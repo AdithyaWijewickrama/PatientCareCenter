@@ -1,0 +1,217 @@
+.root {
+    /* -fx-app-name:"Patient Care Center"; */
+
+    /* Primary Colors */
+    -fx-primary-pane-color: #2C3E50;
+    /* Dark blue-gray */
+    -fx-secondary-pane-color: #34495E;
+    /* Slightly lighter blue-gray */
+
+    /* Text Colors */
+    -fx-primary-text-color: #000000;
+    /* Light gray (for readability) */
+    -fx-secondary-text-color: #ffffff;
+    /* Slightly darker gray */
+
+    /* Button Colors */
+    -fx-primary-button-color: #3498DB;
+    /* Bright blue */
+    -fx-secondary-button-color: #ffffff;
+    /* Darker blue */
+
+    /* Button Colors */
+    -fx-primary-link-color: #3498DB;
+    /* Bright blue */
+    -fx-secondary-link-color: #ffffff;
+    /* Darker blue */
+    /* Button Colors */
+    -fx-primary-link-hover-color: #0d8ce1;
+    /* Bright blue */
+    -fx-secondary-link-hover-color: #bcdff6;
+    /* Darker blue */
+
+    /* Button Text Colors */
+    -fx-primary-button-text-color: #FFFFFF;
+    /* White */
+    -fx-secondary-button-text-color: #000000;
+    /* Light gray */
+
+    /* Border Colors */
+    -fx-primary-border-color: #34495E;
+    /* Matching secondary pane color */
+    -fx-secondary-border-color: #2C3E50;
+    /* Matching primary pane color */
+
+    /* Textfield Colors */
+    -fx-primary-textfield-color: #0000000f;
+    /* Matching secondary pane color */
+    -fx-secondary-textfield-color: #8d9094;
+    /* Matching primary color */
+
+    /* Background Colors */
+    -fx-primary-background-color: #ECF0F1;
+    /* Light gray */
+    -fx-secondary-background-color: #BDC3C7;
+    /* Slightly darker gray */
+
+    /* Shadow Colors */
+    -fx-primary-shadow-color: rgb(20, 36, 53);
+    /* Semi-transparent dark blue-gray */
+    -fx-secondary-shadow-color: rgba(52, 73, 94, 0.5);
+    /* Semi-transparent blue-gray */
+
+    /* Hover Colors */
+    -fx-primary-button-hover-color: #1ABC9C;
+    /* Teal (for a pop of color) */
+    -fx-secondary-button-hover-color: #16A085;
+    /* Darker teal */
+
+    /* Hover Colors */
+    -fx-primary-error-color: #d51111;
+    /* Teal (for a pop of color) */
+    -fx-secondary-error-color: #b31c11;
+    /* Darker teal */
+    /* Hover Colors */
+    -fx-primary-error-text-color: #ffffff;
+    /* Teal (for a pop of color) */
+    -fx-secondary-error-text-color: #ffffff;
+    /* Darker teal */
+}
+
+.shadow-box {
+    -fx-effect: dropshadow(gaussian, -fx-primary-shadow-color, 5, 5, 10, 2);
+}
+
+.background-container {
+    -fx-background-color: -fx-primary-background-color;
+}
+
+.h1-p {
+    -fx-fill: -fx-primary-text-color;
+    -fx-font-size: 2.5em;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+.h1-s {
+    -fx-fill: -fx-secondary-text-color;
+    -fx-font-size: 2.5em;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+.h2-p {
+    -fx-fill: -fx-primary-text-color;
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+.h2-s {
+    -fx-fill: -fx-secondary-text-color;
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+.normal-text-p {
+    -fx-fill: -fx-primary-text-color;
+    -fx-font-size: 1.1em;
+    -fx-text-alignment: center;
+}
+
+.normal-text-s {
+    -fx-fill: -fx-secondary-text-color;
+    -fx-font-size: 1.1em;
+    -fx-text-alignment: center;
+}
+
+.textfield {
+    -fx-font-size: 1.1em;
+    -fx-background-color: -fx-primary-textfield-color;
+}
+
+.button-primary {
+    -fx-background-color: -fx-primary-button-color;
+    -fx-text-fill: -fx-primary-button-text-color;
+    -fx-font-size: 1.1em;
+    -fx-font-weight:bold;
+}
+
+.button-primary:hover{
+    -fx-background-color: -fx-primary-button-hover-color;
+}
+
+.button-seconday {
+    -fx-background-color: -fx-secondary-button-color;
+    -fx-text-fill: -fx-secondary-button-text-color;
+    -fx-font-size: 1.1em;
+    -fx-font-weight:bold;
+}
+
+.button-seconday:hover{
+    -fx-background-color: -fx-secondary-button-hover-color;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.round{
+    -fx-border-color: -fx-primary-border-color;
+    -fx-border-radius: 20px;
+    -fx-border-width: 5px;
+    -fx-background-radius: 20px;
+    -fx-background-color: black;
+}
+
+.link {
+    -fx-text-fill: -fx-primary-link-color;
+    -fx-fill: -fx-primary-link-color;
+    -fx-cursor: hand;
+}
+
+.link:hover{
+    -fx-text-fill: -fx-primary-link-hover-color;
+    -fx-fill: -fx-primary-link-hover-color;
+    -fx-underline: true;
+}
+
+.link-s {
+    -fx-text-fill: -fx-secondary-link-color;
+    -fx-fill: -fx-secondary-link-color;
+    -fx-cursor: hand;
+}
+
+.link-s:hover{
+    -fx-text-fill: -fx-secondary-link-hover-color;
+    -fx-fill: -fx-secondary-link-hover-color;
+    -fx-underline: true;
+}
+
+.error-label{
+    -fx-background-color: -fx-primary-error-color;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 5;
+    -fx-wrap-text: true;
+    -fx-font-weight: normal;
+    -fx-alignment: center;
+    -fx-text-fill: -fx-primary-error-text-color;
+    -fx-padding: 5;
+}
+
+.success-label{
+    -fx-background-color: -fx-primary-error-color;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 5;
+    -fx-wrap-text: true;
+    -fx-font-weight: normal;
+    -fx-alignment: center;
+    -fx-text-fill: -fx-primary-error-text-color;
+    -fx-padding: 5;
+}
+
+.pane-p {
+    -fx-background-color: -fx-primary-pane-color;
+    -fx-alignment: top-center;
+}

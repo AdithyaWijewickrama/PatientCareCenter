@@ -1,0 +1,30 @@
+.nav-button {
+    -fx-padding: 10;
+    -fx-alignment: top-left;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 10;
+}
+
+.nav-button:hover {
+    -fx-background-color: -fx-primary-button-hover-color;
+    -fx-text-fill: -fx-primary-button-text-color;
+    -fx-fill: -fx-primary-button-text-color;
+    -fx-alignment: top-center;
+}
+
+.nav-button-1 {
+    -fx-background-color: -fx-primary-shadow-color;
+    -fx-text-fill: -fx-primary-button-text-color;
+    -fx-fill: -fx-primary-button-text-color;
+    -fx-padding: 10;
+    -fx-alignment: top-left;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 10;
+}
+
+.nav-button-1:hover {
+    -fx-background-color: -fx-primary-button-hover-color;
+    -fx-text-fill: -fx-primary-button-text-color;
+    -fx-fill: -fx-primary-button-text-color;
+    -fx-alignment: top-center;
+}
