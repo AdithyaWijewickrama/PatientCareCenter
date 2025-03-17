@@ -36,4 +36,10 @@ module com.ppcc.PatientCareCenter {
     exports com.ppcc.PatientCareCenter.Database.User;
     exports com.ppcc.PatientCareCenter.Views.Components.PccTable;
     opens com.ppcc.PatientCareCenter.Views.Components.PccTable to javafx.fxml;
+    exports com.ppcc.PatientCareCenter.Controllers.Admin.Patients;
+    opens com.ppcc.PatientCareCenter.Controllers.Admin.Patients to javafx.fxml;
+    exports com.ppcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
+    opens com.ppcc.PatientCareCenter.Controllers.Admin.PharmacyStock to javafx.fxml;
+    exports com.ppcc.PatientCareCenter.Views.Components.DCConnection;
+    opens com.ppcc.PatientCareCenter.Views.Components.DCConnection to javafx.fxml;
 }

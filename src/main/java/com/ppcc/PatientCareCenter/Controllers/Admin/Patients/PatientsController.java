@@ -1,7 +1,7 @@
-package com.ppcc.PatientCareCenter.Controllers.Admin;
+package com.ppcc.PatientCareCenter.Controllers.Admin.Patients;
 
 import com.ppcc.PatientCareCenter.Database.User.Admin.Admin;
-import com.ppcc.PatientCareCenter.Database.User.PatientDemographics;
+import com.ppcc.PatientCareCenter.Database.User.Patient;
 import com.ppcc.PatientCareCenter.Database.User.User;
 import com.ppcc.PatientCareCenter.Model.Sql;
 import com.ppcc.PatientCareCenter.Views.Components.PccTable.ButtonElements;
@@ -52,7 +52,7 @@ public class PatientsController implements Initializable {
     }
 
     private User user;
-    private PatientDemographics pdemo;
+    private Patient pdemo;
 
     private void tableLoad() throws SQLException {
         try (ResultSet resultSet = Sql.getInstance().executeQuery("""
@@ -94,7 +94,7 @@ public class PatientsController implements Initializable {
         int userId = (int) patientsTable.getSelectionModel().getSelectedItem().getData("user_id");
         try {
             user = User.getUser(userId);
-            pdemo = new PatientDemographics(PatientDemographics.getPatientId(user.getUserId()));
+            pdemo = new Patient(Patient.getPatientId(user.getUserId()));
             userName.setText(pdemo.getData().getString("name"));
             this.userId.setText(String.valueOf(userId));
 //            userAddress.setText(pdemo.getData().getString("address"));

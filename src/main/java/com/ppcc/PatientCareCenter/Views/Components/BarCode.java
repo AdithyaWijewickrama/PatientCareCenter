@@ -1,34 +1,30 @@
 package com.ppcc.PatientCareCenter.Views.Components;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.Result;
-import com.google.zxing.WriterException;
+import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+
 public class BarCode {
 
     public static BufferedImage getBuffer(String data, BarcodeFormat format, int w, int h) throws WriterException, IOException {
         return MatrixToImageWriter.toBufferedImage(new MultiFormatWriter().encode(new String(data.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8), format, w, h));
     }
+
     public static BufferedImage getBuffer(byte[] data, BarcodeFormat format, int w, int h) throws WriterException, IOException {
         return MatrixToImageWriter.toBufferedImage(new MultiFormatWriter().encode(new String(data, StandardCharsets.UTF_8), format, w, h));
     }
@@ -36,7 +32,7 @@ public class BarCode {
     public static void create(String data, String path, BarcodeFormat format, int w, int h) throws WriterException, IOException {
         BitMatrix matrix = new MultiFormatWriter().encode(new String(data.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8), format, w, h);
         MatrixToImageConfig f = new MatrixToImageConfig();
-        File file=File.createTempFile("PCC Temp file", path.substring(path.lastIndexOf('.') + 1));
+        File file = File.createTempFile("PCC Temp file", path.substring(path.lastIndexOf('.') + 1));
         file.deleteOnExit();
         MatrixToImageWriter.writeToPath(matrix, path.substring(path.lastIndexOf('.') + 1), Path.of(URI.create(path)));
     }
@@ -46,10 +42,6 @@ public class BarCode {
         Result result = new MultiFormatReader().decode(binaryBitmap);
         return result.getText();
     }
-
-}
-
-class t {
 
     public static void main(String[] args) throws IOException, WriterException {
         String s = "Adithya";
@@ -66,9 +58,9 @@ class t {
                 }
             }
             imgByte = bos.toByteArray();
-            ImageIO.write(BarCode.getBuffer(imgByte,BarcodeFormat.QR_CODE,500,500), "png", new File("QR.png"));
+            ImageIO.write(BarCode.getBuffer(imgByte, BarcodeFormat.QR_CODE, 500, 500), "png", new File("QR.png"));
         } catch (IOException ex) {
-            Logger.getLogger(t.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BarCode.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

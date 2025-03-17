@@ -1,17 +1,8 @@
 package com.ppcc.PatientCareCenter.Views.Panes;
 
-import com.ppcc.PatientCareCenter.Controllers.Admin.PatientsController;
+import com.ppcc.PatientCareCenter.Controllers.Admin.Patients.PatientsController;
 import com.ppcc.PatientCareCenter.Views.GlobalsViews;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-
-import java.io.IOException;
-
-import static com.ppcc.PatientCareCenter.Views.GlobalsViews.FXML_PATH;
 
 public class AdminPanes extends PaneViewFactory {
     private static final String FXML_PATH=GlobalsViews.FXML_PATH+"/Admin/";
