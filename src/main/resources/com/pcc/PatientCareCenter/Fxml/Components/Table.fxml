@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.pcc.PatientCareCenter.Controllers.TableController"
+            prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <TableView fx:id="personTable" prefHeight="400.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="firstNameColumn" text="First Name"/>
+                <TableColumn fx:id="lastNameColumn" text="Last Name"/>
+                <TableColumn fx:id="emailColumn" text="Email"/>
+            </columns>
+        </TableView>
+    </center>
+    <stylesheets>
+        <URL value="@../../Styles/table.css"/>
+    </stylesheets>
+</BorderPane>
