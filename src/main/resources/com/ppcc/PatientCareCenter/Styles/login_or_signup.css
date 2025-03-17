@@ -6,5 +6,6 @@
 
 .badge_container {
     -fx-alignment: center;
-    -fx-background-color: -fx-primary-pane-color;
+    -fx-text-alignment: center;
+    -fx-background-color: -fx-secondary-pane-color;
 }

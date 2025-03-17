@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Text?>
+
+<VBox fillWidth="false" prefHeight="500" prefWidth="400" styleClass="container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <stylesheets>
+      <URL value="@../../Styles/globals.css" />
+      <URL value="@../../Styles/login_or_signup.css" />
+   </stylesheets>
+   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h1-p" text="Login">
+      <VBox.margin>
+         <Insets bottom="30.0" top="20.0" />
+      </VBox.margin>
+   </Text>
+   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="Email" />
+   <TextField fx:id="loginEmail" alignment="CENTER" prefHeight="26.0" prefWidth="400.0" promptText="Enter email" styleClass="textfield" text="anandamadawalage@gmail.com">
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+      <padding>
+         <Insets bottom="10.0" top="10.0" />
+      </padding>
+      <VBox.margin>
+         <Insets bottom="20.0" top="10.0" />
+      </VBox.margin>
+   </TextField>
+   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="Password" />
+   <PasswordField fx:id="loginPassword" alignment="CENTER" prefHeight="26.0" prefWidth="400.0" promptText="Enter password" styleClass="textfield" text="1234">
+      <padding>
+         <Insets bottom="10.0" top="10.0" />
+      </padding>
+      <VBox.margin>
+         <Insets bottom="10.0" top="10.0" />
+      </VBox.margin>
+   </PasswordField>
+   <AnchorPane prefHeight="20.0" prefWidth="400.0">
+      <children>
+         <Label fx:id="forgotPasswordLink" layoutX="235.0" prefHeight="20.0" prefWidth="100.0" text="Forgot password" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <styleClass>
+               <String fx:value="normal-text-p" />
+               <String fx:value="link" />
+               <String fx:value="forgot-password-link" />
+            </styleClass>
+         </Label>
+      </children>
+   </AnchorPane>
+   <Label fx:id="loginMessage" prefHeight="18.0" prefWidth="368.0" text="Message" textAlignment="CENTER" visible="false">
+      <VBox.margin>
+         <Insets bottom="10.0" />
+      </VBox.margin>
+   </Label>
+   <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="20.0" prefWidth="400.0" styleClass="button-primary" text="Login" textAlignment="CENTER">
+      <padding>
+         <Insets bottom="10.0" top="10.0" />
+      </padding>
+      <VBox.margin>
+         <Insets bottom="10.0" />
+      </VBox.margin>
+      <effect>
+         <DropShadow blurType="GAUSSIAN">
+            <color>
+               <Color opacity="0.25" />
+            </color>
+         </DropShadow>
+      </effect>
+   </Button>
+   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="Don't have an account?" />
+   <Label fx:id="signupLink" text="Signup">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <styleClass>
+         <String fx:value="normal-text-p" />
+         <String fx:value="link" />
+      </styleClass>
+   </Label>
+</VBox>

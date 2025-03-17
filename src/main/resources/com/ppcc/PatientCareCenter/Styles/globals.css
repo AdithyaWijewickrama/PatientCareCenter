@@ -2,51 +2,52 @@
     /* -fx-app-name:"Patient Care Center"; */
 
     /* Primary Colors */
-    -fx-primary-pane-color: #2C3E50;
+    -fx-primary-pane-color: #ffffff;
+    /* White */
+    -fx-secondary-pane-color: #1f3953;
     /* Dark blue-gray */
-    -fx-secondary-pane-color: #34495E;
-    /* Slightly lighter blue-gray */
 
     /* Text Colors */
     -fx-primary-text-color: #000000;
-    /* Light gray (for readability) */
+    /* Black */
     -fx-secondary-text-color: #ffffff;
-    /* Slightly darker gray */
+    /* White */
 
     /* Button Colors */
     -fx-primary-button-color: #3498DB;
     /* Bright blue */
     -fx-secondary-button-color: #ffffff;
-    /* Darker blue */
+    /* White */
 
-    /* Button Colors */
+    /* Link Colors */
     -fx-primary-link-color: #3498DB;
     /* Bright blue */
     -fx-secondary-link-color: #ffffff;
-    /* Darker blue */
-    /* Button Colors */
+    /* White */
+
+    /* Link Hover Colors */
     -fx-primary-link-hover-color: #0d8ce1;
-    /* Bright blue */
+    /* Brighter blue */
     -fx-secondary-link-hover-color: #bcdff6;
-    /* Darker blue */
+    /* Light blue */
 
     /* Button Text Colors */
-    -fx-primary-button-text-color: #FFFFFF;
+    -fx-primary-button-text-color: #ffffff;
     /* White */
     -fx-secondary-button-text-color: #000000;
-    /* Light gray */
+    /* Black */
 
     /* Border Colors */
     -fx-primary-border-color: #34495E;
-    /* Matching secondary pane color */
+    /* Dark blue-gray */
     -fx-secondary-border-color: #2C3E50;
-    /* Matching primary pane color */
+    /* Darker blue-gray */
 
     /* Textfield Colors */
     -fx-primary-textfield-color: #0000000f;
-    /* Matching secondary pane color */
-    -fx-secondary-textfield-color: #8d9094;
-    /* Matching primary color */
+    /* Semi-transparent black */
+    -fx-secondary-textfield-color: derive(-fx-secondary-pane-color, 20%);
+    /* Derived from secondary pane color */
 
     /* Background Colors */
     -fx-primary-background-color: #ECF0F1;
@@ -56,26 +57,37 @@
 
     /* Shadow Colors */
     -fx-primary-shadow-color: rgb(20, 36, 53);
-    /* Semi-transparent dark blue-gray */
+    /* Dark blue-gray */
     -fx-secondary-shadow-color: rgba(52, 73, 94, 0.5);
     /* Semi-transparent blue-gray */
 
-    /* Hover Colors */
+    /* Button Hover Colors */
     -fx-primary-button-hover-color: #1ABC9C;
-    /* Teal (for a pop of color) */
+    /* Teal */
     -fx-secondary-button-hover-color: #16A085;
     /* Darker teal */
 
-    /* Hover Colors */
+    /* Error Colors */
     -fx-primary-error-color: #d51111;
-    /* Teal (for a pop of color) */
+    /* Bright red */
     -fx-secondary-error-color: #b31c11;
-    /* Darker teal */
-    /* Hover Colors */
+    /* Darker red */
     -fx-primary-error-text-color: #ffffff;
-    /* Teal (for a pop of color) */
+    /* White */
     -fx-secondary-error-text-color: #ffffff;
-    /* Darker teal */
+    /* White */
+
+    /* Info Colors */
+    -fx-primary-info-color: #0d8ce1;
+    /* Bright blue */
+    -fx-primary-info-text-color: #ffffff;
+    /* White */
+
+    /* Warning Colors */
+    -fx-primary-warning-color: rgb(179, 207, 19);
+    /* Yellow-green */
+    -fx-primary-warning-text-color: #ffffff;
+    /* White */
 }
 
 .shadow-box {
@@ -116,13 +128,28 @@
 
 .normal-text-p {
     -fx-fill: -fx-primary-text-color;
+    -fx-text-fill: -fx-primary-text-color;
     -fx-font-size: 1.1em;
     -fx-text-alignment: center;
 }
 
 .normal-text-s {
     -fx-fill: -fx-secondary-text-color;
+    -fx-text-fill: -fx-secondary-text-color;
     -fx-font-size: 1.1em;
+    -fx-text-alignment: center;
+}
+.bold-text-p {
+    -fx-fill: -fx-primary-text-color;
+    -fx-font-size: 1.1em;
+    -fx-font-weight:bold;
+    -fx-text-alignment: center;
+}
+
+.bold-text-s {
+    -fx-fill: -fx-secondary-text-color;
+    -fx-font-size: 1.1em;
+    -fx-font-weight:bold;
     -fx-text-alignment: center;
 }
 
@@ -135,10 +162,10 @@
     -fx-background-color: -fx-primary-button-color;
     -fx-text-fill: -fx-primary-button-text-color;
     -fx-font-size: 1.1em;
-    -fx-font-weight:bold;
+    -fx-font-weight: bold;
 }
 
-.button-primary:hover{
+.button-primary:hover {
     -fx-background-color: -fx-primary-button-hover-color;
 }
 
@@ -146,10 +173,10 @@
     -fx-background-color: -fx-secondary-button-color;
     -fx-text-fill: -fx-secondary-button-text-color;
     -fx-font-size: 1.1em;
-    -fx-font-weight:bold;
+    -fx-font-weight: bold;
 }
 
-.button-seconday:hover{
+.button-seconday:hover {
     -fx-background-color: -fx-secondary-button-hover-color;
 }
 
@@ -157,12 +184,8 @@
     visibility: hidden;
 }
 
-.round{
-    -fx-border-color: -fx-primary-border-color;
-    -fx-border-radius: 20px;
-    -fx-border-width: 5px;
+.round {
     -fx-background-radius: 20px;
-    -fx-background-color: black;
 }
 
 .link {
@@ -171,7 +194,7 @@
     -fx-cursor: hand;
 }
 
-.link:hover{
+.link:hover {
     -fx-text-fill: -fx-primary-link-hover-color;
     -fx-fill: -fx-primary-link-hover-color;
     -fx-underline: true;
@@ -183,13 +206,13 @@
     -fx-cursor: hand;
 }
 
-.link-s:hover{
+.link-s:hover {
     -fx-text-fill: -fx-secondary-link-hover-color;
     -fx-fill: -fx-secondary-link-hover-color;
     -fx-underline: true;
 }
 
-.error-label{
+.error-label {
     -fx-background-color: -fx-primary-error-color;
     -fx-font-size: 1.2em;
     -fx-background-radius: 5;
@@ -200,18 +223,61 @@
     -fx-padding: 5;
 }
 
-.success-label{
-    -fx-background-color: -fx-primary-error-color;
+.success-label {
+    -fx-background-color: -fx-primary-success-color;
     -fx-font-size: 1.2em;
     -fx-background-radius: 5;
     -fx-wrap-text: true;
     -fx-font-weight: normal;
     -fx-alignment: center;
-    -fx-text-fill: -fx-primary-error-text-color;
+    -fx-text-fill: -fx-primary-success-text-color;
+    -fx-padding: 5;
+}
+
+.info-label {
+    -fx-background-color: -fx-primary-info-color;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 5;
+    -fx-wrap-text: true;
+    -fx-font-weight: normal;
+    -fx-alignment: center;
+    -fx-text-fill: -fx-primary-info-text-color;
+    -fx-padding: 5;
+}
+
+.warning-label {
+    -fx-background-color: -fx-primary-warning-color;
+    -fx-font-size: 1.2em;
+    -fx-background-radius: 5;
+    -fx-wrap-text: true;
+    -fx-font-weight: normal;
+    -fx-alignment: center;
+    -fx-text-fill: -fx-primary-warning-text-color;
     -fx-padding: 5;
 }
 
 .pane-p {
     -fx-background-color: -fx-primary-pane-color;
     -fx-alignment: top-center;
+}
+
+.pane-s {
+    -fx-background-color: -fx-secondary-pane-color;
+    -fx-alignment: top-center;
+}
+
+.delete-button{
+    -fx-fill:red;
+    -fx-text-fill: red;
+    -fx-background-color: -fx-primary-pane-color;
+}
+.edit-button{
+    -fx-fill:#0c9e20;
+    -fx-text-fill: #0c9e20;
+    -fx-background-color: -fx-primary-pane-color;
+}
+.view-button{
+    -fx-text-fill: #256ad1;
+    -fx-fill: #256ad1;
+    -fx-background-color: -fx-primary-pane-color;
 }

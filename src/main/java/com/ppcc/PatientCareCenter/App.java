@@ -8,7 +8,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Model.getInstance().getViewFactory().showLoginOrSignup();
+        Model.getInstance().getCommonViewFactory().getLoginOrSignupViewFactory().showLoginOrSignupWindow();
+//        new PccTable("/Components/Table.fxml").showOnWindow();
     }
 
 }

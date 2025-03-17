@@ -1,17 +1,25 @@
 package com.ppcc.PatientCareCenter.Model;
 
-import com.ppcc.PatientCareCenter.Views.ViewFactory;
+import com.ppcc.PatientCareCenter.Views.CommonViewFactory;
 
 public class Model {
     private static Model model;
-    private final ViewFactory viewFactory;
+    private final CommonViewFactory commonViewFactory;
+    private PasswordValidator validator;
 
     private Model(){
-        this.viewFactory = new ViewFactory();
+        this.commonViewFactory = new CommonViewFactory();
     }
 
-    public ViewFactory getViewFactory() {
-        return viewFactory;
+    public CommonViewFactory getCommonViewFactory() {
+        return commonViewFactory;
+    }
+
+    public PasswordValidator getPasswordValidatorForSignup(){
+        if(validator==null){
+            validator=new PasswordValidator();
+        }
+        return validator;
     }
 
     public static synchronized Model getInstance() {
@@ -20,4 +28,6 @@ public class Model {
         }
         return model;
     }
+
+
 }

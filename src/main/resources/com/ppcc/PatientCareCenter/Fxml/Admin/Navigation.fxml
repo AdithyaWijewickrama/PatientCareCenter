@@ -6,134 +6,131 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity"
-      maxWidth="-Infinity"
-      minHeight="-Infinity"
-      minWidth="-Infinity"
-      prefHeight="640.0"
-      prefWidth="200.0"
-      styleClass="pane-p"
-      xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.ppcc.PatientCareCenter.Controllers.Admin.NavigationController">
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-   </padding>
-   <children>
-      <AnchorPane prefHeight="174.0" prefWidth="179.0" styleClass="pane-p">
-         <children>
-            <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" layoutX="68.0" layoutY="66.0" size="50"
-                                 AnchorPane.topAnchor="23.14285659790039"/>
-            <Text layoutX="13.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2-s"
-                  text="Patient Care Center" wrappingWidth="167.75450134277344" AnchorPane.leftAnchor="13.0"
-                  AnchorPane.rightAnchor="13.845498657226557"/>
-         </children>
-      </AnchorPane>
-      <VBox prefHeight="200.0" prefWidth="100.0">
-         <children>
-            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onPatientPane" prefWidth="200.0"
-                    text="Patients">
-               <graphic>
-                  <FontAwesomeIconView glyphName="USERS" size="20"/>
-               </graphic>
-               <styleClass>
-                  <String fx:value="button-seconday"/>
-                  <String fx:value="nav-button"/>
-               </styleClass>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-               </VBox.margin>
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="260.0" minHeight="560.0" minWidth="200.0" prefHeight="560.0" prefWidth="200.0" styleClass="pane-s" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ppcc.PatientCareCenter.Controllers.Admin.NavigationController">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+    <stylesheets>
+        <URL value="@../../Styles/globals.css" />
+        <URL value="@../../Styles/Admin/navigation.css" />
+    </stylesheets>
+    <top>
+        <VBox alignment="CENTER" prefHeight="149.0" prefWidth="235.0" styleClass="pane-s">
+            <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" layoutX="68.0" layoutY="66.0" size="50" AnchorPane.topAnchor="23.14285659790039">
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin></FontAwesomeIconView>
+            <Text layoutX="13.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h2-s" text="Patient Care Center" wrappingWidth="167.75450134277344" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="13.845498657226557" />
+        </VBox>
+    </top>
+    <center>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+            <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onPatientPane" prefWidth="200.0" text="Patients">
+                <graphic>
+                    <FontAwesomeIconView glyphName="USERS" size="20" />
+                </graphic>
+                <styleClass>
+                    <String fx:value="button-seconday" />
+                    <String fx:value="nav-button" />
+                </styleClass>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
             </Button>
             <Button mnemonicParsing="false" onAction="#onPatientViewPane" prefWidth="200.0" text="Patient view">
-               <graphic>
-                  <FontAwesomeIconView glyphName="USER" size="24"/>
-               </graphic>
-               <styleClass>
-                  <String fx:value="button-seconday"/>
-                  <String fx:value="nav-button"/>
-               </styleClass>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-               </VBox.margin>
+                <graphic>
+                    <FontAwesomeIconView glyphName="USER" size="24" />
+                </graphic>
+                <styleClass>
+                    <String fx:value="button-seconday" />
+                    <String fx:value="nav-button" />
+                </styleClass>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
             </Button>
             <Button mnemonicParsing="false" onAction="#onAnalyzeDataPane" prefWidth="200.0" text="Analyze data">
-               <graphic>
-                  <FontAwesomeIconView glyphName="BAR_CHART" size="20" tabSize="0"/>
-               </graphic>
-               <styleClass>
-                  <String fx:value="button-seconday"/>
-                  <String fx:value="nav-button"/>
-               </styleClass>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-               </VBox.margin>
+                <graphic>
+                    <FontAwesomeIconView glyphName="BAR_CHART" size="20" tabSize="0" />
+                </graphic>
+                <styleClass>
+                    <String fx:value="button-seconday" />
+                    <String fx:value="nav-button" />
+                </styleClass>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
             </Button>
-            <Button layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#onPharmacyStockPane"
-                    prefWidth="200.0" text="Pharmacy stock">
-               <graphic>
-                  <FontAwesomeIconView glyphName="TH_LARGE" size="24"/>
-               </graphic>
-               <styleClass>
-                  <String fx:value="button-seconday"/>
-                  <String fx:value="nav-button"/>
-               </styleClass>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-               </VBox.margin>
+            <Button layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#onPharmacyStockPane" prefWidth="200.0" text="Pharmacy stock">
+                <graphic>
+                    <FontAwesomeIconView glyphName="TH_LARGE" size="24" />
+                </graphic>
+                <styleClass>
+                    <String fx:value="button-seconday" />
+                    <String fx:value="nav-button" />
+                </styleClass>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
             </Button>
-            <Button layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBudgetPane" prefWidth="200.0"
-                    text="Budget">
-               <graphic>
-                  <FontAwesomeIconView glyphName="EXCHANGE" size="24"/>
-               </graphic>
-               <styleClass>
-                  <String fx:value="button-seconday"/>
-                  <String fx:value="nav-button"/>
-               </styleClass>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-               </VBox.margin>
+            <Button layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBudgetPane" prefWidth="200.0" text="Budget">
+                <graphic>
+                    <FontAwesomeIconView glyphName="EXCHANGE" size="24" />
+                </graphic>
+                <styleClass>
+                    <String fx:value="button-seconday" />
+                    <String fx:value="nav-button" />
+                </styleClass>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
             </Button>
-         </children>
-      </VBox>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
-         <children>
+        </VBox>
+    </center>
+    <bottom>
+        <VBox alignment="BOTTOM_CENTER" prefHeight="147.0" prefWidth="235.0">
+            <Button layoutX="15.0" layoutY="124.0" mnemonicParsing="false" onAction="#onProfileDialog" prefWidth="200.0" text="Settings">
+                <graphic>
+                    <FontAwesomeIconView glyphName="GEAR" size="26" styleClass="nav-button-1" />
+                </graphic>
+                <styleClass>
+                    <String fx:value="nav-button-1" />
+                    <String fx:value="button-seconday" />
+                </styleClass>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </Button>
             <Button mnemonicParsing="false" onAction="#onProfileDialog" prefWidth="200.0" text="Profile">
-               <graphic>
-                  <FontAwesomeIconView glyphName="USER_CIRCLE" size="24" styleClass="nav-button-1"/>
-               </graphic>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-               </VBox.margin>
-               <styleClass>
-                  <String fx:value="nav-button-1"/>
-                  <String fx:value="button-seconday"/>
-               </styleClass>
+                <graphic>
+                    <FontAwesomeIconView glyphName="USER_CIRCLE" size="24" styleClass="nav-button-1" />
+                </graphic>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+                <styleClass>
+                    <String fx:value="nav-button-1" />
+                    <String fx:value="button-seconday" />
+                </styleClass>
             </Button>
             <HBox alignment="CENTER" prefHeight="24.0" prefWidth="160.0">
-               <children>
-                  <FontAwesomeIconView fill="WHITE" glyphName="BUG" size="15">
-                     <HBox.margin>
-                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0"/>
-                     </HBox.margin>
-                  </FontAwesomeIconView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Report a bug">
-                     <styleClass>
-                        <String fx:value="normal-text-s"/>
-                        <String fx:value="link-s"/>
-                     </styleClass>
-                  </Text>
-               </children>
+                <FontAwesomeIconView fill="WHITE" glyphName="BUG" size="15">
+                    <HBox.margin>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                    </HBox.margin>
+                </FontAwesomeIconView>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Report a bug">
+                    <styleClass>
+                        <String fx:value="normal-text-s" />
+                        <String fx:value="link-s" />
+                    </styleClass>
+                </Text>
             </HBox>
-         </children>
-      </VBox>
-   </children>
-   <stylesheets>
-      <URL value="@../../Styles/globals.css"/>
-      <URL value="@../../Styles/Admin/navigation.css"/>
-   </stylesheets>
-</VBox>
+        </VBox>
+    </bottom>
+</BorderPane>
