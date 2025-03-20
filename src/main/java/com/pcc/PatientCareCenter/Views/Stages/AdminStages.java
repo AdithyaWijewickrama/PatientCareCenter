@@ -10,6 +10,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.sql.SQLException;
+
 public class AdminStages extends StageViewFactory {
     private BorderPane mainStage;
     private StringProperty currentPane = new SimpleStringProperty("");
@@ -33,7 +35,6 @@ public class AdminStages extends StageViewFactory {
             }
             System.out.println(currentPane.getValue());
         });
-//        setCurrentPane("Patients");
     }
 
     public void setCurrentPane(String pane) {
@@ -59,6 +60,9 @@ public class AdminStages extends StageViewFactory {
     public void showGeneralDetails() {
         Dialog<?> dialog = GlobalsViews.getDialog();
         dialog.getDialogPane().setContent(AdminPanes.getInstance().getGeneralDetails());
+        dialog.onCloseRequestProperty().addListener(event -> {
+            AdminPanes.getPatientsController().tableLoad();
+        });
         dialog.show();
     }
 
@@ -89,6 +93,14 @@ public class AdminStages extends StageViewFactory {
     public void showProfile() {
         Dialog<?> dialog = GlobalsViews.getDialog();
         dialog.getDialogPane().setContent(AdminPanes.getInstance().getProfile());
+        dialog.onCloseRequestProperty().addListener(event -> {
+            try {
+                AdminPanes.getPatientsController().updateFrame();
+            } catch (SQLException e) {
+                GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+                throw new RuntimeException(e);
+            }
+        });
         dialog.show();
     }
 
@@ -107,6 +119,18 @@ public class AdminStages extends StageViewFactory {
     public void showUltrasoundScanForm() {
         Dialog<?> dialog = GlobalsViews.getDialog();
         dialog.getDialogPane().setContent(AdminPanes.getInstance().getUltrasoundScanForm());
+        dialog.show();
+    }
+
+    public void showStockDetails() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getStockDetails());
+        dialog.show();
+    }
+
+    public void showMedicineSelector() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getMedicineSelector());
         dialog.show();
     }
 }

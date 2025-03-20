@@ -15,7 +15,7 @@ public class DateDatePickerConnection implements DataComponentConnection{
     public void setData(Object data) {
         if(data==null)return;
         if(data instanceof EmptyData)datePicker.setValue(LocalDate.now());
-        datePicker.valueProperty().set(LocalDate.parse(data.toString()));
+        else datePicker.valueProperty().set(LocalDate.parse(data.toString()));
     }
 
     @Override

@@ -17,7 +17,7 @@ public class ValueButtonGroupConnection implements DataComponentConnection {
     public void setData(Object data) {
         if(data==null)return;
         if(data instanceof EmptyData){
-
+            toggleGroup.selectToggle(toggleGroup.getToggles().get(0));
         }else{
             Optional<Toggle> toggles = toggleGroup.getToggles().stream().filter(toggle -> {
                 String val = ((RadioButton) toggle).getText();

@@ -1,5 +1,6 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
+import com.google.zxing.WriterException;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.Patient;
 import com.pcc.PatientCareCenter.Model.Model;
@@ -101,8 +102,8 @@ public class PatientsController implements Initializable {
         writePrescriptionButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showPrescription();
             try {
-                AdminPanes.getClaimFormController().loadForCurrentPerson();
-            } catch (SQLException e) {
+//                AdminPanes.getPrescriptionController().
+            } catch (Exception e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
             }
@@ -142,7 +143,15 @@ public class PatientsController implements Initializable {
         pccTable.setTableColumns(columns);
         pccTable.addTableColumn(PccTable.getNodeColumn("Action", cell -> new PatientsButtonCell(getButtonSet())));
         pccTable.resultSetToPccTable(resultSet);
+    }
 
+    public void tableLoad(){
+        try {
+            tableLoad(getTableQuery());
+        } catch (SQLException e) {
+            GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     public ResultSet getTableQuery() throws SQLException {
@@ -173,7 +182,6 @@ public class PatientsController implements Initializable {
             }
         }
         sql.trimToSize();
-        System.out.println(sql);
         return Sql.getInstance().executeQuery(sql.toString(), Doctor.getCurrentDoctor().getDoctorId());
     }
 
@@ -193,7 +201,12 @@ public class PatientsController implements Initializable {
         editButton.setOnAction(event -> {
             Patient.setCurrentPatient(selectedPatient);
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().showGeneralDetails();
-            AdminPanes.getInstance().getGeneralDetailsController().loadDataForCurrentPatient();
+            AdminPanes.getGeneralDetailsController().loadDataForCurrentPatient();
+        });
+        deleteButton.setOnAction(event -> {
+            Patient.setCurrentPatient(selectedPatient);
+            Model.getInstance().getCommonViewFactory().getAdminViewFactory().showGeneralDetails();
+            AdminPanes.getGeneralDetailsController().setGeneralDetailsType(GeneralDetailsType.DELETE);
         });
         ButtonElements.bindIconFillProperty(editButton, "edit-button", new FontAwesomeIconView(FontAwesomeIcon.EDIT, iconSize));
         ButtonElements.bindIconFillProperty(deleteButton, "delete-button", new FontAwesomeIconView(FontAwesomeIcon.TRASH, iconSize));
@@ -207,12 +220,13 @@ public class PatientsController implements Initializable {
             selectedPatient = new Patient(patientId);
             selectedPatient.load();
             Patient.setCurrentPatient(selectedPatient);
-            BufferedImage bufferedImage = BarCode.generateBarcodeImage(selectedPatient.getDataList().toString(), (int) userBarCode.getFitWidth(), (int) userBarCode.getFitHeight());
+            BufferedImage bufferedImage = BarCode.generateQRCodeImage(selectedPatient.getDataList().toString(), (int) userBarCode.getFitWidth(), (int) userBarCode.getFitHeight());
             userBarCode.setImage(SwingFXUtils.toFXImage(bufferedImage, null));
             userName.setText(selectedPatient.loadAndGetData().getString("name"));
             this.userId.setText(String.valueOf(patientId));
             userAddress.setText(selectedPatient.loadAndGetData().getString("gender"));
-        } catch (SQLException e) {
+        } catch (SQLException | WriterException e) {
+            GlobalsViews.showErrorAlert(e.getLocalizedMessage());
             throw new RuntimeException(e);
         }
     }

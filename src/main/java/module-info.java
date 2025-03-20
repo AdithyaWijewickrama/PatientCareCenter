@@ -12,7 +12,6 @@ module com.ppcc.PatientCareCenter {
     requires org.jetbrains.annotations;
     requires javafx.swing;
 
-
     opens com.pcc.PatientCareCenter to javafx.fxml;
     opens com.pcc.PatientCareCenter.Views to javafx.fxml;
     opens com.pcc.PatientCareCenter.Views.Panes to javafx.fxml;
@@ -37,6 +36,7 @@ module com.ppcc.PatientCareCenter {
     exports com.pcc.PatientCareCenter.Views.Panes;
     exports com.pcc.PatientCareCenter.Database.User;
     exports com.pcc.PatientCareCenter.Views.Components.PccTable;
+    exports com.pcc.PatientCareCenter.Database;
     opens com.pcc.PatientCareCenter.Views.Components.PccTable to javafx.fxml;
     exports com.pcc.PatientCareCenter.Controllers.Admin.Patients;
     opens com.pcc.PatientCareCenter.Controllers.Admin.Patients to javafx.fxml;

@@ -78,4 +78,5 @@ public class PccTable extends PccComponent {
         }
         tableView.setItems(data);
     }
+
 }

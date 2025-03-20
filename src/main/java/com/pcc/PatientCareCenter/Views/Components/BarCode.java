@@ -7,6 +7,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.oned.Code128Writer;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -25,22 +26,72 @@ import java.util.logging.Logger;
 public class BarCode {
 
     public static BufferedImage getBuffer(String data, BarcodeFormat format, int w, int h) throws WriterException, IOException {
-
         return MatrixToImageWriter.toBufferedImage(new MultiFormatWriter().encode(new String(data.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8), format, w, h));
     }
+
     public static BufferedImage generateBarcodeImage(String barcodeData, int width, int height) {
-        // Set encoding hints (optional)
         Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.MARGIN, 0); // No margin
-
-        // Create a Code 128 barcode writer
+        hints.put(EncodeHintType.MARGIN, 0);
         Code128Writer barcodeWriter = new Code128Writer();
-
-        // Encode the barcode data into a BitMatrix
         BitMatrix bitMatrix = barcodeWriter.encode(barcodeData, BarcodeFormat.CODE_128, width, height, hints);
-
-        // Convert the BitMatrix to a BufferedImage
         return MatrixToImageWriter.toBufferedImage(bitMatrix);
+    }
+
+    public static BufferedImage generateQRCodeImage(String text, int width, int height) throws WriterException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        Map<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.MARGIN, 0);
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height,hints);
+//        bitMatrix=removeMargin(bitMatrix);
+//        bitMatrix=addMargin(bitMatrix,5);
+        return MatrixToImageWriter.toBufferedImage(bitMatrix);
+    }
+    private static BitMatrix removeMargin(BitMatrix bitMatrix) {
+        int width = bitMatrix.getWidth();
+        int height = bitMatrix.getHeight();
+
+        // Find the boundaries of the QR code (excluding the margin)
+        int minX = width, minY = height, maxX = 0, maxY = 0;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (bitMatrix.get(x, y)) {
+                    if (x < minX) minX = x;
+                    if (y < minY) minY = y;
+                    if (x > maxX) maxX = x;
+                    if (y > maxY) maxY = y;
+                }
+            }
+        }
+
+        int newWidth = maxX - minX + 1;
+        int newHeight = maxY - minY + 1;
+        BitMatrix croppedMatrix = new BitMatrix(newWidth, newHeight);
+
+        for (int x = minX; x <= maxX; x++) {
+            for (int y = minY; y <= maxY; y++) {
+                if (bitMatrix.get(x, y)) {
+                    croppedMatrix.set(x - minX, y - minY);
+                }
+            }
+        }
+
+        return croppedMatrix;
+    }
+    private static BitMatrix addMargin(BitMatrix bitMatrix, int margin) {
+        int width = bitMatrix.getWidth();
+        int height = bitMatrix.getHeight();
+
+        BitMatrix paddedMatrix = new BitMatrix(width + 2 * margin, height + 2 * margin);
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (bitMatrix.get(x, y)) {
+                    paddedMatrix.set(x + margin, y + margin);
+                }
+            }
+        }
+
+        return paddedMatrix;
     }
     public static BufferedImage getBuffer(byte[] data, BarcodeFormat format, int w, int h) throws WriterException, IOException {
         return MatrixToImageWriter.toBufferedImage(new MultiFormatWriter().encode(new String(data, StandardCharsets.UTF_8), format, w, h));
@@ -58,26 +109,5 @@ public class BarCode {
         BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(ImageIO.read(new FileInputStream(path)))));
         Result result = new MultiFormatReader().decode(binaryBitmap);
         return result.getText();
-    }
-
-    public static void main(String[] args) throws IOException, WriterException {
-        String s = "Adithya";
-        try {
-            String img = "Images\\1.png";
-            BarCode.create(s, "QR.png", BarcodeFormat.PDF_417, 50, 50);
-            byte[] imgByte;
-            ByteArrayOutputStream bos;
-            try (FileInputStream im = new FileInputStream(img)) {
-                imgByte = new byte[1024];
-                bos = new ByteArrayOutputStream();
-                for (int i; (i = im.read(imgByte)) != -1; ) {
-                    bos.write(imgByte, 0, i);
-                }
-            }
-            imgByte = bos.toByteArray();
-            ImageIO.write(BarCode.getBuffer(imgByte, BarcodeFormat.QR_CODE, 500, 500), "png", new File("QR.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(BarCode.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

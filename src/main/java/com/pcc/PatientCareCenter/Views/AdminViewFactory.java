@@ -37,10 +37,6 @@ public class AdminViewFactory {
         admin.showGeneralDetails();
     }
 
-    public void showClaimForm() {
-        admin.showClaimForm();
-    }
-
     public AdminStages getAdmin() {
         return admin;
     }

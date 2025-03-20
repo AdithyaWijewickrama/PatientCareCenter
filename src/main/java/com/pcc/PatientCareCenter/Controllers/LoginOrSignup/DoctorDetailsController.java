@@ -1,5 +1,6 @@
 package com.pcc.PatientCareCenter.Controllers.LoginOrSignup;
 
+import com.pcc.PatientCareCenter.Database.PPDetails;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.User;
 import com.pcc.PatientCareCenter.Views.Components.TextFieldElements;
@@ -22,7 +23,8 @@ public class DoctorDetailsController extends LoginOrSignupController implements 
     public void createAccount() {
         try {
             User.setCurrentUser(User.createUser(SignupController.getSignupEmail(), SignupController.getSignupPassword(), SignupController.getAccountType()));
-            Doctor doctorAccount = Doctor.createAdminAccount(User.getCurrentUser(), doctorDetailsButton.getText(), doctorDetailsOccupation.getText());
+            Doctor doctorAccount = Doctor.createAdminAccount(User.getCurrentUser(), doctorDetailsName.getText(), doctorDetailsOccupation.getText());
+            PPDetails.setCurrentPP(PPDetails.createPPpDetails(doctorAccount.getName().toUpperCase() + " PATIENT CARE CENTER", User.getCurrentUser().getEmail(), null, null, doctorAccount.getDoctorId()));
             Doctor.setCurrentAdmin(doctorAccount);
             showLogin();
         } catch (Exception e) {

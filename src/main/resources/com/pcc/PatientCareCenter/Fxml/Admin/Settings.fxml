@@ -74,25 +74,25 @@
                                     <Insets bottom="5.0" top="10.0" />
                                  </VBox.margin>
                               </Text>
-                              <PasswordField fx:id="ppName" prefHeight="26.0" prefWidth="400.0" promptText="Enter pp name" styleClass="textfield" />
+                              <TextField fx:id="ppName" prefHeight="26.0" prefWidth="400.0" promptText="Enter pp name" styleClass="textfield" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="PP Address">
                                  <VBox.margin>
                                     <Insets bottom="5.0" top="10.0" />
                                  </VBox.margin>
                               </Text>
-                              <PasswordField fx:id="ppAddress" prefHeight="26.0" prefWidth="400.0" promptText="Enter pp address" styleClass="textfield" />
+                              <TextField fx:id="ppAddress" prefHeight="26.0" prefWidth="400.0" promptText="Enter pp address" styleClass="textfield" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="PP Email">
                                  <VBox.margin>
                                     <Insets bottom="5.0" top="10.0" />
                                  </VBox.margin>
                               </Text>
-                              <PasswordField fx:id="ppEmail" prefHeight="26.0" prefWidth="400.0" promptText="Enter pp email" styleClass="textfield" />
+                              <TextField fx:id="ppEmail" prefHeight="26.0" prefWidth="400.0" promptText="Enter pp email" styleClass="textfield" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="PP Telephone">
                                  <VBox.margin>
                                     <Insets bottom="5.0" top="10.0" />
                                  </VBox.margin>
                               </Text>
-                              <PasswordField fx:id="ppTelephone" layoutX="20.0" layoutY="177.0" prefHeight="26.0" prefWidth="400.0" promptText="Enter pp telephone" styleClass="textfield" />
+                              <TextField fx:id="ppTelephone" layoutX="20.0" layoutY="177.0" prefHeight="26.0" prefWidth="400.0" promptText="Enter pp telephone" styleClass="textfield" />
                               <Button fx:id="ppSaveButton" mnemonicParsing="false" styleClass="button-primary" text="Save">
                                  <VBox.margin>
                                     <Insets top="10.0" />

@@ -115,9 +115,9 @@ public class GlobalsViews {
         alert.show();
     }
 
-    public static void showWarningAlert(String message) {
+    public static boolean showWarningAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.getDialogPane().setContentText(message);
-        alert.show();
+       return alert.showAndWait().isPresent();
     }
 }

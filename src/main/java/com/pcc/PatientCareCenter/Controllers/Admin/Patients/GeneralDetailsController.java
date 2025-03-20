@@ -3,6 +3,7 @@ package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 import com.pcc.PatientCareCenter.Database.User.Patient;
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
+import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -84,6 +85,7 @@ public class GeneralDetailsController implements Initializable {
                         resultConnection.updateToDataBase();
                         GlobalsViews.showInformationAlert("Updated successfully!");
                         resultConnection.clear();
+                        AdminPanes.getPatientsController().tableLoad();
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -96,7 +98,24 @@ public class GeneralDetailsController implements Initializable {
                     try {
                         resultConnection.insertToDataBase();
                         GlobalsViews.showInformationAlert("Inserted successfully!");
+                        AdminPanes.getPatientsController().tableLoad();
                         setGeneralDetailsType(GeneralDetailsType.UPDATE);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+            case DELETE -> {
+                loadDataForCurrentPatient();
+                saveButton.setText("Delete");
+                setAction((action) -> {
+                    try {
+                        if (GlobalsViews.showWarningAlert("Are you sure want to delete!")) {
+                            Patient.getCurrentPatient().deletePatient();
+                            GlobalsViews.showInformationAlert("Deleted successfully!");
+                            AdminPanes.getPatientsController().tableLoad();
+                            setGeneralDetailsType(GeneralDetailsType.UPDATE);
+                        }
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -105,69 +124,6 @@ public class GeneralDetailsController implements Initializable {
         }
     }
 
-    /*
-    * """
-                            SELECT pd.name,pd.date_of_birth,pd.gender,pd.marital_status,pd.nationality,pd.language_preference,ucd.mobile_number,ucd.whatsapp_number,ucd.lan_number,ucd.street_address,ucd.country,ucd.province,ucd.city,ucd.postal_code FROM patient_demographics pd
-                            JOIN
-                            user_contact_details ucd
-                            ON pd.user_id=ucd.user_id
-                             WHERE pd.user_id=%d""", Patient.getCurrentPatient().getPatientId()),
-                    String.format("""
-                            BEGIN TRANSACTION;
-                            INSERT INTO patient_demographics pd
-                                (name,
-                                date_of_birth,
-                                gender,
-                                marital_status,
-                                nationality,
-                                language_preference)
-                                VALUES (?,?,?,?,?,?)
-                            RETURNING pd.user_id;
-                            INSERT INTO user_contact_details ucd
-                                (mobile_number,
-                                whatsapp_number,
-                                lan_number,
-                                street_address,
-                                country,
-                                province,
-                                city,
-                                postal_code)
-                                VALUES(?,?,?,?,?,?,?,?);
-                            COMMIT;
-                            """),
-                    String.format("""
-                            WITH updated_patient AS (
-                                UPDATE patient_demographics pd
-                                SET
-                                    name = ?,
-                                    date_of_birth = ?,
-                                    gender = ?,
-                                    marital_status = ?,
-                                    nationality = ?,
-                                    language_preference = ?
-                                FROM user_contact_details ucd
-                                WHERE pd.user_id = ucd.user_id
-                                  AND pd.user_id = %d
-                                RETURNING pd.user_id
-                            )
-                            UPDATE user_contact_details ucd
-                            SET
-                                mobile_number = ?,
-                                whatsapp_number = ?,
-                                lan_number = ?,
-                                street_address = ?,
-                                country = ?,
-                                province = ?,
-                                city = ?,
-                                postal_code = ?
-                            FROM updated_patient up
-                            WHERE ucd.user_id = up.user_id;
-                            """, Patient.getCurrentPatient().getPatientId()),
-                    String.format("""
-
-                            """)
-    *
-    * */
     public void setAction(EventHandler<ActionEvent> eventHandler) {
         saveButton.setOnAction(eventHandler);
     }
@@ -196,7 +152,7 @@ public class GeneralDetailsController implements Initializable {
                     postal_code)
                     VALUES(?,?,?,?,?,?,?,?);
                 COMMIT;
-                """,QueryReturnType.ROW));
+                """, QueryReturnType.ROW));
     }
 
     public void loadDataForCurrentPatient() {
@@ -209,7 +165,7 @@ public class GeneralDetailsController implements Initializable {
                     JOIN
                     user_contact_details ucd
                     ON pd.user_id=ucd.user_id
-                     WHERE pd.user_id=%d""", Patient.getCurrentPatient().getPatientId()),QueryReturnType.ROW));
+                     WHERE pd.user_id=%d""", Patient.getCurrentPatient().getPatientId()), QueryReturnType.ROW));
             resultConnection.setUpdate(new SQLQuery(String.format("""
                     WITH updated_patient AS (
                         UPDATE patient_demographics pd
@@ -237,7 +193,7 @@ public class GeneralDetailsController implements Initializable {
                         postal_code = ?
                     FROM updated_patient up
                     WHERE ucd.user_id = up.user_id;
-                    """, Patient.getCurrentPatient().getPatientId()),QueryReturnType.NONE));
+                    """, Patient.getCurrentPatient().getPatientId()), QueryReturnType.NONE));
             resultConnection.loadDataFromDatabase();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage());

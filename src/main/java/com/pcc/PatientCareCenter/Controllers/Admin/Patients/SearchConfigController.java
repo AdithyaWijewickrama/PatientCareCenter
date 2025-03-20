@@ -31,7 +31,7 @@ public class SearchConfigController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        connections= new DataComponentConnection[]{
+        connections = new DataComponentConnection[]{
                 new BooleanCheckboxConnection(id),
                 new BooleanCheckboxConnection(name),
                 new BooleanCheckboxConnection(dateOfBirth),
@@ -60,11 +60,11 @@ public class SearchConfigController implements Initializable {
     }
 
     private ResultConnection getResultConnection() {
-        ResultConnection resultConnection=new ResultConnection(connections);
+        ResultConnection resultConnection = new ResultConnection(connections);
         resultConnection.setUpdate(new SQLQuery("""
                 INSERT INTO search_config (id, value) VALUES
                     ('id', ?),
-                    ('name', ?),
+                    ('name' ,?),
                     ('dateOfBirth', ?),
                     ('mobileNumber', ?),
                     ('whatsappNumber', ?),
@@ -78,24 +78,25 @@ public class SearchConfigController implements Initializable {
                 """, QueryReturnType.NONE));
         resultConnection.setSelect(new SQLQuery("""
                 SELECT value FROM search_config
-                """,QueryReturnType.COLUMN));
+                """, QueryReturnType.COLUMN));
         return resultConnection;
     }
 
     public List<Boolean> getValues() throws SQLException {
-        return getResultConnection().getList(getResultConnection().getSelect()).stream().map(obj->(Boolean)obj).collect(Collectors.toList());
+        return getResultConnection().getList(getResultConnection().getSelect()).stream().map(obj -> (Boolean) obj).collect(Collectors.toList());
     }
 
-    public List<String> getColumns(){
+    public List<String> getColumns() {
         List<Boolean> values;
         try {
             values = getValues();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        List<String> columns=Arrays.asList(
-                "pd.patient_id::TEXT",
+        List<String> columns = Arrays.asList(
+                "pd.patient_id",
                 "pd.name",
+                "pd.date_of_birth",
                 "pcd.mobile_number",
                 "pcd.whatsapp_number",
                 "pcd.street_address",
@@ -107,16 +108,18 @@ public class SearchConfigController implements Initializable {
         List<Boolean> finalValues = values;
         return columns.stream().filter(s -> finalValues.get(columns.indexOf(s))).toList();
     }
-    public List<String> getColumnsWithNaming(){
+
+    public List<String> getColumnsWithNaming() {
         List<Boolean> values;
         try {
             values = getValues();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        List<String> columns=Arrays.asList(
+        List<String> columns = Arrays.asList(
                 "pd.patient_id AS \"Patient Id\"",
                 "pd.name AS Name",
+                "pd.date_of_birth AS \"Date of birth\"",
                 "pcd.mobile_number AS \"Mobile Number\"",
                 "pcd.whatsapp_number AS \"Whatsapp Number\"",
                 "pcd.street_address AS Address",

@@ -70,7 +70,7 @@ public class ResultConnection {
 
     public void clear() {
         for (DataComponentConnection connection : connections) {
-            connection.setData(null);
+            connection.setData(new EmptyData());
         }
     }
 
@@ -97,6 +97,10 @@ public class ResultConnection {
     public void insertToDataBase() throws SQLException {
         Object[] array = getDataArray(insert);
         Sql.getInstance().execute(insert.getQueryString(), array);
+    }
+
+    public void deleteFromDataBase() throws SQLException {
+        Sql.getInstance().execute(delete.getQueryString(), delete.getParams());
     }
 
     private Object[] getDataArray(SQLQuery s) {

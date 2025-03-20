@@ -30,7 +30,7 @@
                       </VBox.margin>
                   </CheckBox>
                   <CheckBox fx:id="dateOfBirth" mnemonicParsing="false" styleClass="normal-text-p"
-                            text="Email or Number">
+                            text="Date of birth">
                       <VBox.margin>
                           <Insets top="5.0"/>
                       </VBox.margin>

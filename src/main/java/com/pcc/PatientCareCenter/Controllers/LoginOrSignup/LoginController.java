@@ -1,5 +1,6 @@
 package com.pcc.PatientCareCenter.Controllers.LoginOrSignup;
 
+import com.pcc.PatientCareCenter.Database.PPDetails;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.User;
 import com.pcc.PatientCareCenter.Model.Model;
@@ -35,6 +36,7 @@ public class LoginController extends LoginOrSignupController implements Initiali
                 User user = User.getUser(email);
                 if (user != null) {
                     Doctor.setCurrentAdmin(Doctor.getAdmin(user.getUserId()));
+                    PPDetails.setCurrentPP(PPDetails.getPpDetailsOfDoctor(Doctor.getCurrentDoctor().getDoctorId()));
                     User.setCurrentUser(user);
                     enterApplication(user);
                 } else {

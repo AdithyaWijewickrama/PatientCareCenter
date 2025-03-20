@@ -1,9 +1,12 @@
 package com.pcc.PatientCareCenter.Controllers.Admin;
 
 import com.pcc.PatientCareCenter.Model.Model;
+import com.pcc.PatientCareCenter.Views.GlobalsViews;
+import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class NavigationController implements Initializable {
@@ -28,6 +31,7 @@ public class NavigationController implements Initializable {
 
     public void onPharmacyStockPane() {
         Model.getInstance().getCommonViewFactory().getAdminViewFactory().showPharmacyStockPane();
+        AdminPanes.getPharmacyStockController().tableLoad();
 
     }
 
@@ -38,9 +42,22 @@ public class NavigationController implements Initializable {
 
     public void onProfileDialog() {
         Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showProfile();
+        try {
+            AdminPanes.getProfileController().load();
+        } catch (SQLException e) {
+            GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+            throw new RuntimeException(e);
+        }
     }
+
     public void onSettingsDialog() {
         Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showSettings();
+        try {
+            AdminPanes.getSettingsController().loadSettings();
+        } catch (SQLException e) {
+            GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+            throw new RuntimeException(e);
+        }
     }
 
 }

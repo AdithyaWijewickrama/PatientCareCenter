@@ -84,4 +84,8 @@ public class Patient {
         return new Patient(getPatientId(userId));
     }
 
+    public void deletePatient() throws SQLException {
+        Sql.getInstance().execute("UPDATE patient_demographics SET status='Inactive' WHERE patient_id=?",patientId);
+    }
+
 }

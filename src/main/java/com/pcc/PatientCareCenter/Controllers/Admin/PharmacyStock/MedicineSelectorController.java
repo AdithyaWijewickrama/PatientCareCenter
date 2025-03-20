@@ -2,8 +2,11 @@ package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
 
 import com.pcc.PatientCareCenter.Controllers.Admin.Patients.GeneralDetailsType;
 import com.pcc.PatientCareCenter.Database.Stock;
+import com.pcc.PatientCareCenter.Model.Medicine;
 import com.pcc.PatientCareCenter.Model.Model;
 import com.pcc.PatientCareCenter.Model.Sql;
+import com.pcc.PatientCareCenter.Views.Components.MessageType;
+import com.pcc.PatientCareCenter.Views.Components.PccMessage;
 import com.pcc.PatientCareCenter.Views.Components.PccTable.ButtonElements;
 import com.pcc.PatientCareCenter.Views.Components.PccTable.DynamicTableRow;
 import com.pcc.PatientCareCenter.Views.Components.PccTable.PatientsButtonCell;
@@ -21,32 +24,43 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class PharmacyStockController implements Initializable {
+public class MedicineSelectorController implements Initializable {
     public Label pharmacyStock;
     public TextField searchTextField;
-    public ToggleButton addStock;
+    public Button add;
     public TableView<DynamicTableRow> tableView;
-
+    public List<Medicine> selectedStocks = new ArrayList<>();
+    public Label message;
     private PccTable pccTable;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pccTable = new PccTable(tableView);
-        tableView.getSelectionModel().selectedIndexProperty().addListener((e) -> {
-            try {
-                patientSelected();
-            } catch (SQLException ex) {
-                GlobalsViews.showErrorAlert(ex.getLocalizedMessage());
-                throw new RuntimeException(ex);
-            }
-        });
-        addStock.setOnAction(event -> {
-            Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
-            AdminPanes.getStockDetailsController().clear();
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        add.setOnAction(event -> {
+            tableView.getSelectionModel().getSelectedItems().forEach(dynamicTableRow -> {
+                int stockId = (Integer) dynamicTableRow.getData("Stock Id");
+                Stock stock;
+                try {
+                    stock = Stock.getStock(stockId);
+                    Optional<Medicine.InputValues> result = InputDialogHelper.showInputDialog();
+                    result.ifPresent(inputValues -> {
+                        Medicine med;
+                        try {
+                            med = new Medicine(stock, inputValues.frequency(), inputValues.days() + (inputValues.weeks() * 7) + (inputValues.months() * 30));
+                            selectedStocks.add(med);
+                            PccMessage.showMessage(message, stock.getLocalizedName() + " added\n" + med, MessageType.MESSAGE_TYPE_INFO);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                } catch (SQLException e) {
+                    GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+                    throw new RuntimeException(e);
+                }
+            });
         });
         searchTextField.textProperty().addListener(event -> {
             try {
@@ -155,7 +169,7 @@ public class PharmacyStockController implements Initializable {
                         Object expireDateObj = item.getData("Expire date");
                         System.out.println(expireDateObj.getClass());
                         if (expireDateObj instanceof Date) {
-                            LocalDate expireDate =( (Date) expireDateObj).toLocalDate();
+                            LocalDate expireDate = ((Date) expireDateObj).toLocalDate();
                             LocalDate today = LocalDate.now();
 
                             // Check if expiration date is within 3 months
@@ -179,9 +193,12 @@ public class PharmacyStockController implements Initializable {
         });
     }
 
+    public void addMedicine() {
+
+    }
+
     public void patientSelected() throws SQLException {
         if (tableView.getSelectionModel().getSelectedItem() == null) return;
-        System.out.println("sfdjakffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         int stockId = (int) tableView.getSelectionModel().getSelectedItem().getData("Stock Id");
         selectedStock = Stock.getStock(stockId);
         selectedStock.load();
