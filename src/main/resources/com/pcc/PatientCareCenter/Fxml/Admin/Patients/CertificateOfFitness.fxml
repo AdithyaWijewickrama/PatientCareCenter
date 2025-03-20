@@ -5,6 +5,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -13,99 +15,256 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="TOP_CENTER" prefHeight="732.0" prefWidth="600.0" stylesheets="@../../../Styles/globals.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pcc.PatientCareCenter.Controllers.Admin.Patients.MedicalCertificateController">
+<VBox alignment="TOP_CENTER"
+      prefHeight="732.0"
+      prefWidth="600.0"
+      stylesheets="@../../../Styles/globals.css"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1">
+<!--      fx:controller="com.pcc.PatientCareCenter.Controllers.Admin.Patients.MedicalCertificateController"-->
    <children>
-      <Label styleClass="h1-p" text="Medical certificate" />
-      <VBox prefHeight="595.0" prefWidth="580.0">
-         <children>
-            <Label styleClass="normal-text-p" text="Patient name">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="name" promptText="Enter the name" styleClass="textfield" />
-            <Label styleClass="normal-text-p" text="Age">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <Spinner fx:id="age" editable="true" prefHeight="25.0" prefWidth="157.0" styleClass="textfield" />
-            <Label styleClass="normal-text-p" text="Gender">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="29.0" prefWidth="400.0">
+      <Label styleClass="h1-p" text="Certificate of fitness"/>
+      <ScrollPane hbarPolicy="NEVER">
+         <content>
+            <VBox prefHeight="721.0" prefWidth="567.0">
                <children>
-                  <RadioButton fx:id="male" mnemonicParsing="false" selected="true" styleClass="normal-text-p" text="Male">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="genderGroup" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton fx:id="female" mnemonicParsing="false" styleClass="normal-text-p" text="Female" toggleGroup="$genderGroup">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </RadioButton>
-                  <RadioButton fx:id="other" mnemonicParsing="false" styleClass="normal-text-p" text="Other" toggleGroup="$genderGroup">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </RadioButton>
+                  <Label styleClass="normal-text-p" text="Patient name">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="name" promptText="Enter the name" styleClass="textfield"/>
+                  <Label styleClass="normal-text-p" text="Age">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <Spinner fx:id="age" editable="true" prefHeight="25.0" prefWidth="157.0" styleClass="textfield"/>
+                  <Label styleClass="normal-text-p" text="Gender">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="29.0" prefWidth="400.0">
+                     <children>
+                        <RadioButton fx:id="male" mnemonicParsing="false" selected="true" styleClass="normal-text-p"
+                                     text="Male">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                           </HBox.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="genderGroup"/>
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="female" mnemonicParsing="false" styleClass="normal-text-p" text="Female"
+                                     toggleGroup="$genderGroup">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="other" mnemonicParsing="false" styleClass="normal-text-p" text="Other"
+                                     toggleGroup="$genderGroup">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                           </HBox.margin>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <Label styleClass="normal-text-p" text="NIC">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="nic" promptText="Enter the nic" styleClass="textfield"/>
+                  <Label styleClass="normal-text-p" text="Address">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="address" promptText="Enter the address" styleClass="textfield">
+                     <VBox.margin>
+                        <Insets bottom="5.0"/>
+                     </VBox.margin>
+                  </TextField>
+                  <Separator prefWidth="200.0"/>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="46.0" prefWidth="130.0">
+                           <children>
+                              <Label styleClass="normal-text-p" text="Weight(Kg)"/>
+                              <Spinner fx:id="weight" editable="true" prefHeight="25.0" prefWidth="157.0"
+                                       styleClass="textfield"/>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0"/>
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="46.0" prefWidth="134.0">
+                           <children>
+                              <Label styleClass="normal-text-p" text="Height(cm)"/>
+                              <Spinner fx:id="height" editable="true" prefHeight="25.0" prefWidth="157.0"
+                                       styleClass="textfield"/>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0"/>
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="46.0" prefWidth="129.0">
+                           <children>
+                              <Label styleClass="normal-text-p" text="BMI(Kg/m²)"/>
+                              <Spinner fx:id="bmi" editable="true" prefHeight="25.0" prefWidth="157.0"
+                                       styleClass="textfield"/>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0"/>
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                     </padding>
+                  </HBox>
+                  <Separator prefWidth="200.0"/>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="46.0" prefWidth="154.0">
+                           <children>
+                              <Label styleClass="normal-text-p" text="Blood presure (mmHg)"/>
+                              <TextField fx:id="bloodPressure" promptText="Enter blood pressurre"
+                                         styleClass="textfield"/>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0"/>
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="46.0" prefWidth="134.0">
+                           <children>
+                              <Label styleClass="normal-text-p" text="Pulse rate per minite"/>
+                              <Spinner fx:id="pulseRate" editable="true" prefHeight="25.0" prefWidth="157.0"
+                                       styleClass="textfield"/>
+                           </children>
+                           <HBox.margin>
+                              <Insets right="10.0"/>
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                     </padding>
+                  </HBox>
+                  <Label styleClass="normal-text-p" text="Examination of heart">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="examinationOfHeart" prefHeight="50.0" prefWidth="580.0"
+                            promptText="Enter description here..." styleClass="textfield"/>
+                  <Label styleClass="normal-text-p" text="Respiratory system">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="respiratorySystem" prefHeight="50.0" prefWidth="580.0"
+                            promptText="Enter description here..." styleClass="textfield"/>
+                  <Label styleClass="normal-text-p" text="Central nervous system">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="centralNervousSystem" prefHeight="50.0" prefWidth="580.0"
+                            promptText="Enter description here..." styleClass="textfield"/>
+                  <Label styleClass="normal-text-p" text="Limbs">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="limbs" prefHeight="50.0" prefWidth="580.0" promptText="Enter description here..."
+                            styleClass="textfield"/>
+                  <Label styleClass="normal-text-p" text="Urine examination">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="urineExamination" prefHeight="50.0" prefWidth="580.0"
+                            promptText="Enter description here..." styleClass="textfield"/>
+                  <Label styleClass="normal-text-p" text="ECG">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="ecg" prefHeight="50.0" prefWidth="580.0" promptText="Enter description here..."
+                            styleClass="textfield"/>
+                  <Label styleClass="normal-text-p" text="Chest X Ray">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0"/>
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="chestXRay" prefHeight="50.0" prefWidth="580.0" promptText="Enter description here..."
+                            styleClass="textfield"/>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="46.0" prefWidth="203.0">
+                           <children>
+                              <Label styleClass="normal-text-p" text="Date of examination">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" top="10.0"/>
+                                 </VBox.margin>
+                              </Label>
+                              <DatePicker fx:id="examinedDate" styleClass="textfield"/>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="46.0" prefWidth="224.0">
+                           <children>
+                              <Label styleClass="normal-text-p" text="Phisical ability">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" top="10.0"/>
+                                 </VBox.margin>
+                              </Label>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <RadioButton mnemonicParsing="false" text="Fit">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                       </HBox.margin>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="physicalAbilityGroup"/>
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton mnemonicParsing="false" text="Not fit"
+                                                 toggleGroup="$physicalAbilityGroup">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="10.0" right="5.0" top="5.0"/>
+                                       </HBox.margin>
+                                    </RadioButton>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="30.0"/>
+                     </VBox.margin>
+                  </HBox>
                </children>
-            </HBox>
-            <Label styleClass="normal-text-p" text="NIC">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="nic" promptText="Enter the name" styleClass="textfield" />
-            <Label styleClass="normal-text-p" text="Place of work">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="placeOfWork" promptText="Enter the name" styleClass="textfield" />
-            <Label styleClass="normal-text-p" text="Designation">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <TextArea fx:id="designation" prefHeight="50.0" prefWidth="580.0" promptText="Enter designation here..." styleClass="textfield" />
-            <Label styleClass="normal-text-p" text="Diagnosis">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <TextArea fx:id="diagnosis" prefHeight="50.0" prefWidth="580.0" promptText="Enter designation here..." styleClass="textfield" />
-            <Label styleClass="normal-text-p" text="Aprove leaving date">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <DatePicker fx:id="leavingDate" styleClass="textfield" />
-            <Label styleClass="normal-text-p" text="How many days for leave">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <Spinner fx:id="numberOfDaysForLeave" editable="true" prefHeight="25.0" prefWidth="157.0" styleClass="textfield" />
-         </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-      </VBox>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
       <FlowPane alignment="CENTER_RIGHT" prefHeight="87.0" prefWidth="580.0">
          <children>
-            <Button mnemonicParsing="false" styleClass="button-primary" text="Print certificate" />
+            <Button fx:id="printButton" mnemonicParsing="false" styleClass="button-primary" text="Print certificate"/>
          </children>
       </FlowPane>
    </children>
    <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
    </padding>
 </VBox>

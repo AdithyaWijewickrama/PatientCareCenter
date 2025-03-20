@@ -15,13 +15,19 @@ public class ValueButtonGroupConnection implements DataComponentConnection {
 
     @Override
     public void setData(Object data) {
-        Optional<Toggle> toggles = toggleGroup.getToggles().stream().filter(toggle -> {
-            String val = ((RadioButton) toggle).getText();
-            System.out.println(data+":"+val);
-            return data.equals(val);
-        }).findFirst();
-        if (toggles.isPresent()) {
-            RadioButton radioButton = (RadioButton) toggles.get();
+        if(data==null)return;
+        if(data instanceof EmptyData){
+
+        }else{
+            Optional<Toggle> toggles = toggleGroup.getToggles().stream().filter(toggle -> {
+                String val = ((RadioButton) toggle).getText();
+                return data.equals(val);
+            }).findFirst();
+            if (toggles.isPresent()) {
+                RadioButton radioButton = (RadioButton) toggles.get();
+                System.out.println(radioButton.getText());
+                toggleGroup.selectToggle(toggles.get());
+            }
         }
     }
 

@@ -16,10 +16,10 @@
       minWidth="-Infinity"
       prefHeight="499.0"
       prefWidth="415.0"
-      fx:controller="com.pcc.PatientCareCenter.Controllers.Admin.Patients.UltrasoundScanFormController"
       stylesheets="@../../../Styles/globals.css"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1">
+<!--      fx:controller="com.pcc.PatientCareCenter.Controllers.Admin.Patients.UltrasoundScanFormController"-->
     <children>
         <Label styleClass="h1-p" text="Ultrasound Scan"/>
         <VBox prefHeight="346.0" prefWidth="415.0">

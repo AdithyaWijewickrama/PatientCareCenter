@@ -1,5 +1,7 @@
 package com.pcc.PatientCareCenter.Views;
 
+import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
+import com.pcc.PatientCareCenter.Model.Sql;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.property.StringProperty;
@@ -7,11 +9,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GlobalsViews {
     public static final int STAGE_WIDTH = 600;
@@ -32,6 +41,27 @@ public class GlobalsViews {
         });
         stage.setScene(scene);
         return stage;
+    }
+
+    public static Map<String,Object> getLetterHead() throws SQLException {
+        Map<String,Object> map=new HashMap<>();
+        List<Object> row = Sql.getInstance().getRow("""
+                SELECT
+                    pp.name,
+                    pp.address,
+                    d.name,
+                    pp.email,
+                    pp.telephone
+                FROM
+                    pp_details pp
+                JOIN
+                    doctor d ON d.doctor_id=pp.doctor_id
+                WHERE d.doctor_id=?;""", Doctor.getCurrentDoctor().getDoctorId());
+        int i=0;
+        for(String key:new String[]{"appName","address","doctorName","email","telephone"}){
+            map.put(key,row.get(i++));
+        }
+        return map;
     }
 
     public static synchronized Parent loadFxml(String fxmlPath) {
@@ -59,4 +89,35 @@ public class GlobalsViews {
         return iconView.snapshot(params, null);
     }
 
+    public static Dialog<?> getDialog() {
+        Dialog<?> dialog = new Dialog<>();
+        dialog.getDialogPane().getStylesheets().add(GlobalsViews.class.getResource("/com/pcc/PatientCareCenter/Styles/globals.css").toExternalForm());
+        Window window = dialog.getDialogPane().getScene().getWindow();
+        window.setOnCloseRequest(event -> window.hide());
+        return dialog;
+    }
+
+    public static void showInformationAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getDialogPane().setContentText(message);
+        alert.show();
+    }
+
+    public static void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.getDialogPane().setContentText(message);
+        alert.show();
+    }
+
+    public static void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        alert.getDialogPane().setContentText(message);
+        alert.show();
+    }
+
+    public static void showWarningAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.getDialogPane().setContentText(message);
+        alert.show();
+    }
 }

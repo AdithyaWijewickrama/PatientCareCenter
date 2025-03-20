@@ -2,14 +2,16 @@ module com.ppcc.PatientCareCenter {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-    requires org.xerial.sqlitejdbc;
     requires de.jensd.fx.glyphs.fontawesome;
 
     requires com.dlsc.formsfx;
-    requires org.slf4j;
     requires com.google.zxing;
     requires com.google.zxing.javase;
-    requires java.desktop;
+    requires net.sf.jasperreports.core;
+    requires org.eclipse.jdt.core;
+    requires org.jetbrains.annotations;
+    requires javafx.swing;
+
 
     opens com.pcc.PatientCareCenter to javafx.fxml;
     opens com.pcc.PatientCareCenter.Views to javafx.fxml;
@@ -42,4 +44,6 @@ module com.ppcc.PatientCareCenter {
     opens com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock to javafx.fxml;
     exports com.pcc.PatientCareCenter.Views.Components.DCConnection;
     opens com.pcc.PatientCareCenter.Views.Components.DCConnection to javafx.fxml;
+    exports com.pcc.PatientCareCenter.Views.Components.ReportPrinting;
+    opens com.pcc.PatientCareCenter.Views.Components.ReportPrinting to javafx.fxml;
 }

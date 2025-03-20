@@ -17,7 +17,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane minHeight="560.0" minWidth="630.0" prefHeight="571.0" prefWidth="905.0" stylesheets="@../../../Styles/globals.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="553.0" minWidth="630.0" prefHeight="553.0" prefWidth="903.0" stylesheets="@../../../Styles/globals.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<!--            fx:controller="com.pcc.PatientCareCenter.Controllers.Admin.Patients.PatientsController"-->
    <top>
       <BorderPane prefHeight="267.0" prefWidth="839.0" BorderPane.alignment="CENTER">
          <left>
@@ -52,13 +53,11 @@
          <top>
             <FlowPane alignment="CENTER_RIGHT" columnHalignment="RIGHT" prefHeight="49.0" prefWidth="839.0" BorderPane.alignment="CENTER">
                <VBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="516.0">
-                  <children>
-                     <Label fx:id="doctorName" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="35.0" prefWidth="516.0" styleClass="h2-p" text="Doctor name" textOverrun="LEADING_ELLIPSIS" />
-                     <Label fx:id="doctorOccupation" alignment="CENTER_RIGHT" prefHeight="19.0" prefWidth="515.0" styleClass="normal-text-p" text="Occupation" />
-                  </children>
                   <FlowPane.margin>
                      <Insets right="10.0" />
                   </FlowPane.margin>
+                  <Label fx:id="doctorName" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="35.0" prefWidth="516.0" styleClass="h2-p" text="Doctor name" textOverrun="LEADING_ELLIPSIS" />
+                  <Label fx:id="doctorOccupation" alignment="CENTER_RIGHT" prefHeight="19.0" prefWidth="515.0" styleClass="normal-text-p" text="Occupation" />
                </VBox>
                <FontAwesomeIconView glyphName="USER_MD" size="30" styleClass="normal-text-p" wrappingWidth="34.0">
                   <FlowPane.margin>
@@ -69,27 +68,69 @@
          </top>
          <center>
             <AnchorPane prefHeight="213.0" prefWidth="388.0" BorderPane.alignment="CENTER">
-               <Text layoutX="13.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="Total patients" />
-               <Label layoutX="138.0" layoutY="46.0" prefHeight="17.0" prefWidth="75.0" styleClass="normal-text-p" text="0" />
-               <Text layoutX="16.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text-p" text="Patients overview" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
-               <Text layoutX="13.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="Total active patients" />
-               <Label layoutX="138.0" layoutY="66.0" prefHeight="17.0" prefWidth="75.0" styleClass="normal-text-p" text="0" />
-               <AnchorPane layoutX="14.0" layoutY="163.0" prefHeight="47.0" prefWidth="437.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-                  <TextField fx:id="searchTextField" layoutX="14.0" layoutY="7.0" prefHeight="36.0" prefWidth="250.0" promptText="Search here" styleClass="textfield" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                  <Button layoutX="260.0" layoutY="11.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="72.0" styleClass="button-primary" text="Config" AnchorPane.leftAnchor="265.0" />
+               <Text layoutX="16.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text-p" text="Print documents" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0" />
+               <AnchorPane layoutX="212.0" layoutY="164.0" prefHeight="47.0" prefWidth="336.0" AnchorPane.leftAnchor="212.0">
+                  <TextField fx:id="searchTextField" layoutX="282.0" layoutY="6.0" prefHeight="36.0" prefWidth="250.0" promptText="Search here" styleClass="textfield" AnchorPane.leftAnchor="10.0" />
+                  <Button fx:id="searchConfigButton" layoutX="263.0" layoutY="7.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="72.0" styleClass="button-primary" text="Config" />
                </AnchorPane>
-               <Button layoutX="224.0" layoutY="41.0" mnemonicParsing="false" styleClass="button-seconday" text="Add a patient">
-                  <graphic>
-                     <FontAwesomeIconView glyphName="PLUS" />
-                  </graphic>
-               </Button>
-               <Separator layoutX="213.0" layoutY="11.0" orientation="VERTICAL" prefHeight="144.0" prefWidth="7.0" />
+               <Separator layoutX="205.0" layoutY="14.0" orientation="VERTICAL" prefHeight="144.0" prefWidth="7.0" />
                <Text layoutX="224.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bold-text-p" text="Database options" />
-               <ToggleButton layoutX="224.0" layoutY="76.0" mnemonicParsing="false" styleClass="button-seconday" text="Write prescription">
-                  <graphic>
-                     <FontAwesomeIconView glyphName="FILE_TEXT" />
-                  </graphic>
-               </ToggleButton>
+               <VBox layoutX="16.0" layoutY="36.0" prefHeight="120.0" prefWidth="175.0">
+                  <children>
+                     <Button fx:id="medicalCertificateButton" mnemonicParsing="false" styleClass="button-seconday" text="Medical certificate">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="ADDRESS_BOOK" />
+                        </graphic>
+                        <VBox.margin>
+                           <Insets top="5.0" />
+                        </VBox.margin>
+                     </Button>
+                     <Button fx:id="certificateOfFitnessButton" mnemonicParsing="false" styleClass="button-seconday" text="Certificate of fitness">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="HEARTBEAT" />
+                        </graphic>
+                        <VBox.margin>
+                           <Insets top="5.0" />
+                        </VBox.margin>
+                     </Button>
+                     <Button fx:id="claimReportButton" mnemonicParsing="false" styleClass="button-seconday" text="Claim report">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="CREDIT_CARD" />
+                        </graphic>
+                        <VBox.margin>
+                           <Insets top="5.0" />
+                        </VBox.margin>
+                     </Button>
+                     <Button fx:id="ultrasoundScanButton" mnemonicParsing="false" styleClass="button-seconday" text="Ultrasound Scan">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="BULLSEYE" />
+                        </graphic>
+                        <VBox.margin>
+                           <Insets top="5.0" />
+                        </VBox.margin>
+                     </Button>
+                  </children>
+               </VBox>
+               <VBox layoutX="224.0" layoutY="35.0" prefHeight="102.0" prefWidth="163.0">
+                  <children>
+                     <Button fx:id="addPatientButton" mnemonicParsing="false" styleClass="button-seconday" text="Add a patient">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="PLUS" />
+                        </graphic>
+                        <VBox.margin>
+                           <Insets top="5.0" />
+                        </VBox.margin>
+                     </Button>
+                     <ToggleButton fx:id="writePrescriptionButton" mnemonicParsing="false" styleClass="button-seconday" text="Write prescription">
+                        <graphic>
+                           <FontAwesomeIconView glyphName="FILE_TEXT" />
+                        </graphic>
+                        <VBox.margin>
+                           <Insets top="5.0" />
+                        </VBox.margin>
+                     </ToggleButton>
+                  </children>
+               </VBox>
             </AnchorPane>
          </center>
       </BorderPane>

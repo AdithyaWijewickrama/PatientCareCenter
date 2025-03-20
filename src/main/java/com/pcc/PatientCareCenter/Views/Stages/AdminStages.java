@@ -8,6 +8,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class AdminStages extends StageViewFactory {
     private BorderPane mainStage;
@@ -27,6 +28,8 @@ public class AdminStages extends StageViewFactory {
                 case "PharmacyStock" -> mainStage.setCenter(AdminPanes.getInstance().getPharmacyStockPane());
                 case "DataAnalyze" -> mainStage.setCenter(AdminPanes.getInstance().getDataAnalyzePane());
                 case "Budget" -> mainStage.setCenter(AdminPanes.getInstance().getBudgetPane());
+                case "Profile" -> showProfile();
+                case "Settings" -> showSettings();
             }
             System.out.println(currentPane.getValue());
         });
@@ -54,16 +57,56 @@ public class AdminStages extends StageViewFactory {
     }
 
     public void showGeneralDetails() {
-        Dialog<Object> dialog = new Dialog<>();
-        dialog.getDialogPane().getStylesheets().add(getClass().getResource("/com/pcc/PatientCareCenter/Styles/globals.css").toExternalForm());
+        Dialog<?> dialog = GlobalsViews.getDialog();
         dialog.getDialogPane().setContent(AdminPanes.getInstance().getGeneralDetails());
-//        Stage dialogStage = new Stage();
-//        dialogStage.initStyle(StageStyle.UNDECORATED); // Remove all decorations
-//        dialogStage.setScene(new Scene(new HBox()));
-//        dialogStage.getScene().getStylesheets().add(getClass().getResource("/com/ppcc/PatientCareCenter/Styles/globals.css").toExternalForm());
-//        dialog.initOwner(dialogStage);
-//        dialog.getDialogPane().getButtonTypes().add(ButtonType.APPLY);
-//        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        dialog.showAndWait();
+        dialog.show();
+    }
+
+    public void showPrescription() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getPrescription());
+        dialog.show();
+    }
+
+    public void showSearchConfig() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getSearchConfig());
+        dialog.show();
+    }
+
+    public void showMedicalCertificate() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getMedicalCertificate());
+        dialog.show();
+    }
+
+    public void showCertificateOfFitness() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getCertificateOfFitness());
+        dialog.show();
+    }
+
+    public void showProfile() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getProfile());
+        dialog.show();
+    }
+
+    public void showSettings() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getSettings());
+        dialog.show();
+    }
+
+    public void showClaimForm() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getClaimForm());
+        dialog.show();
+    }
+
+    public void showUltrasoundScanForm() {
+        Dialog<?> dialog = GlobalsViews.getDialog();
+        dialog.getDialogPane().setContent(AdminPanes.getInstance().getUltrasoundScanForm());
+        dialog.show();
     }
 }

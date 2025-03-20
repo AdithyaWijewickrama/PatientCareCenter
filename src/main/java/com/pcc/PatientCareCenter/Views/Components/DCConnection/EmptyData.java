@@ -1,4 +1,4 @@
-package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
+package com.pcc.PatientCareCenter.Views.Components.DCConnection;
 
 public class EmptyData {
 }

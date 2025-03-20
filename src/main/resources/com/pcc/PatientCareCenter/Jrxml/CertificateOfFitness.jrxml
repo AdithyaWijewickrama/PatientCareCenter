@@ -1,0 +1,190 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="CertificateOfFitness" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="20" uuid="53baa72d-3b9c-4e4b-b36a-d0a2d70889cf">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="appName" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="telephone" class="java.lang.String"/>
+	<parameter name="doctorName" class="java.lang.String"/>
+	<parameter name="examinedDate" class="java.time.LocalDate"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="patientName" class="java.lang.String"/>
+	<parameter name="physicalAbility" class="java.lang.String"/>
+	<parameter name="patientAge" class="java.lang.Integer"/>
+	<parameter name="patientGender" class="java.lang.String"/>
+	<parameter name="patientAddress" class="java.lang.String"/>
+	<parameter name="patientNic" class="java.lang.String"/>
+	<parameter name="pulseRate" class="java.lang.Integer"/>
+	<parameter name="bloodPressure" class="java.lang.String"/>
+	<parameter name="limbs" class="java.lang.String"/>
+	<parameter name="chestXRay" class="java.lang.String"/>
+	<parameter name="height" class="java.lang.Double"/>
+	<parameter name="centralNervousSystem" class="java.lang.String"/>
+	<parameter name="ecg" class="java.lang.String"/>
+	<parameter name="bmi" class="java.lang.Double"/>
+	<parameter name="weight" class="java.lang.Double"/>
+	<parameter name="urineExamination" class="java.lang.String"/>
+	<parameter name="examinationOfHeart" class="java.lang.String"/>
+	<parameter name="respiratorySystem" class="java.lang.String"/>
+	<query language="sql"><![CDATA[]]></query>
+	<title height="120" splitType="Stretch">
+		<element kind="textField" uuid="d3392dec-4fc2-4596-b09c-956b2205e5db" x="0" y="0" width="515" height="32" fontName="SansSerif" fontSize="24.0" bold="true" hTextAlign="Center">
+			<expression><![CDATA[$P{appName}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="3a18866e-fdce-48d9-b391-f67293f1619a" x="0" y="32" width="515" height="20" fontName="SansSerif" fontSize="14.0" bold="true" hTextAlign="Center">
+			<expression><![CDATA[$P{address}]]></expression>
+		</element>
+		<element kind="textField" uuid="6a4378d6-5f63-4cc1-9c70-2ad5f8cc2412" x="2" y="50" width="513" height="32" fontName="SansSerif" fontSize="24.0" bold="true" hTextAlign="Center" vTextAlign="Top">
+			<expression><![CDATA[$P{doctorName}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="textField" uuid="f3152ab3-ba89-4df5-b0f9-bac5bc16b969" x="237" y="80" width="278" height="20" fontName="SansSerif" fontSize="14.0" bold="false" hTextAlign="Left">
+			<expression><![CDATA[$P{email}]]></expression>
+		</element>
+		<element kind="staticText" uuid="d597a5a8-c68f-45b9-b2f8-e2930eb97b49" x="2" y="80" width="218" height="20" fontName="SansSerif" fontSize="14.0" hTextAlign="Right">
+			<text><![CDATA[Email]]></text>
+		</element>
+		<element kind="textField" uuid="467a18fc-b6c3-4a8f-abac-e75724c477f7" x="237" y="100" width="278" height="20" fontName="SansSerif" fontSize="14.0" bold="false" hTextAlign="Left">
+			<expression><![CDATA[$P{telephone}]]></expression>
+		</element>
+		<element kind="staticText" uuid="038263c2-630f-4f45-9b05-5379db4c065c" x="2" y="100" width="218" height="20" fontName="SansSerif" fontSize="14.0" hTextAlign="Right">
+			<text><![CDATA[Telephone]]></text>
+		</element>
+		<element kind="line" uuid="3ab3d6c6-7700-4ed4-bd83-050370f8cce9" x="230" y="80" width="1" height="37"/>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</title>
+	<pageHeader height="20" splitType="Stretch">
+		<element kind="line" uuid="8fc56e58-f0ae-4e13-b499-6088884b3f3f" x="0" y="10" width="513" height="1" direction="BottomUp">
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</pageHeader>
+	<columnHeader height="40" splitType="Stretch">
+		<element kind="staticText" uuid="5094d68b-c184-4612-8334-b2db81b45f91" x="0" y="0" width="515" height="40" fontName="SansSerif" fontSize="24.0" underline="true" bold="true" hTextAlign="Center">
+			<text><![CDATA[CERTIFICATE OF FITNESS]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="602" splitType="Stretch">
+			<element kind="staticText" uuid="4992577d-9458-4204-a679-d45755087248" x="0" y="0" width="83" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Name]]></text>
+			</element>
+			<element kind="textField" uuid="8cd65b93-30d5-4047-b561-f0cfb627248f" x="83" y="0" width="431" height="32" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{patientName}]]></expression>
+			</element>
+			<element kind="textField" uuid="95003700-8cfb-454f-bcba-182f0a2ce139" x="83" y="32" width="87" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{patientAge}]]></expression>
+			</element>
+			<element kind="staticText" uuid="b2e3c8d5-fe4d-452e-8eb1-d0e8bd68f2f2" x="0" y="32" width="83" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Age]]></text>
+			</element>
+			<element kind="staticText" uuid="6d8991ea-0150-4f3c-b2e5-ca589fb17176" x="170" y="32" width="58" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Sex]]></text>
+			</element>
+			<element kind="textField" uuid="bb021068-2586-4fc8-82c3-bf158693c48c" x="228" y="32" width="102" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{patientGender}]]></expression>
+			</element>
+			<element kind="staticText" uuid="fc0ae7bc-e0a6-467a-92d6-fdb2a69abdfa" x="330" y="31" width="58" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[ID No]]></text>
+			</element>
+			<element kind="textField" uuid="d5ce3a7b-3343-414f-80b6-f89ad559a655" x="388" y="31" width="126" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{patientNic}]]></expression>
+			</element>
+			<element kind="staticText" uuid="07e62f85-96cd-44ef-b342-8a37c00ce102" x="0" y="60" width="82" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Address]]></text>
+			</element>
+			<element kind="textField" uuid="52cfa482-5c07-444a-88d8-1f22f1360436" x="83" y="57" width="430" height="32" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{patientAddress}]]></expression>
+			</element>
+			<element kind="staticText" uuid="e4f9245d-72f1-44fa-94f3-3ed79b9806d7" x="0" y="230" width="119" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Urine examinatoin]]></text>
+			</element>
+			<element kind="textField" uuid="e4d92e60-5342-4e91-b9db-b76bce1921d2" x="0" y="340" width="513" height="40" fontName="Yu Gothic UI" fontSize="11.0" bold="true">
+				<expression><![CDATA["I here by certify that the above person is examined by me on "+$P{examinedDate}+" and found "+$P{physicalAbility}.toLowerCase()+" ,physically and mentally for performing any physical and mental activity at the time of examination."]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="staticText" uuid="21942e76-5d04-4409-9b25-dbf00a70b4c1" x="26" y="540" width="180" height="15" fontName="Yu Gothic UI" fontSize="11.0" bold="true" hTextAlign="Center">
+				<text><![CDATA[Signature of the medical officer]]></text>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="b6428715-2045-4c25-aac8-c1386a26b9a9" x="0" y="520" width="233" height="30" fontName="Sitka Text" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
+				<text><![CDATA[..................................................................]]></text>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="09ab9558-4fac-4ca6-b042-03b92eb9b5e3" x="1" y="210" width="82" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Limbs]]></text>
+			</element>
+			<element kind="textField" uuid="1b758ffa-8f4a-45ec-bf11-de342705e091" x="82" y="210" width="432" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{limbs}]]></expression>
+			</element>
+			<element kind="staticText" uuid="4704dcd1-6663-4d34-a4e1-67c304aff038" x="2" y="90" width="81" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Weight]]></text>
+			</element>
+			<element kind="textField" uuid="359ff37f-644b-44c8-85bf-116c84e619e7" x="83" y="90" width="76" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[String.format("%.02f",$P{weight})]]></expression>
+			</element>
+			<element kind="staticText" uuid="61b412f9-17cf-4bb3-81fa-5d21889b663f" x="170" y="89" width="58" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Height]]></text>
+			</element>
+			<element kind="textField" uuid="97e362d4-5bb0-453d-8c7b-0c71419d56b2" x="228" y="89" width="98" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[String.format("%.02f",$P{height})]]></expression>
+			</element>
+			<element kind="staticText" uuid="5302b8e8-ff70-4fe1-8658-333529da805b" x="332" y="89" width="58" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[BMI]]></text>
+			</element>
+			<element kind="textField" uuid="967fb037-b268-471c-87a1-3dd8e964a78b" x="390" y="89" width="126" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[String.format("%.02f",$P{bmi})]]></expression>
+			</element>
+			<element kind="staticText" uuid="185e5b2f-b978-48b3-8fe9-6776b8301648" x="0" y="120" width="83" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Blood pressure]]></text>
+			</element>
+			<element kind="textField" uuid="c1394e1c-f018-4dbc-aa36-68b18f938de6" x="83" y="120" width="158" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{bloodPressure}]]></expression>
+			</element>
+			<element kind="staticText" uuid="c90e3083-9770-4015-b34f-e8a593d39b6b" x="241" y="120" width="81" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Pulse rate]]></text>
+			</element>
+			<element kind="textField" uuid="b984a7fd-bc38-4ddb-a1f7-967a90449941" x="322" y="120" width="191" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{pulseRate}]]></expression>
+			</element>
+			<element kind="textField" uuid="bc089253-971d-4ff4-9100-474013af7df8" x="120" y="231" width="393" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{urineExamination}]]></expression>
+			</element>
+			<element kind="staticText" uuid="aac747f6-45b7-4412-843f-d72e2ecc02f7" x="0" y="150" width="119" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Examination of heart]]></text>
+			</element>
+			<element kind="textField" uuid="94cd7694-bf50-4ea2-a5ca-245f295d6f0e" x="119" y="151" width="395" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{examinationOfHeart}]]></expression>
+			</element>
+			<element kind="staticText" uuid="2dee2747-0c75-4ab0-b74f-3039a1993bb5" x="0" y="170" width="119" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Respiratory system]]></text>
+			</element>
+			<element kind="textField" uuid="b20867b5-57f1-40bb-aa8c-27b93e4647b5" x="119" y="171" width="394" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{respiratorySystem}]]></expression>
+			</element>
+			<element kind="staticText" uuid="c0b4f8f1-d00c-4eac-bc76-ca57b73a4970" x="0" y="190" width="119" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Central nervous system]]></text>
+			</element>
+			<element kind="textField" uuid="2fc724fa-b60e-4f06-b0f9-fffa3d2bdcc8" x="119" y="191" width="394" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{centralNervousSystem}]]></expression>
+			</element>
+			<element kind="staticText" uuid="27284878-8bcd-4791-a5ee-6d34e1adcd4a" x="0" y="250" width="83" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[ECG]]></text>
+			</element>
+			<element kind="textField" uuid="ccbf16a3-7a30-43a2-9b50-177b9829df4d" x="83" y="250" width="433" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{ecg}]]></expression>
+			</element>
+			<element kind="staticText" uuid="22b193cf-74d8-4635-b826-cc8055726f77" x="1" y="269" width="81" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Chest X ray]]></text>
+			</element>
+			<element kind="textField" uuid="4daeb006-20ef-49a9-a4ea-cac6899aa859" x="82" y="269" width="434" height="19" fontName="SansSerif" fontSize="11.0">
+				<expression><![CDATA[$P{chestXRay}]]></expression>
+			</element>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+</jasperReport>

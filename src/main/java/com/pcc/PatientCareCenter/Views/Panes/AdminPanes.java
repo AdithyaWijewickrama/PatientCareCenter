@@ -1,12 +1,14 @@
 package com.pcc.PatientCareCenter.Views.Panes;
 
-import com.pcc.PatientCareCenter.Controllers.Admin.Patients.GeneralDetailsController;
-import com.pcc.PatientCareCenter.Controllers.Admin.Patients.PatientsController;
+import com.pcc.PatientCareCenter.Controllers.Admin.Patients.*;
+import com.pcc.PatientCareCenter.Controllers.Admin.Patients.UltrasoundScanFormController;
+import com.pcc.PatientCareCenter.Controllers.Admin.ProfileController;
+import com.pcc.PatientCareCenter.Controllers.Admin.SettingsController;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
 import javafx.scene.Parent;
 
 public class AdminPanes extends PaneViewFactory {
-    private static final String FXML_PATH=GlobalsViews.FXML_PATH+"/Admin/";
+    private static final String FXML_PATH = GlobalsViews.FXML_PATH + "/Admin/";
     private static AdminPanes adminPanes;
 
     private Parent patientsPane;
@@ -17,29 +19,129 @@ public class AdminPanes extends PaneViewFactory {
     private Parent budgetPane;
     private Parent navigationPane;
     private Parent generalDetails;
+    private Parent prescription;
+    private Parent searchConfig;
+    private Parent medicalCertificate;
+    private Parent certificateOfFitness;
+    private Parent profile;
+    private Parent settings;
+    private Parent claimForm;
+    private Parent ultrasoundScan;
+
 
     //Controllers
-    private final GeneralDetailsController generalDetailsController=new GeneralDetailsController();
+    private static final GeneralDetailsController generalDetailsController = new GeneralDetailsController();
+    private static final PrescriptionController prescriptionController = new PrescriptionController();
+    private static final SearchConfigController searchConfigController = new SearchConfigController();
+    private static final MedicalCertificateController medicalCertificateController = new MedicalCertificateController();
+    private static final CertificateOfFitnessController certificateOfFitnessController = new CertificateOfFitnessController();
+    private static final ProfileController profileController = new ProfileController();
+    private static final SettingsController settingsController = new SettingsController();
+    private static final ClaimFormController claimFormController =new ClaimFormController();
+    private static final UltrasoundScanFormController ultrasoundScanController=new UltrasoundScanFormController();
 
     public AdminPanes() {
     }
 
     public Parent getPatientsPane() {
         if (patientsPane == null) {
-            patientsPane = GlobalsViews.loadFxml(FXML_PATH + "Patients/Patients.fxml",new PatientsController());
+            patientsPane = GlobalsViews.loadFxml(FXML_PATH + "Patients/Patients.fxml", new PatientsController());
         }
         return patientsPane;
     }
 
     public Parent getGeneralDetails() {
         if (generalDetails == null) {
-            generalDetails = GlobalsViews.loadFxml(FXML_PATH + "Patients/GeneralDetails.fxml",generalDetailsController);
+            generalDetails = GlobalsViews.loadFxml(FXML_PATH + "Patients/GeneralDetails.fxml", generalDetailsController);
         }
         return generalDetails;
     }
 
-    public GeneralDetailsController getGeneralDetailsController() {
+    public Parent getPrescription() {
+        if (prescription == null) {
+            prescription = GlobalsViews.loadFxml(FXML_PATH + "Patients/Prescription.fxml", prescriptionController);
+        }
+        return prescription;
+    }
+
+    public Parent getSearchConfig() {
+        if (searchConfig == null) {
+            searchConfig = GlobalsViews.loadFxml(FXML_PATH + "Patients/SearchConfig.fxml", searchConfigController);
+        }
+        return searchConfig;
+    }
+
+    public Parent getProfile() {
+        if (profile == null) {
+            profile = GlobalsViews.loadFxml(FXML_PATH + "Profile.fxml", profileController);
+        }
+        return profile;
+    }
+
+    public Parent getSettings() {
+        if (settings == null) {
+            settings = GlobalsViews.loadFxml(FXML_PATH + "Settings.fxml", settingsController);
+        }
+        return settings;
+    }
+
+    public Parent getMedicalCertificate() {
+        if (medicalCertificate == null) {
+            medicalCertificate = GlobalsViews.loadFxml(FXML_PATH + "Patients/MedicalCertificate.fxml", medicalCertificateController);
+        }
+        return medicalCertificate;
+    }
+
+    public Parent getCertificateOfFitness() {
+        if (certificateOfFitness == null) {
+            certificateOfFitness = GlobalsViews.loadFxml(FXML_PATH + "Patients/CertificateOfFitness.fxml", certificateOfFitnessController);
+        }
+        return certificateOfFitness;
+    }
+
+    public Parent getClaimForm() {
+        if (claimForm == null) {
+            claimForm = GlobalsViews.loadFxml(FXML_PATH + "Patients/ClaimForm.fxml", claimFormController);
+        }
+        return claimForm;
+    }
+
+    public Parent getUltrasoundScanForm() {
+        if (ultrasoundScan == null) {
+            ultrasoundScan = GlobalsViews.loadFxml(FXML_PATH + "Patients/UltrasoundScanForm.fxml", ultrasoundScanController);
+        }
+        return ultrasoundScan;
+    }
+
+    public static PrescriptionController getPrescriptionController() {
+        return prescriptionController;
+    }
+
+    public static MedicalCertificateController getMedicalCertificateController() {
+        return medicalCertificateController;
+    }
+
+    public static CertificateOfFitnessController getCertificateOfFitnessController() {
+        return certificateOfFitnessController;
+    }
+
+    public static ClaimFormController getClaimFormController(){
+        return claimFormController;
+    }
+    public static ProfileController getProfileController() {
+        return profileController;
+    }
+
+    public static SettingsController getSettingsController() {
+        return settingsController;
+    }
+
+    public static GeneralDetailsController getGeneralDetailsController() {
         return generalDetailsController;
+    }
+
+    public static AdminPanes getAdminPanes() {
+        return adminPanes;
     }
 
     public Parent getNavigationPane() {
@@ -58,7 +160,7 @@ public class AdminPanes extends PaneViewFactory {
 
     public Parent getDataAnalyzePane() {
         if (dataAnalyzePane == null) {
-            dataAnalyzePane = GlobalsViews.loadFxml(FXML_PATH + "DataAnalyze.fxml");
+            dataAnalyzePane = GlobalsViews.loadFxml(FXML_PATH + "AnalyzeData.fxml");
         }
         return dataAnalyzePane;
     }
@@ -72,7 +174,7 @@ public class AdminPanes extends PaneViewFactory {
 
     public Parent getPharmacyStockPane() {
         if (pharmacyStockPane == null) {
-            pharmacyStockPane = GlobalsViews.loadFxml(FXML_PATH + "PharmacyStock.fxml");
+            pharmacyStockPane = GlobalsViews.loadFxml(FXML_PATH + "PharmacyStock/PharmacyStock.fxml");
         }
         return pharmacyStockPane;
     }
@@ -95,5 +197,9 @@ public class AdminPanes extends PaneViewFactory {
         AdminPanes a = new AdminPanes();
         System.out.println(a.getPatientsPane());
         System.out.println(a.getPatientsPane());
+    }
+
+    public static SearchConfigController getSearchConfigController() {
+        return searchConfigController;
     }
 }

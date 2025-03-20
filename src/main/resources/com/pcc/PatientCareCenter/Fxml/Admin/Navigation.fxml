@@ -42,30 +42,6 @@
                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                 </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onPatientViewPane" prefWidth="200.0" text="Patient view">
-                <graphic>
-                    <FontAwesomeIconView glyphName="USER" size="24" />
-                </graphic>
-                <styleClass>
-                    <String fx:value="button-seconday" />
-                    <String fx:value="nav-button" />
-                </styleClass>
-                <VBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#onAnalyzeDataPane" prefWidth="200.0" text="Analyze data">
-                <graphic>
-                    <FontAwesomeIconView glyphName="BAR_CHART" size="20" tabSize="0" />
-                </graphic>
-                <styleClass>
-                    <String fx:value="button-seconday" />
-                    <String fx:value="nav-button" />
-                </styleClass>
-                <VBox.margin>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </VBox.margin>
-            </Button>
             <Button layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#onPharmacyStockPane" prefWidth="200.0" text="Pharmacy stock">
                 <graphic>
                     <FontAwesomeIconView glyphName="TH_LARGE" size="24" />
@@ -78,7 +54,31 @@
                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                 </VBox.margin>
             </Button>
-            <Button layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBudgetPane" prefWidth="200.0" text="Budget">
+            <Button disable="true" mnemonicParsing="false" onAction="#onPatientViewPane" prefWidth="200.0" text="Patient view">
+                <graphic>
+                    <FontAwesomeIconView glyphName="USER" size="24" />
+                </graphic>
+                <styleClass>
+                    <String fx:value="button-seconday" />
+                    <String fx:value="nav-button" />
+                </styleClass>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </Button>
+            <Button disable="true" mnemonicParsing="false" onAction="#onAnalyzeDataPane" prefWidth="200.0" text="Analyze data">
+                <graphic>
+                    <FontAwesomeIconView glyphName="BAR_CHART" size="20" tabSize="0" />
+                </graphic>
+                <styleClass>
+                    <String fx:value="button-seconday" />
+                    <String fx:value="nav-button" />
+                </styleClass>
+                <VBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+            </Button>
+            <Button disable="true" layoutX="15.0" layoutY="68.0" mnemonicParsing="false" onAction="#onBudgetPane" prefWidth="200.0" text="Budget">
                 <graphic>
                     <FontAwesomeIconView glyphName="EXCHANGE" size="24" />
                 </graphic>
@@ -94,7 +94,7 @@
     </center>
     <bottom>
         <VBox alignment="BOTTOM_CENTER" prefHeight="147.0" prefWidth="235.0">
-            <Button layoutX="15.0" layoutY="124.0" mnemonicParsing="false" onAction="#onProfileDialog" prefWidth="200.0" text="Settings">
+            <Button layoutX="15.0" layoutY="124.0" mnemonicParsing="false" onAction="#onSettingsDialog" prefWidth="200.0" text="Settings">
                 <graphic>
                     <FontAwesomeIconView glyphName="GEAR" size="26" styleClass="nav-button-1" />
                 </graphic>

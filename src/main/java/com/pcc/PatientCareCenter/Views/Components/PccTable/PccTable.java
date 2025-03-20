@@ -30,7 +30,6 @@ public class PccTable extends PccComponent {
         List<TableColumn<DynamicTableRow, ?>> columns = new ArrayList<>();
         ResultSetMetaData metaData = resultSet.getMetaData();
         int columnCount = metaData.getColumnCount();
-
         for (int i = 1; i <= columnCount; i++) {
             String columnName = metaData.getColumnName(i);
             TableColumn<DynamicTableRow, Object> column = new TableColumn<>(columnName);
@@ -56,6 +55,11 @@ public class PccTable extends PccComponent {
 
     public void addTableColumn(TableColumn<DynamicTableRow, Void> column) throws SQLException {
         tableView.getColumns().add(column);
+    }
+
+    public void clear(){
+        tableView.getColumns().clear();
+        data.clear();
     }
 
     public void resultSetToPccTable(ResultSet resultSet) throws SQLException {

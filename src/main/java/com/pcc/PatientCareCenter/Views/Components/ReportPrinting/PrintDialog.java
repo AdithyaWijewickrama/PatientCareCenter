@@ -1,4 +1,5 @@
-package com.pcc.PatientCareCenter.Views.Components;
+package com.pcc.PatientCareCenter.Views.Components.ReportPrinting;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -7,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.type.OrientationEnum;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimplePrintServiceExporterConfiguration;
 
@@ -38,14 +40,8 @@ public class PrintDialog extends Application {
 
         // ComboBox for selecting paper size
         ComboBox<MediaSizeName> sizeComboBox = new ComboBox<>();
-        sizeComboBox.getItems().addAll(
-                MediaSizeName.ISO_A4,
-                MediaSizeName.ISO_A3,
-                MediaSizeName.ISO_A5,
-                MediaSizeName.NA_LETTER,
-                MediaSizeName.NA_LEGAL
-        );
-        sizeComboBox.setValue(MediaSizeName.ISO_A4); // Default: A4
+        PrintUtils.populateMediaSizeComboBox(sizeComboBox);
+        sizeComboBox.setValue(PrintUtils.getMediaSize(jasperPrint)); // Default: A4
 
         // RadioButtons for orientation
         ToggleGroup orientationGroup = new ToggleGroup();
@@ -54,6 +50,12 @@ public class PrintDialog extends Application {
         portraitRadio.setToggleGroup(orientationGroup);
         landscapeRadio.setToggleGroup(orientationGroup);
         portraitRadio.setSelected(true); // Default selection
+        if (jasperPrint.getOrientation() == OrientationEnum.LANDSCAPE) {
+            landscapeRadio.setSelected(true);
+        } else {
+            landscapeRadio.setToggleGroup(orientationGroup);
+
+        }
 
         // Spinner for selecting number of copies
         Spinner<Integer> copiesSpinner = new Spinner<>(1, 100, 1); // Min:1, Max:100, Default:1
@@ -125,6 +127,7 @@ public class PrintDialog extends Application {
             System.out.println("Error: Printer not found!");
         }
     }
+
 
     public static void main(String[] args) {
         launch(args);

@@ -1,6 +1,6 @@
 package com.pcc.PatientCareCenter.Controllers.LoginOrSignup;
 
-import com.pcc.PatientCareCenter.Database.User.Admin.Admin;
+import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.User;
 import com.pcc.PatientCareCenter.Views.Components.TextFieldElements;
 import javafx.fxml.Initializable;
@@ -22,8 +22,8 @@ public class DoctorDetailsController extends LoginOrSignupController implements 
     public void createAccount() {
         try {
             User.setCurrentUser(User.createUser(SignupController.getSignupEmail(), SignupController.getSignupPassword(), SignupController.getAccountType()));
-            Admin adminAccount = Admin.createAdminAccount(User.getCurrentUser(), doctorDetailsButton.getText(), doctorDetailsOccupation.getText());
-            Admin.setCurrentAdmin(adminAccount);
+            Doctor doctorAccount = Doctor.createAdminAccount(User.getCurrentUser(), doctorDetailsButton.getText(), doctorDetailsOccupation.getText());
+            Doctor.setCurrentAdmin(doctorAccount);
             showLogin();
         } catch (Exception e) {
             throw new RuntimeException(e);

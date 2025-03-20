@@ -7,6 +7,6 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pcc.PatientCareCenter.Controllers.Admin.AdminController">
    <stylesheets>
       <URL value="@../../Styles/globals.css" />
-      <URL value="@../../Styles/Admin/admin.css" />
+      <URL value="@../../Styles/Admin/doctor.css" />
    </stylesheets>
 </BorderPane>

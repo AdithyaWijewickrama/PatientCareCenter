@@ -10,7 +10,10 @@ public class StringTextfieldConnection implements DataComponentConnection{
 
     @Override
     public void setData(Object data) {
-        textField.setText(data.toString());
+        if(data==null)return;
+        if (data instanceof EmptyData) textField.setText("");
+        else
+            textField.setText(data.toString());
     }
 
     @Override

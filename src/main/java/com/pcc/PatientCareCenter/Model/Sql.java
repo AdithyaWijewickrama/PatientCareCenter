@@ -2,6 +2,7 @@ package com.pcc.PatientCareCenter.Model;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Sql {
@@ -11,10 +12,13 @@ public class Sql {
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private final String DB_URL = "jdbc:sqlite:pcc.db";
+    public final String url = "jdbc:postgresql://localhost:5432/pcc";
+    public final String user = "postgres";
+    public final String password = "Password";
 
     public Sql() {
         try {
-            connection = DriverManager.getConnection(DB_URL);
+            connection = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -22,10 +26,6 @@ public class Sql {
 
     public Connection getConnection() {
         return connection;
-    }
-
-    public String getDB_URL() {
-        return DB_URL;
     }
 
     public static Sql getInstance() {
@@ -90,6 +90,7 @@ public class Sql {
                     preparedStatement.setObject(i + 1, values[i]);
                 }
             }
+            System.out.println(query);
             return preparedStatement;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -112,7 +113,27 @@ public class Sql {
     }
 
     public List<Object> getRow(String query, Object... values) throws SQLException {
+        System.out.println(query + Arrays.toString(values));
         return getRow(prepareValues(query, values));
+    }
+
+
+    public List<Object> getColumn(ResultSet resultSet) throws SQLException {
+        List<Object> column = null;
+        column = new ArrayList<>();
+        while (resultSet.next()) {
+            column.add(resultSet.getObject(1));
+        }
+        return column;
+    }
+
+    public List<Object> getColumn(PreparedStatement pst) throws SQLException {
+        return getColumn(executeQuery(pst));
+    }
+
+    public List<Object> getColumn(String query, Object... values) throws SQLException {
+        System.out.println(query + Arrays.toString(values));
+        return getColumn(prepareValues(query, values));
     }
 
     public Object getObject(ResultSet resultSet) throws SQLException {

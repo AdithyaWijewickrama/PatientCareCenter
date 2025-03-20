@@ -1,56 +1,71 @@
 package com.pcc.PatientCareCenter.Database.User.Admin;
 
+import com.pcc.PatientCareCenter.Database.DBObject;
 import com.pcc.PatientCareCenter.Database.User.User;
 import com.pcc.PatientCareCenter.Database.User.UserType;
 import com.pcc.PatientCareCenter.Model.Sql;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class Admin{
-    private static Admin currentAdmin;
-    private int adminId;
-    private String name;
-    private String occupation;
+public class Doctor implements DBObject {
+    private static Doctor currentDoctor;
+    private ResultSet resultSet;
+    private int doctorId;
 
-    private Admin(int adminId, String name, String occupation) {
-        this.adminId = adminId;
-        this.name = name;
-        this.occupation = occupation;
+    private Doctor(int doctorId) {
+        this.doctorId = doctorId;
     }
 
-    public static Admin getCurrentAdmin() {
-        return currentAdmin;
+    public static Doctor getCurrentDoctor() {
+        return currentDoctor;
     }
 
-    public static Admin getAdmin(int userId) throws SQLException {
+    public static Doctor getAdmin(int userId) throws SQLException {
         List<Object> row = Sql.getInstance().getRow("SELECT doctor_id,name,occupation FROM doctor WHERE user_id=?", userId);
-        return new Admin((int)row.get(0),(String)row.get(1),(String)row.get(2));
+        return new Doctor((int)row.get(0));
     }
 
-    public int getAdminId() {
-        return adminId;
+    public int getDoctorId() {
+        return doctorId;
     }
 
-    public String getName() {
-        return name;
+    public String getName() throws SQLException {
+        return resultSet.getString("name");
     }
 
-    public String getOccupation() {
-        return occupation;
+    public String getOccupation() throws SQLException {
+        return resultSet.getString("occupation");
     }
 
-    public static void setCurrentAdmin(Admin currentAdmin) {
-        Admin.currentAdmin = currentAdmin;
+    public static void setCurrentAdmin(Doctor currentDoctor) {
+        Doctor.currentDoctor = currentDoctor;
     }
 
-    public static Admin createAdminAccount(User user, String name, String occupation) throws SQLException {
+    public static Doctor createAdminAccount(User user, String name, String occupation) throws SQLException {
         if (user.getUserType() != UserType.DOCTOR) {
             throw new RuntimeException("Cannot create admin profile for " + user.getUserType().getName() + " users");
         } else {
             int doctorId = (int) Sql.getInstance().getObject("INSERT INTO doctor (user_id,name,occupation) VALUES(?,?,?) RETURNING doctor_id", user.getUserId(), name, occupation);
-            Admin admin = new Admin(doctorId, name, occupation);
-            return admin;
+            return new Doctor(doctorId);
         }
+    }
+
+    @Override
+    public void load() throws SQLException {
+        resultSet=Sql.getInstance().executeQuery("SELECT name,occupation FROM doctor WHERE doctor_id=?", doctorId);
+        resultSet.next();
+    }
+
+    @Override
+    public ResultSet loadAndGetData() throws SQLException {
+        load();
+        return resultSet;
+    }
+
+    @Override
+    public ResultSet getData() throws SQLException {
+        return resultSet;
     }
 }

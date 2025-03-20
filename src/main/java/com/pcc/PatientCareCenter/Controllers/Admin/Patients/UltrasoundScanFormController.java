@@ -1,4 +1,4 @@
-package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
+package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.Components.JRXMLPrinter.PccJRXmlLoader;

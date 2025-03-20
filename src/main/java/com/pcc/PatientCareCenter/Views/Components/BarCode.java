@@ -6,6 +6,7 @@ import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.oned.Code128Writer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -16,15 +17,31 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BarCode {
 
     public static BufferedImage getBuffer(String data, BarcodeFormat format, int w, int h) throws WriterException, IOException {
+
         return MatrixToImageWriter.toBufferedImage(new MultiFormatWriter().encode(new String(data.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8), format, w, h));
     }
+    public static BufferedImage generateBarcodeImage(String barcodeData, int width, int height) {
+        // Set encoding hints (optional)
+        Map<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.MARGIN, 0); // No margin
 
+        // Create a Code 128 barcode writer
+        Code128Writer barcodeWriter = new Code128Writer();
+
+        // Encode the barcode data into a BitMatrix
+        BitMatrix bitMatrix = barcodeWriter.encode(barcodeData, BarcodeFormat.CODE_128, width, height, hints);
+
+        // Convert the BitMatrix to a BufferedImage
+        return MatrixToImageWriter.toBufferedImage(bitMatrix);
+    }
     public static BufferedImage getBuffer(byte[] data, BarcodeFormat format, int w, int h) throws WriterException, IOException {
         return MatrixToImageWriter.toBufferedImage(new MultiFormatWriter().encode(new String(data, StandardCharsets.UTF_8), format, w, h));
     }

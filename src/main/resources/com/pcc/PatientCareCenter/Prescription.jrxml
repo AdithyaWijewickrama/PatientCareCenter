@@ -1,5 +1,5 @@
 <!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
-<jasperReport name="Prescription" language="java" columnCount="1" pageWidth="298" pageHeight="420" orientation="Landscape" columnWidth="258" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ba7153e-a813-4bd9-90dc-efcd5c9332d8">
+<jasperReport name="Prescription" language="java" columnCount="1" pageWidth="300" pageHeight="420" orientation="Landscape" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ba7153e-a813-4bd9-90dc-efcd5c9332d8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>

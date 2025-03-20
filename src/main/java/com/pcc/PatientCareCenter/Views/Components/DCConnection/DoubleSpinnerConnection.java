@@ -3,28 +3,30 @@ package com.pcc.PatientCareCenter.Views.Components.DCConnection;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 
-public class IntegerSpinnerConnection implements DataComponentConnection {
-    Spinner<Integer> integerSpinner;
+public class DoubleSpinnerConnection implements DataComponentConnection {
+    Spinner<Double> doubleSpinner;
+    SpinnerValueFactory.DoubleSpinnerValueFactory doubleSpinnerValueFactory;
 
-    public IntegerSpinnerConnection(Spinner<Integer> integerSpinner) {
-        this.integerSpinner = integerSpinner;
+    public DoubleSpinnerConnection(Spinner<Double> doubleSpinner) {
+        this.doubleSpinner = doubleSpinner;
     }
 
-    public IntegerSpinnerConnection(Spinner<Integer> integerSpinner,int min,int max,int initialValue) {
-        this.integerSpinner = integerSpinner;
-        SpinnerValueFactory.IntegerSpinnerValueFactory integerSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, initialValue);
-        this.integerSpinner.setValueFactory(integerSpinnerValueFactory);
+    public DoubleSpinnerConnection(Spinner<Double> doubleSpinner, double min, double max, double initialValue, double step) {
+        this.doubleSpinner = doubleSpinner;
+        doubleSpinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(min, max, initialValue, step);
+        this.doubleSpinner.setValueFactory(doubleSpinnerValueFactory);
     }
-
-
 
     @Override
     public void setData(Object data) {
-        integerSpinner.getValueFactory().setValue((Integer) data);
+        if (data instanceof EmptyData) {
+            doubleSpinner.getValueFactory().setValue(doubleSpinnerValueFactory.getMin());
+        } else
+            doubleSpinner.getValueFactory().setValue((Double) data);
     }
 
     @Override
     public Object getData() {
-        return integerSpinner.getValue();
+        return doubleSpinner.valueProperty().getValue();
     }
 }

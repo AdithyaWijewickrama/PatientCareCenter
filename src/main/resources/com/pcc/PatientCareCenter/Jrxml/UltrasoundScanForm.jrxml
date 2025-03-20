@@ -1,8 +1,8 @@
 <!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
-<jasperReport name="Blank_A4" language="java" columnCount="1" pageWidth="420" pageHeight="595" columnWidth="380" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a6c38c09-ed98-4898-a08c-bd6bd8519e20">
+<jasperReport name="UltrasoundScanForm" language="java" columnCount="1" pageWidth="420" pageHeight="595" columnWidth="380" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a6c38c09-ed98-4898-a08c-bd6bd8519e20">
 	<parameter name="appName" class="java.lang.String"/>
 	<parameter name="address" class="java.lang.String"/>
-	<parameter name="where" class="java.lang.String"/>
+	<parameter name="scanType" class="java.lang.String"/>
 	<parameter name="hospital" class="java.lang.String"/>
 	<parameter name="description" class="java.lang.String"/>
 	<parameter name="otherDoctorName" class="java.lang.String"/>
@@ -52,8 +52,8 @@
 			<element kind="staticText" uuid="a41aec47-5723-440c-9442-e1f16d20ed76" x="0" y="80" width="380" height="30" fontName="SansSerif" fontSize="16.0" underline="true" bold="true" hTextAlign="Center">
 				<text><![CDATA[Request for Ultrasound scan]]></text>
 			</element>
-			<element kind="textField" uuid="95ba3d40-dbbb-439a-af32-9b7acb5d16fc" x="0" y="110" width="380" height="60" fontSize="14.0">
-				<expression><![CDATA["Please arrange Ultrasound Scan "+$P{where}+" of this patient.\n"+$P{description}+"\nThank you."]]></expression>
+			<element kind="textField" uuid="95ba3d40-dbbb-439a-af32-9b7acb5d16fc" x="0" y="110" width="380" height="210" fontSize="14.0">
+				<expression><![CDATA["Please arrange Ultrasound Scan "+$P{scanType}+" of this patient.\n"+$P{description}+"\nThank you."]]></expression>
 			</element>
 			<element kind="staticText" uuid="e882f218-1c78-4c1e-94bd-25732f114886" x="290" y="390" width="30" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
 				<text><![CDATA[Date]]></text>
