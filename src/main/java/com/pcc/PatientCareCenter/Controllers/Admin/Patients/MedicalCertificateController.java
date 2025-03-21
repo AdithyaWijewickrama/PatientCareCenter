@@ -33,7 +33,7 @@ public class MedicalCertificateController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         connections = new DataComponentConnection[]{
                 new StringTextfieldConnection(name),
-                new IntegerSpinnerConnection(age, 0, 200, 18,5),
+                new IntegerSpinnerConnection(age, 0, 200, 18, 5),
                 new StringTextfieldConnection(nic),
                 new ValueButtonGroupConnection(genderGroup),
                 new StringTextfieldConnection(address),
@@ -41,7 +41,7 @@ public class MedicalCertificateController implements Initializable {
                 new StringTextAreaConnection(designation),
                 new StringTextAreaConnection(diagnosis),
                 new DateDatePickerConnection(leavingDate),
-                new IntegerSpinnerConnection(numberOfDaysForLeave, 1, 200, 7,5),
+                new IntegerSpinnerConnection(numberOfDaysForLeave, 1, 200, 7, 5),
         };
         printButton.setOnAction(event -> {
             try {
@@ -61,6 +61,12 @@ public class MedicalCertificateController implements Initializable {
 
     public void loadForCurrentPerson() throws SQLException {
         Patient patient = Patient.getCurrentPatient();
+        if (patient == null) {
+            name.setText("");
+            age.getValueFactory().setValue(0);
+            address.setText("");
+            return;
+        }
         name.setText(patient.getName());
         age.getValueFactory().setValue(patient.getAgeInYears());
         address.setText(PatientContactDetails.getCurrentPatientsContactDetails().getAddress());

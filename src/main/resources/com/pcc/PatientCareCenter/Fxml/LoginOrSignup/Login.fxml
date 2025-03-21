@@ -28,7 +28,7 @@
       </VBox.margin>
    </Text>
    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="Email" />
-   <TextField fx:id="loginEmail" alignment="CENTER" prefHeight="26.0" prefWidth="400.0" promptText="Enter email" styleClass="textfield" text="anandamadawalage@gmail.com">
+   <TextField fx:id="loginEmail" alignment="CENTER" prefHeight="26.0" prefWidth="400.0" promptText="Enter email" styleClass="textfield" text="amadawalage@gmail.com">
       <opaqueInsets>
          <Insets />
       </opaqueInsets>

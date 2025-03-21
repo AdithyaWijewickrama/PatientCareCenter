@@ -3,6 +3,7 @@ package com.pcc.PatientCareCenter.Database.User;
 import com.pcc.PatientCareCenter.Model.Sql;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class User {
@@ -14,8 +15,8 @@ public class User {
     private UserType userType;
 
 
-    public User(int userId){
-
+    public User(int userId) {
+        this.user_id = userId;
     }
 
     private User(int user_id, String email, String password, UserType userType) {
@@ -24,9 +25,6 @@ public class User {
         this.password = password;
         this.userType = userType;
     }
-
-
-    protected User(){}
 
     private User(String email) {
         this.email = email;
@@ -48,10 +46,6 @@ public class User {
         return password;
     }
 
-    public void updatePassword(String password) {
-        this.password = password;
-    }
-
     public static User getUser(String email) throws SQLException {
         List<Object> row = Sql.getInstance().getRow("SELECT user_id,password,account_type FROM public.user where email=?", email);
         User user = null;
@@ -60,23 +54,24 @@ public class User {
         }
         return user;
     }
+
     public static User getUser(int userId) throws SQLException {
         List<Object> row = Sql.getInstance().getRow("SELECT email,password,account_type FROM public.user where user_id=?", userId);
         User user = null;
         if (row != null) {
-            user = new User(userId,(String) row.get(0), (String) row.get(1), UserType.getUserTypeByName((String) row.get(2)));
+            user = new User(userId, (String) row.get(0), (String) row.get(1), UserType.getUserTypeByName((String) row.get(2)));
         }
         return user;
     }
 
     public static void setCurrentUser(User user) {
-        if(user==null){
+        if (user == null) {
             throw new RuntimeException("User is null");
         }
-        currentUser=user;
+        currentUser = user;
     }
 
-    public static User getCurrentUser(){
+    public static User getCurrentUser() {
         return currentUser;
     }
 
@@ -89,8 +84,7 @@ public class User {
     }
 
     public static User createUser(String email, String password, UserType userType) throws Exception {
-        int userId =1;
-        Sql.getInstance().execute("INSERT INTO public.user (email,password,account_type,date_created) VALUES(?,?,?,datetime('now'))", email, password, userType.getName());
+        int userId= (int) Sql.getInstance().getObject("INSERT INTO public.user (email,password,account_type,date_created) VALUES(?,?,?,?) RETURNING user_id", email, password, userType.getName(), LocalDate.now());
         System.out.println(userId);
         return new User(userId, email, password, userType);
     }

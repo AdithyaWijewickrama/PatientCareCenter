@@ -14,16 +14,17 @@ public class Doctor implements DBObject {
     private ResultSet resultSet;
     private int doctorId;
 
-    private Doctor(int doctorId) {
+    private Doctor(int doctorId) throws SQLException {
         this.doctorId = doctorId;
+        load();
     }
 
     public static Doctor getCurrentDoctor() {
         return currentDoctor;
     }
 
-    public static Doctor getAdmin(int userId) throws SQLException {
-        List<Object> row = Sql.getInstance().getRow("SELECT doctor_id,name,occupation FROM doctor WHERE user_id=?", userId);
+    public static Doctor getDoctor(int userId) throws SQLException {
+        List<Object> row = Sql.getInstance().getRow("SELECT doctor_id FROM doctor WHERE user_id=?", userId);
         return new Doctor((int)row.get(0));
     }
 
@@ -39,11 +40,11 @@ public class Doctor implements DBObject {
         return resultSet.getString("occupation");
     }
 
-    public static void setCurrentAdmin(Doctor currentDoctor) {
+    public static void setCurrentDoctor(Doctor currentDoctor) {
         Doctor.currentDoctor = currentDoctor;
     }
 
-    public static Doctor createAdminAccount(User user, String name, String occupation) throws SQLException {
+    public static Doctor createDoctorAccount(User user, String name, String occupation) throws SQLException {
         if (user.getUserType() != UserType.DOCTOR) {
             throw new RuntimeException("Cannot create admin profile for " + user.getUserType().getName() + " users");
         } else {

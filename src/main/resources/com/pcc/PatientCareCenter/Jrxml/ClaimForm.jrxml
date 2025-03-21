@@ -1,5 +1,5 @@
 <!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
-<jasperReport name="ClaimForm" language="java" columnCount="1" pageWidth="420" pageHeight="298" orientation="Landscape" columnWidth="400" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="9b8b6fbe-8ae0-4532-aee4-e79851f46eff">
+<jasperReport name="ClaimForm" language="java" columnCount="1" pageWidth="420" pageHeight="297" orientation="Landscape" columnWidth="400" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="9b8b6fbe-8ae0-4532-aee4-e79851f46eff">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -67,7 +67,7 @@
 			<element kind="staticText" uuid="1c1320dd-7bc3-4f6b-aeaf-ac300e4a7263" x="280" y="135" width="30" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
 				<text><![CDATA[Date]]></text>
 			</element>
-			<element kind="staticText" uuid="0a4add5d-ca0e-46f1-b0a5-edb800b11981" x="5" y="130" width="160" height="30" fontName="Sitka Text" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
+			<element kind="staticText" uuid="0a4add5d-ca0e-46f1-b0a5-edb800b11981" x="5" y="130" width="160" height="30" fontName="Sitka Text" fontSize="11.0" bold="true" strikeThrough="false" hTextAlign="Center">
 				<text><![CDATA[..................................]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>

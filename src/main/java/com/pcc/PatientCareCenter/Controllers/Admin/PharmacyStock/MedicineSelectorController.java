@@ -1,6 +1,7 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
 
 import com.pcc.PatientCareCenter.Controllers.Admin.Patients.GeneralDetailsType;
+import com.pcc.PatientCareCenter.Controllers.Admin.Patients.PrescriptionController;
 import com.pcc.PatientCareCenter.Database.Stock;
 import com.pcc.PatientCareCenter.Model.Medicine;
 import com.pcc.PatientCareCenter.Model.Model;
@@ -26,6 +27,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import static com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock.PharmacyStockController.validateRows;
+
 public class MedicineSelectorController implements Initializable {
     public Label pharmacyStock;
     public TextField searchTextField;
@@ -33,6 +36,7 @@ public class MedicineSelectorController implements Initializable {
     public TableView<DynamicTableRow> tableView;
     public List<Medicine> selectedStocks = new ArrayList<>();
     public Label message;
+    public Button addToPrescription;
     private PccTable pccTable;
 
     @Override
@@ -45,13 +49,14 @@ public class MedicineSelectorController implements Initializable {
                 Stock stock;
                 try {
                     stock = Stock.getStock(stockId);
-                    Optional<Medicine.InputValues> result = InputDialogHelper.showInputDialog();
+                    Optional<Medicine.InputValues> result = InputDialogHelper.showInputDialog(stock);
                     result.ifPresent(inputValues -> {
                         Medicine med;
                         try {
-                            med = new Medicine(stock, inputValues.frequency(), inputValues.days() + (inputValues.weeks() * 7) + (inputValues.months() * 30));
+                            med = new Medicine(stock, inputValues);
                             selectedStocks.add(med);
-                            PccMessage.showMessage(message, stock.getLocalizedName() + " added\n" + med, MessageType.MESSAGE_TYPE_INFO);
+                            AdminPanes.getPrescriptionController().addToList(med);
+                            PccMessage.showMessage(message, med.getValues() + " added\n" + med, MessageType.MESSAGE_TYPE_INFO);
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
@@ -83,29 +88,30 @@ public class MedicineSelectorController implements Initializable {
         pccTable.setTableColumns(columns);
         pccTable.addTableColumn(PccTable.getNodeColumn("Action", cell -> new PatientsButtonCell(getButtonSet())));
         pccTable.resultSetToPccTable(resultSet);
+        validateRows(tableView);
     }
 
     public ResultSet getTableQuery() throws SQLException {
         StringBuilder sql = new StringBuilder("""
                 SELECT
                     stock_id AS "Stock Id",
-                    medicine_name Name,
-                    medicine_strength Strength,
+                    medicine_name "Name",
+                    medicine_strength "Strength",
                     medicine_unit "Unit",
-                    prise_per_medicine AS Prise,
+                    price_per_medicine AS "Price",
                     stock_quantity AS "Stock quantity",
                     stock_expire_date AS "Expire date"
                 FROM public.stock_details
                 """);
         String searchString = searchTextField.getText();
         if (searchString.isEmpty())
-            return Sql.getInstance().executeQuery(sql + ";");
+            return Sql.getInstance().executeQuery(sql + " ORDER BY stock_expire_date DESC, medicine_name ASC;");
         List<String> columns = Arrays.asList(
                 "stock_id::TEXT",
                 "medicine_name",
                 "medicine_strength::TEXT",
                 "medicine_unit",
-                "prise_per_medicine::TEXT",
+                "price_per_medicine::TEXT",
                 "stock_quantity::TEXT",
                 "stock_expire_date::TEXT"
         );
@@ -115,7 +121,7 @@ public class MedicineSelectorController implements Initializable {
             if (columns.indexOf(column) < columns.size() - 1) {
                 sql.append("\n\tOR ");
             } else {
-                sql.append(";");
+                sql.append(" ORDER BY stock_expire_date DESC, medicine_name ASC;");
             }
         }
         return Sql.getInstance().executeQuery(sql.toString());
@@ -124,7 +130,7 @@ public class MedicineSelectorController implements Initializable {
     public void tableLoad() {
         try {
             tableLoad(getTableQuery());
-            validateRows();
+            validateRows(tableView);
         } catch (SQLException e) {
             GlobalsViews.showErrorAlert(e.getLocalizedMessage());
             throw new RuntimeException(e);
@@ -137,7 +143,6 @@ public class MedicineSelectorController implements Initializable {
         String iconSize = "20";
         Button editButton = new Button();
         Button deleteButton = new Button();
-        Button viewButton = new Button();
         editButton.setOnAction(event -> {
             Stock.setCurrentStock(selectedStock);
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
@@ -151,50 +156,7 @@ public class MedicineSelectorController implements Initializable {
         });
         ButtonElements.bindIconFillProperty(editButton, "edit-button", new FontAwesomeIconView(FontAwesomeIcon.EDIT, iconSize));
         ButtonElements.bindIconFillProperty(deleteButton, "delete-button", new FontAwesomeIconView(FontAwesomeIcon.TRASH, iconSize));
-        ButtonElements.bindIconFillProperty(viewButton, "view-button", new FontAwesomeIconView(FontAwesomeIcon.EYE, iconSize));
-        return new Button[]{viewButton, editButton, deleteButton};
-    }
-
-    public void validateRows() {
-        tableView.setRowFactory(tv -> {
-            TableRow<DynamicTableRow> row = new TableRow<>() {
-                @Override
-                protected void updateItem(DynamicTableRow item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (item == null || empty) {
-                        setStyle(""); // Clear style for empty rows
-                    } else {
-                        // Check the expiration date column (assuming it's named "expire_date")
-                        Object expireDateObj = item.getData("Expire date");
-                        System.out.println(expireDateObj.getClass());
-                        if (expireDateObj instanceof Date) {
-                            LocalDate expireDate = ((Date) expireDateObj).toLocalDate();
-                            LocalDate today = LocalDate.now();
-
-                            // Check if expiration date is within 3 months
-                            long monthsUntilExpire = ChronoUnit.MONTHS.between(today, expireDate);
-
-                            if (expireDate.isBefore(today)) {
-                                // Expired: Set row background to red
-                                setStyle("-fx-background-color: #FFCCCB;"); // Light red
-                            } else if (monthsUntilExpire <= 3) {
-                                // Expiring soon: Set row background to yellow
-                                setStyle("-fx-background-color: #FFFFE0;"); // Light yellow
-                            } else {
-                                // Not expiring soon: Clear style
-                                setStyle("");
-                            }
-                        }
-                    }
-                }
-            };
-            return row;
-        });
-    }
-
-    public void addMedicine() {
-
+        return new Button[]{editButton, deleteButton};
     }
 
     public void patientSelected() throws SQLException {

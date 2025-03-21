@@ -1,8 +1,10 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
 
 import com.pcc.PatientCareCenter.Controllers.Admin.Patients.GeneralDetailsType;
+import com.pcc.PatientCareCenter.Database.PPDetails;
 import com.pcc.PatientCareCenter.Database.Stock;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
+import com.pcc.PatientCareCenter.Model.MedicineType;
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
 import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
@@ -21,6 +23,7 @@ import java.util.ResourceBundle;
 public class StockDetailsController implements Initializable {
     public Spinner<Integer> strength;
     public ComboBox<String> unit;
+    public ComboBox<String> medicineType;
     public Spinner<Double> pricePerMedicine;
     public Spinner<Integer> quantity;
     public DatePicker expirationDate;
@@ -35,6 +38,7 @@ public class StockDetailsController implements Initializable {
         initializeData();
         DataComponentConnection[] connections = {
                 new ValueComboBoxConnection<>(name),
+                new ValueComboBoxConnection<>(medicineType),
                 new IntegerSpinnerConnection(strength, 0, 1000000, 1, 1),
                 new ValueComboBoxConnection<>(unit),
                 new DoubleSpinnerConnection(pricePerMedicine, 0, 500000, 5.5, 5),
@@ -84,8 +88,8 @@ public class StockDetailsController implements Initializable {
                     try {
                         if (GlobalsViews.showWarningAlert("Are you sure want to delete!")) {
                             resultConnection.setDelete(new SQLQuery("""
-                                    DELETE FROM stock_details WHERE stock_id=?
-                                    """, QueryReturnType.NONE, new Object[]{Stock.getCurrentStock().getStockId()}));
+                                    DELETE FROM stock_details WHERE stock_id=? AND pp_id=?
+                                    """, QueryReturnType.NONE, new Object[]{Stock.getCurrentStock().getStockId(), PPDetails.getCurrentPP().getPpId()}));
                             resultConnection.deleteFromDataBase();
                             AdminPanes.getPharmacyStockController().tableLoad();
                             GlobalsViews.showInformationAlert("Deleted successfully!");
@@ -111,26 +115,29 @@ public class StockDetailsController implements Initializable {
                 INSERT INTO stock_details
                     (
                     medicine_name,
+                    medicine_type,
                     medicine_dose,
                     medicine_dose_unit,
-                    prise_per_medicine,
+                    price_per_medicine,
                     stock_quantity,
-                    stock_expire_date
+                    stock_expire_date,
+                    pp_id,
                      )
-                    VALUES(?,?,?,?,?,?)
-                """, QueryReturnType.ROW));
+                    VALUES(?,?,?,?,?,?,?)
+                """, QueryReturnType.ROW, new Object[]{PPDetails.getCurrentPP().getPpId()}));
         resultConnection.setUpdate(new SQLQuery("""
                 UPDATE stock_details
                 SET
                     medicine_name=?,
+                    medicine_type=?,
                     medicine_dose=?,
                     medicine_dose_unit=?,
-                    prise_per_medicine=?,
+                    price_per_medicine=?,
                     stock_quantity=?,
                     stock_expire_date=?
                 WHERE
-                    stock_id=?
-                """, QueryReturnType.NONE, new Object[]{Stock.getCurrentStock().getStockId()}));
+                    stock_id=? AND pp_id=?
+                """, QueryReturnType.NONE, new Object[]{Stock.getCurrentStock().getStockId(), PPDetails.getCurrentPP().getPpId()}));
     }
 
     public void loadDataForCurrentMedicine() {
@@ -141,25 +148,29 @@ public class StockDetailsController implements Initializable {
             resultConnection.setSelect(new SQLQuery(String.format("""
                     SELECT
                         medicine_name,
+                        medicine_type,
                         medicine_strength,
                         medicine_unit,
-                        prise_per_medicine,
+                        price_per_medicine,
                         stock_quantity,
                         stock_expire_date
                     FROM stock_details
-                    WHERE  stock_id=%d""", Stock.getCurrentStock().getStockId()), QueryReturnType.ROW));
+                    WHERE  stock_id=%d
+                    ORDER BY stock_expire_date DESC, medicine_name ASC;
+                    """, Stock.getCurrentStock().getStockId()), QueryReturnType.ROW));
             resultConnection.setUpdate(new SQLQuery("""
                     UPDATE stock_details
                     SET
                         medicine_name=?,
+                        medicine_type=?,
                         medicine_strength=?,
                         medicine_unit=?,
-                        prise_per_medicine=?,
+                        price_per_medicine=?,
                         stock_quantity=?,
                         stock_expire_date=?
                     WHERE
-                        stock_id=?
-                    """, QueryReturnType.NONE, new Object[]{Stock.getCurrentStock().getStockId()}));
+                        stock_id=? AND pp_id=?
+                    """, QueryReturnType.NONE, new Object[]{Stock.getCurrentStock().getStockId(), PPDetails.getCurrentPP().getPpId()}));
             resultConnection.loadDataFromDatabase();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage());
@@ -170,7 +181,8 @@ public class StockDetailsController implements Initializable {
     HashMap<String, ObservableList<String>> citiesByProvince;
 
     private void initializeData() {
-        unit.getItems().addAll("mg", "ml", "g");
+        unit.getItems().addAll("mg", "mcg", "ml", "g");
+        medicineType.getItems().addAll(MedicineType.getList());
         try {
             name.getItems().addAll(Stock.getMedicineNames(Doctor.getCurrentDoctor().getDoctorId()));
         } catch (SQLException e) {

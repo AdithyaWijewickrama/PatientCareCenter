@@ -44,6 +44,10 @@ public class ClaimFormController implements Initializable {
 
     public void loadForCurrentPerson() throws SQLException {
         Patient patient = Patient.getCurrentPatient();
+        if(patient==null){
+            name.setText("");
+            return;
+        }
         name.setText(patient.getName());
     }
 

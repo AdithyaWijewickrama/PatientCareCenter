@@ -2,11 +2,14 @@ package com.pcc.PatientCareCenter.Views.Components.JRXMLPrinter;
 
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.DataComponentConnection;
 import com.pcc.PatientCareCenter.Views.Components.ReportPrinting.PrintDialog;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +27,7 @@ public class PccJRXmlLoader {
         this.fileName = fileName;
         File file = new File(Objects.requireNonNull(getClass().getResource(JRXML_PATH + fileName + ".jasper")).getFile());
         jasperPath = file.getAbsolutePath();
-        jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getAbsolutePath());
+        jasperReport = (JasperReport) JRLoader.loadObjectFromFile(jasperPath);
     }
 
     public void addParams(Map<String, Object> params) {
@@ -42,16 +45,34 @@ public class PccJRXmlLoader {
         parameters.forEach((k, o) -> {
             if (o != null) {
                 System.out.println(k + ":\t" + o.getClass());
-
             }
         });
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
-        PrintDialog printDialog=new PrintDialog(jasperPrint);
-        printDialog.start(new Stage());
-        boolean printSuccess=true; // true = show print dialog
+//        String s = JasperFillManager.fillReportToFile(jasperPath, parameters);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf", "*.pdf"));
+        File file = fileChooser.showSaveDialog(null);
+        if (file != null) {
+            JasperExportManager.exportReportToPdfFile(jasperPrint, file.getAbsolutePath());
+        }
+//        PrintDialog printDialog = new PrintDialog(file);
+//        Stage stage = new Stage();
+//        printDialog.start(stage);
+        System.out.println(file);
+        if (file.exists()) {
+            try {
+                // Open the file using the default application
+                Desktop.getDesktop().open(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Error opening file: " + e.getMessage());
+            }
+        } else {
+            System.out.println("File does not exist: " + file.getAbsolutePath());
+        }
+        boolean printSuccess = true; // true = show print dialog
 //        printSuccess = JasperPrintManager.printReport(jasperPrint, true);
         return printSuccess;
-
     }
 
     public PccJRXmlLoader(String fileName, Map<String, Object> parameters) {

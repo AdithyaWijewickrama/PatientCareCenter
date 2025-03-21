@@ -1,61 +1,86 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
 
+import com.pcc.PatientCareCenter.Database.Stock;
+import com.pcc.PatientCareCenter.Model.FrequencyType;
 import com.pcc.PatientCareCenter.Model.Medicine;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
+import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class InputDialogHelper {
 
-    public static Optional<Medicine.InputValues> showInputDialog() {
-        // Create a custom dialog
+    public static Optional<Medicine.InputValues> showInputDialog(Stock med) throws SQLException {
         Dialog<Medicine.InputValues> dialog = new Dialog<>();
         dialog.setTitle("Input Dialog");
-        dialog.setHeaderText("Please enter the following inputs:");
+        dialog.setHeaderText(med.getName() + " " + med.getQuantity() + " available");
 
-        // Set the button types (OK and Cancel)
+        ComboBox<String> frequencyCombo = new ComboBox<>(FXCollections.observableArrayList(Arrays.stream(FrequencyType.values()).map(FrequencyType::getName).toList()));
+        frequencyCombo.getSelectionModel().select(FrequencyType.BD.getName());
+
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
-        // Create the input fields
-        Spinner<Integer> frequencySpinner = new Spinner<>(1, 100, 1); // Min: 1, Max: 100, Initial: 1
-        Spinner<Integer> daysSpinner = new Spinner<>(0, 31, 0); // Min: 0, Max: 31, Initial: 0
-        Spinner<Integer> weeksSpinner = new Spinner<>(0, 52, 0); // Min: 0, Max: 52, Initial: 0
-        Spinner<Integer> monthsSpinner = new Spinner<>(0, 12, 0); // Min: 0, Max: 12, Initial: 0
+        Spinner<Integer> daysSpinner = new Spinner<>(0, 31, 0);
+        Spinner<Integer> noOfDosesPerMedicine = new Spinner<>(1, 100000, 1, 5);
+        Spinner<Integer> dose = new Spinner<>(1, med.getStrength(), med.getStrength(), 5);
+        dose.setEditable(false);
 
-        // Create a grid layout for the inputs
+        Spinner<Integer> weeksSpinner = new Spinner<>(0, 52, 0);
+        Spinner<Integer> monthsSpinner = new Spinner<>(0, 12, 0);
+        frequencyCombo.valueProperty().addListener((observable, oldValue, newValue) -> {
+            boolean b = !newValue.equals(FrequencyType.WEEKLY.getName());
+            daysSpinner.setVisible(b);
+            if (b)
+                daysSpinner.getValueFactory().setValue(0);
+        });
+        dose.setEditable(false);
+        daysSpinner.setEditable(true);
+        monthsSpinner.setEditable(true);
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        grid.add(new Label("Frequency:"), 0, 0);
-        grid.add(frequencySpinner, 1, 0);
-        grid.add(new Label("Days:"), 0, 1);
-        grid.add(daysSpinner, 1, 1);
-        grid.add(new Label("Weeks:"), 0, 2);
-        grid.add(weeksSpinner, 1, 2);
-        grid.add(new Label("Months:"), 0, 3);
-        grid.add(monthsSpinner, 1, 3);
+        dose.valueProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                noOfDosesPerMedicine.getValueFactory().setValue(med.getStrength() / newValue);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        int row = 0;
+        grid.add(new Label("Frequency:"), 0, row++);
+        grid.add(frequencyCombo, 1, row - 1);
+        grid.add(new Label("Dose(" + med.getUnit() + "):"), 0, row++);
+        grid.add(dose, 1, row - 1);
+        grid.add(new Label("No. of doses per pack:"), 0, row++);
+        grid.add(noOfDosesPerMedicine, 1, row - 1);
+        grid.add(new Label("Days:"), 0, row++);
+        grid.add(daysSpinner, 1, row - 1);
+        grid.add(new Label("Weeks:"), 0, row++);
+        grid.add(weeksSpinner, 1, row - 1);
+        grid.add(new Label("Months:"), 0, row++);
+        grid.add(monthsSpinner, 1, row - 1);
 
-        // Add the grid to the dialog
         dialog.getDialogPane().setContent(grid);
 
-        // Convert the result to an InputValues object when the OK button is clicked
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == okButtonType) {
-                int frequency = frequencySpinner.getValue();
-                int days = daysSpinner.getValue();
-                int weeks = weeksSpinner.getValue();
-                int months = monthsSpinner.getValue();
-                return new Medicine.InputValues(frequency, days, weeks, months);
+                int days = daysSpinner.valueProperty().getValue();
+                int weeks = weeksSpinner.valueProperty().getValue();
+                int months = monthsSpinner.valueProperty().getValue();
+                Medicine.InputValues inputValues = new Medicine.InputValues(med,FrequencyType.getFrequencyType(frequencyCombo.getValue()), noOfDosesPerMedicine.valueProperty().getValue(), days, weeks, months);
+                System.out.println(inputValues);
+                return inputValues;
             }
             return null;
         });
-
-        // Show the dialog and wait for the user's response
         return dialog.showAndWait();
     }
 

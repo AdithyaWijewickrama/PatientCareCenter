@@ -1,6 +1,6 @@
 package com.pcc.PatientCareCenter.Controllers.Admin;
 
-import com.pcc.PatientCareCenter.Database.PPDetails;
+import com.pcc.PatientCareCenter.Database.Defaults;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.User;
 import com.pcc.PatientCareCenter.Model.Model;
@@ -26,38 +26,64 @@ public class SettingsController implements Initializable {
     public TextField ppEmail;
     public TextField ppTelephone;
     public Button ppSaveButton;
-    DataComponentConnection[] connections1;
-    ResultConnection resultConnection1;
-    ResultConnection resultConnection2;
-    DataComponentConnection[] connections2;
+    public TextField postgresUrl;
+    public TextField postgresUsername;
+    public PasswordField postgresPassword;
+    public Button postgresSaveButton;
+    public TextField webhook;
+    public Button webhookButton;
+    DataComponentConnection[] connUserDetails;
+    DataComponentConnection[] connPPDetails;
+    ResultConnection rsUserDetails;
+    ResultConnection rsPPDetails;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        connections1 = new DataComponentConnection[]{
+        connUserDetails = new DataComponentConnection[]{
                 new StringTextfieldConnection(email),
                 new StringTextfieldConnection(password),
         };
-        resultConnection1 = new ResultConnection(connections1);
-        resultConnection1.setSelect(new SQLQuery("SELECT email,password FROM public.user WHERE user_id=?", QueryReturnType.ROW, new Object[]{User.getCurrentUser().getUserId()}));
+        rsUserDetails = new ResultConnection(connUserDetails);
+        rsUserDetails.setSelect(new SQLQuery("SELECT email,password FROM public.user WHERE user_id=?", QueryReturnType.ROW, new Object[]{User.getCurrentUser().getUserId()}));
         saveUserDetailsButton.setOnAction(event -> {
             try {
                 updateUserDetails();
+                GlobalsViews.showInformationAlert("Update successfully!");
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
             }
         });
-        connections2 = new DataComponentConnection[]{
+        connPPDetails = new DataComponentConnection[]{
                 new StringTextfieldConnection(ppName),
                 new StringTextfieldConnection(ppAddress),
                 new StringTextfieldConnection(ppEmail),
                 new StringTextfieldConnection(ppTelephone),
         };
-        resultConnection2 = new ResultConnection(connections2);
-        resultConnection2.setSelect(new SQLQuery("SELECT name, address, email, telephone FROM public.pp_details WHERE doctor_id=?;", QueryReturnType.ROW, new Object[]{Doctor.getCurrentDoctor().getDoctorId()}));
+        rsPPDetails = new ResultConnection(connPPDetails);
+        rsPPDetails.setSelect(new SQLQuery("SELECT name, address, email, telephone FROM public.pp_details WHERE doctor_id=?;", QueryReturnType.ROW, new Object[]{Doctor.getCurrentDoctor().getDoctorId()}));
         ppSaveButton.setOnAction(event -> {
             try {
                 updateUserDetails();
+                GlobalsViews.showInformationAlert("Update successfully!");
+            } catch (SQLException e) {
+                GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+                throw new RuntimeException(e);
+            }
+        });
+        postgresSaveButton.setOnAction(event -> {
+            try {
+                updateDb();
+                GlobalsViews.showInformationAlert("Update successfully!");
+            } catch (SQLException e) {
+                GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+                throw new RuntimeException(e);
+            }
+        });
+        webhookButton.setOnAction(event -> {
+            try {
+                updateWebhook();
+                GlobalsViews.showInformationAlert("Update successfully!");
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
@@ -71,9 +97,31 @@ public class SettingsController implements Initializable {
         }
     }
 
+    public void loadDb() throws SQLException {
+        postgresUrl.setText(Defaults.getDefault("DB_URL"));
+        postgresUsername.setText(Defaults.getDefault("DB_USERNAME"));
+        postgresPassword.setText(Defaults.getDefault("DB_PASSWORD"));
+    }
+
+    public void updateDb() throws SQLException {
+        Defaults.setDefault("DB_URL", postgresUrl.getText());
+        Defaults.setDefault("DB_USERNAME", postgresUsername.getText());
+        Defaults.setDefault("DB_PASSWORD", postgresPassword.getText());
+    }
+
+    public void loadWebhook() throws SQLException {
+        webhook.setText(Defaults.getDefault("WEBHOOK_URL"));
+    }
+
+    public void updateWebhook() throws SQLException {
+        Defaults.setDefault("WEBHOOK_URL", webhook.getText());
+    }
+
     public void loadSettings() throws SQLException {
-        resultConnection1.loadDataFromDatabase();
-        resultConnection2.loadDataFromDatabase();
+        rsUserDetails.loadDataFromDatabase();
+        rsPPDetails.loadDataFromDatabase();
+        loadDb();
+        loadWebhook();
         clearNewPassWordFields();
     }
 
@@ -84,17 +132,18 @@ public class SettingsController implements Initializable {
             GlobalsViews.showErrorAlert("Password is not valid!");
             return;
         }
-        resultConnection1.setUpdate(new SQLQuery("UPDATE public.user SET email=?,password=? WHERE user_id=?", QueryReturnType.ROW, new Object[]{ User.getCurrentUser().getUserId()}));
-        resultConnection1.updateToDataBase();
-        resultConnection1.loadDataFromDatabase();
+        password.setText(newPassword.getText());
+        rsUserDetails.setUpdate(new SQLQuery("UPDATE public.user SET email=?,password=? WHERE user_id=?", QueryReturnType.ROW, new Object[]{User.getCurrentUser().getUserId()}));
+        rsUserDetails.updateToDataBase();
+        rsUserDetails.loadDataFromDatabase();
         clearNewPassWordFields();
     }
 
     public void upDatePPDetails() throws SQLException {
-        resultConnection2.setSelect(new SQLQuery("SELECT name, address, email, telephone FROM public.pp_details WHERE doctor_id=?;", QueryReturnType.ROW, new Object[]{Doctor.getCurrentDoctor().getDoctorId()}));
-        resultConnection2.setUpdate(new SQLQuery("UPDATE pp_details SET name=?,address=?,email=?,telephone=? WHERE doctor_id=?", QueryReturnType.NONE, new Object[]{Doctor.getCurrentDoctor().getDoctorId()}));
-        resultConnection2.updateToDataBase();
-        resultConnection2.loadDataFromDatabase();
+        rsPPDetails.setSelect(new SQLQuery("SELECT name, address, email, telephone FROM public.pp_details WHERE doctor_id=?;", QueryReturnType.ROW, new Object[]{Doctor.getCurrentDoctor().getDoctorId()}));
+        rsPPDetails.setUpdate(new SQLQuery("UPDATE pp_details SET name=?,address=?,email=?,telephone=? WHERE doctor_id=?", QueryReturnType.NONE, new Object[]{Doctor.getCurrentDoctor().getDoctorId()}));
+        rsPPDetails.updateToDataBase();
+        rsPPDetails.loadDataFromDatabase();
     }
 
     public boolean confirmPassword() {

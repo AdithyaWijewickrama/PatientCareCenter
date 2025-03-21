@@ -21,6 +21,7 @@ public class IntegerSpinnerConnection implements DataComponentConnection {
     @Override
     public void setData(Object data) {
         if (data instanceof EmptyData) {
+            System.out.println();
             integerSpinner.getValueFactory().setValue(integerSpinnerValueFactory.getMin());
         } else
             integerSpinner.getValueFactory().setValue((Integer) data);

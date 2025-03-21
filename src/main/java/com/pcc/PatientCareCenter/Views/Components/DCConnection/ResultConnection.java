@@ -86,17 +86,19 @@ public class ResultConnection {
     }
 
     public List<Object> getList(SQLQuery query) throws SQLException {
-        if(query.getParams() != null) {
-            return select.getQueryReturnType() == QueryReturnType.ROW ? Sql.getInstance().getRow(query.getQueryString(),query.getParams()) :
-                    select.getQueryReturnType() == QueryReturnType.COLUMN ? Sql.getInstance().getColumn(query.getQueryString(),query.getParams()) : Sql.getInstance().getRow(query.getQueryString(),query.getParams());
+        if (query.getParams() != null) {
+            return select.getQueryReturnType() == QueryReturnType.ROW ? Sql.getInstance().getRow(query.getQueryString(), query.getParams()) :
+                    select.getQueryReturnType() == QueryReturnType.COLUMN ? Sql.getInstance().getColumn(query.getQueryString(), query.getParams()) : Sql.getInstance().getRow(query.getQueryString(), query.getParams());
         }
         return select.getQueryReturnType() == QueryReturnType.ROW ? Sql.getInstance().getRow(query.getQueryString()) :
                 select.getQueryReturnType() == QueryReturnType.COLUMN ? Sql.getInstance().getColumn(query.getQueryString()) : Sql.getInstance().getRow(query.getQueryString());
     }
 
-    public void insertToDataBase() throws SQLException {
+    public Object insertToDataBase() throws SQLException {
         Object[] array = getDataArray(insert);
-        Sql.getInstance().execute(insert.getQueryString(), array);
+        if (insert.getQueryReturnType() == QueryReturnType.SINGLE_VALUE)
+            return Sql.getInstance().getObject(insert.getQueryString(), array);
+        return Sql.getInstance().execute(insert.getQueryString(), array);
     }
 
     public void deleteFromDataBase() throws SQLException {

@@ -1,5 +1,6 @@
 package com.pcc.PatientCareCenter.Database;
 
+import com.pcc.PatientCareCenter.Model.MedicineType;
 import com.pcc.PatientCareCenter.Model.Sql;
 
 import java.sql.ResultSet;
@@ -19,7 +20,6 @@ public class Stock implements DBObject {
 
     public int getStockId() {
         return stockId;
-
     }
 
     @Override
@@ -48,13 +48,23 @@ public class Stock implements DBObject {
         return stock;
     }
 
+    public MedicineType getMedicineType() throws SQLException {
+        return MedicineType.fromDisplayName(data.getString("medicine_type"));
+    }
+
     public Double getPricePerMedicine() throws SQLException {
-        return data.getDouble("prise_per_medicine");
+        return data.getDouble("price_per_medicine");
     }
 
     public LocalDate getExpireDate() throws SQLException {
         return data.getDate("stock_expire_date").toLocalDate();
 
+    }
+
+    public void removeStockMedicine(int q) throws SQLException {
+        if(q<=getQuantity()){
+            Sql.getInstance().execute("UPDATE stock_details SET stock_quantity=stock_quantity-?",q);
+        }
     }
 
     public Integer getQuantity() throws SQLException {

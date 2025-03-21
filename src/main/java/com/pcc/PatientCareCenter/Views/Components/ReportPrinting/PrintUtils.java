@@ -22,7 +22,7 @@ public class PrintUtils {
         if (w == 595 && h == 842) return MediaSizeName.ISO_A4;
         if (w == 842 && h == 1191) return MediaSizeName.ISO_A3;
         if (w == 420 && h == 595) return MediaSizeName.ISO_A5;
-        if (w == 298 && h == 420) return MediaSizeName.ISO_A6;
+        if (w == 297 && h == 420) return MediaSizeName.ISO_A6;
         if (w == 210 && h == 297) return MediaSizeName.ISO_A7;
         if (w == 148 && h == 210) return MediaSizeName.ISO_A8;
         if (w == 105 && h == 148) return MediaSizeName.ISO_A9;

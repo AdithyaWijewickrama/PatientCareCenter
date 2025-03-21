@@ -1,7 +1,6 @@
 module com.ppcc.PatientCareCenter {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.sql;
     requires de.jensd.fx.glyphs.fontawesome;
 
     requires com.dlsc.formsfx;
@@ -11,6 +10,10 @@ module com.ppcc.PatientCareCenter {
     requires org.eclipse.jdt.core;
     requires org.jetbrains.annotations;
     requires javafx.swing;
+    requires com.formdev.flatlaf;
+    requires com.fasterxml.jackson.databind;
+    requires java.sql;
+    requires org.apache.pdfbox;
 
     opens com.pcc.PatientCareCenter to javafx.fxml;
     opens com.pcc.PatientCareCenter.Views to javafx.fxml;

@@ -10,8 +10,6 @@ public class Sql {
     private static Sql instance;
     private final Connection connection;
     private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
-    private final String DB_URL = "jdbc:sqlite:pcc.db";
     public final String url = "jdbc:postgresql://localhost:5432/pcc";
     public final String user = "postgres";
     public final String password = "Password";
@@ -45,6 +43,8 @@ public class Sql {
     }
 
     public boolean execute(String query, Object... values) throws SQLException {
+        System.out.println(query+ Arrays.toString(values));
+       preparedStatement = connection.prepareStatement(query);
         return execute(prepareValues(query, values));
     }
 
@@ -90,7 +90,7 @@ public class Sql {
                     preparedStatement.setObject(i + 1, values[i]);
                 }
             }
-            System.out.println(query);
+//            System.out.println(query);
             return preparedStatement;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -149,13 +149,14 @@ public class Sql {
     }
 
     public Object getObject(String query, Object... values) throws SQLException {
+        System.out.println(query+ Arrays.toString(values));
         return getObject(prepareValues(query, values));
     }
 
     public static void main(String[] args) {
         try {
             List<Object> row = Sql.getInstance().getRow("SELECT * FROM user WHERE user_id=?", 2);
-            System.out.println(row);
+//            System.out.println(row);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

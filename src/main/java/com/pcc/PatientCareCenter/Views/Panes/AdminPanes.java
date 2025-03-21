@@ -208,6 +208,10 @@ public class AdminPanes extends PaneViewFactory {
         return claimFormController;
     }
 
+    public static UltrasoundScanFormController getUltrasoundScanController(){
+        return ultrasoundScanController;
+    }
+
     public static ProfileController getProfileController() {
         return profileController;
     }

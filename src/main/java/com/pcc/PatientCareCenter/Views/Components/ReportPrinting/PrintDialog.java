@@ -6,29 +6,34 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
-import net.sf.jasperreports.engine.type.OrientationEnum;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimplePrintServiceExporterConfiguration;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.printing.PDFPageable;
 
 import javax.print.*;
-import javax.print.attribute.*;
-import javax.print.attribute.standard.*;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.OrientationRequested;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
-public class PrintDialog extends Application {
+import static com.pcc.PatientCareCenter.Views.Components.ReportPrinting.PrintUtils.populateMediaSizeComboBox;
+import static com.pcc.PatientCareCenter.Views.GlobalsViews.showErrorAlert;
+import static com.pcc.PatientCareCenter.Views.GlobalsViews.showInformationAlert;
 
-    private JasperPrint jasperPrint; // JasperPrint object to be printed
+public class PrintDialog {
 
-    public PrintDialog(JasperPrint jasperPrint) {
-        this.jasperPrint = jasperPrint;
+    private File pdfFile; // PDF file to be printed
+
+    public PrintDialog(File pdfFile) {
+        this.pdfFile = pdfFile;
     }
 
-    @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Print Settings");
 
-        // ComboBox for selecting printer
         ComboBox<String> printerComboBox = new ComboBox<>();
         PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
         for (PrintService service : services) {
@@ -38,35 +43,24 @@ public class PrintDialog extends Application {
             printerComboBox.setValue(printerComboBox.getItems().get(0)); // Set default printer
         }
 
-        // ComboBox for selecting paper size
         ComboBox<MediaSizeName> sizeComboBox = new ComboBox<>();
-        PrintUtils.populateMediaSizeComboBox(sizeComboBox);
-        sizeComboBox.setValue(PrintUtils.getMediaSize(jasperPrint)); // Default: A4
+        populateMediaSizeComboBox(sizeComboBox);
+        sizeComboBox.setValue(MediaSizeName.ISO_A4); // Default: A4
 
-        // RadioButtons for orientation
         ToggleGroup orientationGroup = new ToggleGroup();
         RadioButton portraitRadio = new RadioButton("Portrait");
         RadioButton landscapeRadio = new RadioButton("Landscape");
         portraitRadio.setToggleGroup(orientationGroup);
         landscapeRadio.setToggleGroup(orientationGroup);
-        portraitRadio.setSelected(true); // Default selection
-        if (jasperPrint.getOrientation() == OrientationEnum.LANDSCAPE) {
-            landscapeRadio.setSelected(true);
-        } else {
-            landscapeRadio.setToggleGroup(orientationGroup);
+        portraitRadio.setSelected(true);
 
-        }
-
-        // Spinner for selecting number of copies
         Spinner<Integer> copiesSpinner = new Spinner<>(1, 100, 1); // Min:1, Max:100, Default:1
-
-        // CheckBox for showing print dialog
         CheckBox showPrintDialog = new CheckBox("Show Print Dialog");
         showPrintDialog.setSelected(false); // Default: No print dialog
 
-        // Print Button
+        // Print button
         Button printButton = new Button("Print");
-        printButton.setOnAction(e -> printReport(
+        printButton.setOnAction(e -> printPDF(
                 printerComboBox.getValue(),
                 sizeComboBox.getValue(),
                 landscapeRadio.isSelected(),
@@ -83,53 +77,40 @@ public class PrintDialog extends Application {
                 showPrintDialog, printButton
         );
         layout.setPadding(new Insets(15));
-
         primaryStage.setScene(new Scene(layout, 300, 350));
         primaryStage.show();
     }
 
-    private void printReport(String selectedPrinter, MediaSizeName paperSize, boolean isLandscape, int copies, boolean showDialog) {
+    private void printPDF(String selectedPrinter, MediaSizeName paperSize, boolean isLandscape, int copies, boolean showDialog) {
         PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
         printRequestAttributeSet.add(paperSize);
         printRequestAttributeSet.add(new Copies(copies));
         printRequestAttributeSet.add(isLandscape ? OrientationRequested.LANDSCAPE : OrientationRequested.PORTRAIT);
-
-        PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
-        printServiceAttributeSet.add(new PrinterName(selectedPrinter, null));
-
-        JRPrintServiceExporter exporter = new JRPrintServiceExporter();
-        SimplePrintServiceExporterConfiguration configuration = new SimplePrintServiceExporterConfiguration();
-        configuration.setPrintRequestAttributeSet(printRequestAttributeSet);
-        configuration.setPrintServiceAttributeSet(printServiceAttributeSet);
-        configuration.setDisplayPrintDialog(showDialog);
-
-        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setConfiguration(configuration);
-
-        // Find selected printer
         PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
-        PrintService selectedService = null;
-        for (PrintService service : services) {
-            if (service.getName().equals(selectedPrinter)) {
-                selectedService = service;
-                break;
-            }
+        PrintService selectedService = Arrays.stream(services)
+                .filter(service -> service.getName().equalsIgnoreCase(selectedPrinter.trim()))
+                .findFirst()
+                .orElse(null);
+
+        if (selectedService == null) {
+            showErrorAlert("Error: Printer not found!");
+            return;
         }
 
-        if (selectedService != null) {
-            try {
-                exporter.exportReport();
-                System.out.println("Print successful!");
-            } catch (JRException e) {
-                System.out.println("Error printing: " + e.getMessage());
+        try (PDDocument document = PDDocument.load(pdfFile)) {
+            PDFPageable pageable = new PDFPageable(document);
+            DocPrintJob printJob = selectedService.createPrintJob();
+            Doc doc = new SimpleDoc(pageable, DocFlavor.SERVICE_FORMATTED.PAGEABLE, null);
+
+            if (showDialog) {
+                printJob.print(doc, printRequestAttributeSet); // Show print dialog
+            } else {
+                printJob.print(doc, null); // Print without dialog
             }
-        } else {
-            System.out.println("Error: Printer not found!");
+
+            showInformationAlert("Print successful!");
+        } catch (IOException | PrintException e) {
+            showErrorAlert("Error printing: " + e.getMessage());
         }
-    }
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

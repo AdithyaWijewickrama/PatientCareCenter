@@ -1,5 +1,6 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
+import com.pcc.PatientCareCenter.Database.User.Patient;
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.Components.JRXMLPrinter.PccJRXmlLoader;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
@@ -47,7 +48,7 @@ public class UltrasoundScanFormController implements Initializable {
                 "Hip (for infants)",
                 "Endoscopic (EUS)"
         );
-        hospital.getItems().addAll("Matale","Kandy");
+        hospital.getItems().addAll("Matale", "Kandy");
         connections = new DataComponentConnection[]{
                 new StringTextfieldConnection(name),
                 new ValueComboBoxConnection<>(hospital),
@@ -62,6 +63,16 @@ public class UltrasoundScanFormController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    public void load() {
+        try {
+            if (Patient.getCurrentPatient() != null)
+                name.setText(Patient.getCurrentPatient().getName());
+        } catch (SQLException e) {
+            GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     public void print() throws JRException, SQLException {

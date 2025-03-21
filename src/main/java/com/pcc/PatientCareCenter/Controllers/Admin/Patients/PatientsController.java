@@ -70,7 +70,8 @@ public class PatientsController implements Initializable {
         });
         addPatientButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showGeneralDetails();
-            AdminPanes.getGeneralDetailsController().prepareToInsert();
+            AdminPanes.getGeneralDetailsController().setGeneralDetailsType(GeneralDetailsType.INSERT);
+
         });
         searchConfigButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showSearchConfig();
@@ -102,7 +103,7 @@ public class PatientsController implements Initializable {
         writePrescriptionButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showPrescription();
             try {
-//                AdminPanes.getPrescriptionController().
+                AdminPanes.getPrescriptionController().loadForCurrentPatient();
             } catch (Exception e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
@@ -119,6 +120,7 @@ public class PatientsController implements Initializable {
         });
         ultrasoundScanButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showUltrasoundScanForm();
+            AdminPanes.getUltrasoundScanController().load();
         });
         try {
             updateFrame();
@@ -201,7 +203,7 @@ public class PatientsController implements Initializable {
         editButton.setOnAction(event -> {
             Patient.setCurrentPatient(selectedPatient);
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().showGeneralDetails();
-            AdminPanes.getGeneralDetailsController().loadDataForCurrentPatient();
+            AdminPanes.getGeneralDetailsController().setGeneralDetailsType(GeneralDetailsType.UPDATE);
         });
         deleteButton.setOnAction(event -> {
             Patient.setCurrentPatient(selectedPatient);
@@ -215,6 +217,7 @@ public class PatientsController implements Initializable {
     }
 
     public void patientSelected() {
+        if(patientsTable.getSelectionModel().getSelectedItem()==null)return;
         int patientId = (int) patientsTable.getSelectionModel().getSelectedItem().getData("Patient Id");
         try {
             selectedPatient = new Patient(patientId);

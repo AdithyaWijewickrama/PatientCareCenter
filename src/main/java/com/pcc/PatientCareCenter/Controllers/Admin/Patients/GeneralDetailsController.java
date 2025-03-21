@@ -1,6 +1,8 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
+import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.Patient;
+import com.pcc.PatientCareCenter.Model.Sql;
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
 import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
@@ -11,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import javax.print.Doc;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -84,9 +87,9 @@ public class GeneralDetailsController implements Initializable {
                     try {
                         resultConnection.updateToDataBase();
                         GlobalsViews.showInformationAlert("Updated successfully!");
-                        resultConnection.clear();
                         AdminPanes.getPatientsController().tableLoad();
                     } catch (SQLException e) {
+                        GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                         throw new RuntimeException(e);
                     }
                 });
@@ -96,11 +99,15 @@ public class GeneralDetailsController implements Initializable {
                 prepareToInsert();
                 setAction((action) -> {
                     try {
-                        resultConnection.insertToDataBase();
-                        GlobalsViews.showInformationAlert("Inserted successfully!");
+                        int patientId = (int) resultConnection.insertToDataBase();
+                        GlobalsViews.showInformationAlert("Inserted successfully!\nPatient id:\t"+patientId);
                         AdminPanes.getPatientsController().tableLoad();
+                        Sql.getInstance().execute("""
+                                INSERT INTO doctors_of_patients VALUES(?,?)
+                                """, patientId, Doctor.getCurrentDoctor().getDoctorId());
                         setGeneralDetailsType(GeneralDetailsType.UPDATE);
                     } catch (SQLException e) {
+                        GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                         throw new RuntimeException(e);
                     }
                 });
@@ -117,6 +124,7 @@ public class GeneralDetailsController implements Initializable {
                             setGeneralDetailsType(GeneralDetailsType.UPDATE);
                         }
                     } catch (SQLException e) {
+                        GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                         throw new RuntimeException(e);
                     }
                 });
@@ -128,31 +136,21 @@ public class GeneralDetailsController implements Initializable {
         saveButton.setOnAction(eventHandler);
     }
 
-    public void prepareToInsert() {
+    private void prepareToInsert() {
         resultConnection.clear();
         resultConnection.setInsert(new SQLQuery("""
-                BEGIN TRANSACTION;
-                INSERT INTO patient_demographics pd
-                    (name,
-                    date_of_birth,
-                    gender,
-                    marital_status,
-                    nationality,
-                    language_preference)
-                    VALUES (?,?,?,?,?,?)
-                RETURNING pd.user_id;
-                INSERT INTO user_contact_details ucd
-                    (mobile_number,
-                    whatsapp_number,
-                    lan_number,
-                    street_address,
-                    country,
-                    province,
-                    city,
-                    postal_code)
-                    VALUES(?,?,?,?,?,?,?,?);
-                COMMIT;
-                """, QueryReturnType.ROW));
+               WITH inserted_patient AS (
+                   INSERT INTO patient_demographics\s
+                       (name, date_of_birth, gender, marital_status, nationality, language_preference)
+                   VALUES\s
+                       (?, ?, ?, ?, ?, ?)
+                   RETURNING patient_id
+               )
+               INSERT INTO patient_contact_details\s
+                   (patient_id, mobile_number, whatsapp_number, lan_number, street_address, country, province, city, postal_code)
+               SELECT\s
+                   patient_id, ?, ?, ?, ?, ?, ?, ?, ?
+               FROM inserted_patient RETURNING patient_id;""", QueryReturnType.SINGLE_VALUE));
     }
 
     public void loadDataForCurrentPatient() {
@@ -161,11 +159,25 @@ public class GeneralDetailsController implements Initializable {
         }
         try {
             resultConnection.setSelect(new SQLQuery(String.format("""
-                    SELECT pd.name,pd.date_of_birth,pd.gender,pd.marital_status,pd.nationality,pd.language_preference,ucd.mobile_number,ucd.whatsapp_number,ucd.lan_number,ucd.street_address,ucd.country,ucd.province,ucd.city,ucd.postal_code FROM patient_demographics pd
+                    SELECT
+                        pd.name,
+                        pd.date_of_birth,
+                        pd.gender,pd.marital_status,
+                        pd.nationality,
+                        pd.language_preference,
+                        pcd.mobile_number,
+                        pcd.whatsapp_number,
+                        pcd.lan_number,
+                        pcd.street_address,
+                        pcd.country,
+                        pcd.province,
+                        pcd.city,
+                        pcd.postal_code
+                    FROM patient_demographics pd
                     JOIN
-                    user_contact_details ucd
-                    ON pd.user_id=ucd.user_id
-                     WHERE pd.user_id=%d""", Patient.getCurrentPatient().getPatientId()), QueryReturnType.ROW));
+                    patient_contact_details pcd
+                    ON pd.patient_id=pcd.patient_id
+                     WHERE pd.patient_id=%d""", Patient.getCurrentPatient().getPatientId()), QueryReturnType.ROW));
             resultConnection.setUpdate(new SQLQuery(String.format("""
                     WITH updated_patient AS (
                         UPDATE patient_demographics pd
@@ -176,12 +188,12 @@ public class GeneralDetailsController implements Initializable {
                             marital_status = ?,
                             nationality = ?,
                             language_preference = ?
-                        FROM user_contact_details ucd
-                        WHERE pd.user_id = ucd.user_id
-                          AND pd.user_id = %d
-                        RETURNING pd.user_id
+                        FROM patient_contact_details pcd
+                        WHERE pd.patient_id = pcd.patient_id
+                          AND pd.patient_id = %d
+                        RETURNING pd.patient_id
                     )
-                    UPDATE user_contact_details ucd
+                    UPDATE patient_contact_details pcd
                     SET
                         mobile_number = ?,
                         whatsapp_number = ?,
@@ -192,7 +204,7 @@ public class GeneralDetailsController implements Initializable {
                         city = ?,
                         postal_code = ?
                     FROM updated_patient up
-                    WHERE ucd.user_id = up.user_id;
+                    WHERE pcd.patient_id = up.patient_id;
                     """, Patient.getCurrentPatient().getPatientId()), QueryReturnType.NONE));
             resultConnection.loadDataFromDatabase();
         } catch (SQLException e) {
@@ -204,6 +216,8 @@ public class GeneralDetailsController implements Initializable {
     HashMap<String, ObservableList<String>> citiesByProvince;
 
     private void initializeData() {
+        nationality.getItems().addAll("Sri Lankan", "Indian", "American", "British", "Canadian", "Australian", "Other");
+        languagePreference.getItems().addAll("Sinhala", "English", "Tamil", "Other");
         citiesByProvince = new HashMap<>();
         citiesByProvince.put("Western Province", FXCollections.observableArrayList("Colombo", "Gampaha", "Kalutara"));
         citiesByProvince.put("Central Province", FXCollections.observableArrayList("Kandy", "Nuwara Eliya", "Matale"));

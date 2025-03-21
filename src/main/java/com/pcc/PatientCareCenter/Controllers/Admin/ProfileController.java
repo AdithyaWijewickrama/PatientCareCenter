@@ -3,6 +3,7 @@ package com.pcc.PatientCareCenter.Controllers.Admin;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
+import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -27,6 +28,8 @@ public class ProfileController implements Initializable {
         saveButton.setOnAction(event -> {
             try {
                 update();
+                AdminPanes.getPatientsController().updateFrame();
+                GlobalsViews.showInformationAlert("Updated successfully!");
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);

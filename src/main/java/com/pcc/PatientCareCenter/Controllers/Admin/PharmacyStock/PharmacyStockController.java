@@ -75,23 +75,23 @@ public class PharmacyStockController implements Initializable {
         StringBuilder sql = new StringBuilder("""
                 SELECT
                     stock_id AS "Stock Id",
-                    medicine_name Name,
-                    medicine_strength Strength,
+                    medicine_name "Name",
+                    medicine_strength "Strength",
                     medicine_unit "Unit",
-                    prise_per_medicine AS Prise,
+                    price_per_medicine AS "Prise",
                     stock_quantity AS "Stock quantity",
                     stock_expire_date AS "Expire date"
                 FROM public.stock_details
                 """);
         String searchString = searchTextField.getText();
         if (searchString.isEmpty())
-            return Sql.getInstance().executeQuery(sql + ";");
+            return Sql.getInstance().executeQuery(sql + " ORDER BY stock_expire_date DESC, medicine_name ASC;");
         List<String> columns = Arrays.asList(
                 "stock_id::TEXT",
                 "medicine_name",
                 "medicine_strength::TEXT",
                 "medicine_unit",
-                "prise_per_medicine::TEXT",
+                "price_per_medicine::TEXT",
                 "stock_quantity::TEXT",
                 "stock_expire_date::TEXT"
         );
@@ -101,16 +101,17 @@ public class PharmacyStockController implements Initializable {
             if (columns.indexOf(column) < columns.size() - 1) {
                 sql.append("\n\tOR ");
             } else {
-                sql.append(";");
+                sql.append(" ORDER BY stock_expire_date DESC, medicine_name ASC;");
             }
         }
+        System.out.println(sql);
         return Sql.getInstance().executeQuery(sql.toString());
     }
 
     public void tableLoad() {
         try {
             tableLoad(getTableQuery());
-            validateRows();
+            validateRows(tableView);
         } catch (SQLException e) {
             GlobalsViews.showErrorAlert(e.getLocalizedMessage());
             throw new RuntimeException(e);
@@ -123,7 +124,6 @@ public class PharmacyStockController implements Initializable {
         String iconSize = "20";
         Button editButton = new Button();
         Button deleteButton = new Button();
-        Button viewButton = new Button();
         editButton.setOnAction(event -> {
             Stock.setCurrentStock(selectedStock);
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
@@ -137,11 +137,11 @@ public class PharmacyStockController implements Initializable {
         });
         ButtonElements.bindIconFillProperty(editButton, "edit-button", new FontAwesomeIconView(FontAwesomeIcon.EDIT, iconSize));
         ButtonElements.bindIconFillProperty(deleteButton, "delete-button", new FontAwesomeIconView(FontAwesomeIcon.TRASH, iconSize));
-        ButtonElements.bindIconFillProperty(viewButton, "view-button", new FontAwesomeIconView(FontAwesomeIcon.EYE, iconSize));
-        return new Button[]{viewButton, editButton, deleteButton};
+//        ButtonElements.bindIconFillProperty(viewButton, "view-button", new FontAwesomeIconView(FontAwesomeIcon.EYE, iconSize));
+        return new Button[]{editButton, deleteButton};
     }
 
-    public void validateRows() {
+    public static void validateRows(TableView<DynamicTableRow> tableView) {
         tableView.setRowFactory(tv -> {
             TableRow<DynamicTableRow> row = new TableRow<>() {
                 @Override
@@ -149,27 +149,33 @@ public class PharmacyStockController implements Initializable {
                     super.updateItem(item, empty);
 
                     if (item == null || empty) {
-                        setStyle(""); // Clear style for empty rows
+                        setStyle("");
                     } else {
-                        // Check the expiration date column (assuming it's named "expire_date")
                         Object expireDateObj = item.getData("Expire date");
-                        System.out.println(expireDateObj.getClass());
                         if (expireDateObj instanceof Date) {
-                            LocalDate expireDate =( (Date) expireDateObj).toLocalDate();
+                            LocalDate expireDate = ((Date) expireDateObj).toLocalDate();
                             LocalDate today = LocalDate.now();
-
-                            // Check if expiration date is within 3 months
                             long monthsUntilExpire = ChronoUnit.MONTHS.between(today, expireDate);
-
                             if (expireDate.isBefore(today)) {
-                                // Expired: Set row background to red
-                                setStyle("-fx-background-color: #FFCCCB;"); // Light red
+                                setStyle("-fx-background-color: #FFCCCB;");
                             } else if (monthsUntilExpire <= 3) {
-                                // Expiring soon: Set row background to yellow
-                                setStyle("-fx-background-color: #FFFFE0;"); // Light yellow
+                                setStyle("-fx-background-color: #FFFFE0;");
                             } else {
-                                // Not expiring soon: Clear style
                                 setStyle("");
+                            }
+                            Object quantity = item.getData("Stock quantity");
+                            getStyleClass().removeAll("low-quantity", "medium-quantity", "high-quantity", "very-high-quantity");
+                            if (quantity instanceof Integer) {
+                                int qnt = (int) quantity;
+                                if (qnt < 50) {
+                                    getStyleClass().add("low-quantity");
+                                } else if (qnt < 150) {
+                                    getStyleClass().add("medium-quantity");
+                                } else if (qnt < 500) {
+                                    getStyleClass().add("high-quantity");
+                                } else if (qnt < 1000) {
+                                    getStyleClass().add("very-high-quantity");
+                                }
                             }
                         }
                     }
@@ -181,7 +187,6 @@ public class PharmacyStockController implements Initializable {
 
     public void patientSelected() throws SQLException {
         if (tableView.getSelectionModel().getSelectedItem() == null) return;
-        System.out.println("sfdjakffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         int stockId = (int) tableView.getSelectionModel().getSelectedItem().getData("Stock Id");
         selectedStock = Stock.getStock(stockId);
         selectedStock.load();

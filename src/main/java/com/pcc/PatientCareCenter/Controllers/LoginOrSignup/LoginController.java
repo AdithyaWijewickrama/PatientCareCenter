@@ -3,9 +3,11 @@ package com.pcc.PatientCareCenter.Controllers.LoginOrSignup;
 import com.pcc.PatientCareCenter.Database.PPDetails;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.User;
+import com.pcc.PatientCareCenter.Database.User.UserType;
 import com.pcc.PatientCareCenter.Model.Model;
 import com.pcc.PatientCareCenter.Views.Components.MessageType;
 import com.pcc.PatientCareCenter.Views.Components.PccMessage;
+import com.pcc.PatientCareCenter.Views.GlobalsViews;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -35,10 +37,14 @@ public class LoginController extends LoginOrSignupController implements Initiali
             try {
                 User user = User.getUser(email);
                 if (user != null) {
-                    Doctor.setCurrentAdmin(Doctor.getAdmin(user.getUserId()));
-                    PPDetails.setCurrentPP(PPDetails.getPpDetailsOfDoctor(Doctor.getCurrentDoctor().getDoctorId()));
-                    User.setCurrentUser(user);
-                    enterApplication(user);
+                    if (user.getUserType() == UserType.DOCTOR) {
+                        Doctor.setCurrentDoctor(Doctor.getDoctor(user.getUserId()));
+                        PPDetails.setCurrentPP(PPDetails.getPpDetailsOfDoctor(Doctor.getCurrentDoctor().getDoctorId()));
+                        User.setCurrentUser(user);
+                        enterApplication(user);
+                    }else if (user.getUserType() == UserType.DOCTOR) {
+                        GlobalsViews.showInformationAlert("You may login!");
+                    }
                 } else {
                     PccMessage.showMessage(loginMessage, "Email or password invalid!", MessageType.MESSAGE_TYPE_ERROR);
                 }

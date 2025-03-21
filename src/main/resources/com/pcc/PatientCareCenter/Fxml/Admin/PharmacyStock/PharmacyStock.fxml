@@ -53,13 +53,13 @@
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="448.0" prefWidth="693.0" BorderPane.alignment="CENTER">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <top>
+               <center>
                   <TableView fx:id="tableView" prefHeight="402.0" prefWidth="742.0" stylesheets="@../../../Styles/Admin/stock.css" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets />
                      </BorderPane.margin>
                   </TableView>
-               </top>
+               </center>
             </BorderPane>
          </content>
          <BorderPane.margin>

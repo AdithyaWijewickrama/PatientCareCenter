@@ -22,6 +22,10 @@ public class PPDetails implements DBObject {
         data.next();
     }
 
+    public int getPpId() {
+        return ppId;
+    }
+
     @Override
     public ResultSet loadAndGetData() throws SQLException {
         load();

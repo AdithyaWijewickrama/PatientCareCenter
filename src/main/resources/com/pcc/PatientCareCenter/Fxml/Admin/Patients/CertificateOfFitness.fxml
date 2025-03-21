@@ -221,14 +221,14 @@
                         </VBox>
                         <VBox prefHeight="46.0" prefWidth="224.0">
                            <children>
-                              <Label styleClass="normal-text-p" text="Phisical ability">
+                              <Label styleClass="normal-text-p" text="Physical ability">
                                  <VBox.margin>
                                     <Insets bottom="5.0" top="10.0"/>
                                  </VBox.margin>
                               </Label>
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="Fit">
+                                    <RadioButton mnemonicParsing="false" text="Fit" selected="true">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                        </HBox.margin>

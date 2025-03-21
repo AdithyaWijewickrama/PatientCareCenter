@@ -281,3 +281,31 @@
     -fx-fill: #256ad1;
     -fx-background-color: -fx-primary-pane-color;
 }
+
+.low-quantity {
+    -fx-border-color: #ff2929; /* Red */
+    -fx-padding: 5;
+    -fx-border-width: 0.6px;
+    -fx-border-radius: 5px;
+}
+
+.medium-quantity {
+    -fx-border-color: #e9a72e; /* Orange */
+    -fx-padding: 5;
+    -fx-border-width: 0.6px;
+    -fx-border-radius: 5px;
+}
+
+.high-quantity {
+    -fx-border-color: #33e433; /* Green */
+    -fx-border-width: 0.6px;
+    -fx-padding: 5;
+    -fx-border-radius: 5px;
+}
+
+.very-high-quantity {
+    -fx-border-color: #2020e0; /* Blue */
+    -fx-padding: 5;
+    -fx-border-width: 0.6px;
+    -fx-border-radius: 5px;
+}

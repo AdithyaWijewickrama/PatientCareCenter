@@ -2,6 +2,7 @@ package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
+import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -48,6 +49,7 @@ public class SearchConfigController implements Initializable {
         applyButton.setOnAction(event -> {
             try {
                 resultConnection.updateToDataBase();
+                AdminPanes.getPatientsController().tableLoad();
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
@@ -94,9 +96,9 @@ public class SearchConfigController implements Initializable {
             throw new RuntimeException(e);
         }
         List<String> columns = Arrays.asList(
-                "pd.patient_id",
+                "pd.patient_id::TEXT",
                 "pd.name",
-                "pd.date_of_birth",
+                "pd.date_of_birth::TEXT",
                 "pcd.mobile_number",
                 "pcd.whatsapp_number",
                 "pcd.street_address",
@@ -118,16 +120,16 @@ public class SearchConfigController implements Initializable {
         }
         List<String> columns = Arrays.asList(
                 "pd.patient_id AS \"Patient Id\"",
-                "pd.name AS Name",
+                "pd.name AS \"Name\"",
                 "pd.date_of_birth AS \"Date of birth\"",
                 "pcd.mobile_number AS \"Mobile Number\"",
                 "pcd.whatsapp_number AS \"Whatsapp Number\"",
-                "pcd.street_address AS Address",
-                "pd.gender AS Gender",
+                "pcd.street_address AS \"Address\"",
+                "pd.gender AS \"Gender\"",
                 "pd.marital_status AS \"Marital status\"",
-                "pd.nationality AS Nationality",
+                "pd.nationality AS \"Nationality\"",
                 "pd.language_preference AS \"Language preference\"",
-                "pcd.city AS City");
+                "pcd.city AS \"City\"");
         List<Boolean> finalValues = values;
         return columns.stream().filter(s -> finalValues.get(columns.indexOf(s))).toList();
     }

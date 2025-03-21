@@ -63,11 +63,6 @@ public class CertificateOfFitnessController implements Initializable {
                 new DateDatePickerConnection(examinedDate),
                 new ValueButtonGroupConnection(physicalAbilityGroup),
         };
-//        for (Spinner spinner : new Spinner[]{weight, height, bmi}) {
-//            spinner.valueProperty().addListener(event -> {
-//                setBmi();
-//            });
-//        }
         weight.valueProperty().addListener(event -> {
             setBmi();
         });
@@ -95,7 +90,7 @@ public class CertificateOfFitnessController implements Initializable {
         try {
             this.bmi.getValueFactory().setValue(getBmi(weight.getValue(), height.getValue()));
         } catch (Exception e) {
-//            throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -105,6 +100,12 @@ public class CertificateOfFitnessController implements Initializable {
 
     public void loadForCurrentPerson() throws SQLException {
         Patient patient = Patient.getCurrentPatient();
+        if (patient == null) {
+            name.setText("");
+            age.getValueFactory().setValue(0);
+            address.setText("");
+            return;
+        }
         name.setText(patient.getName());
         age.getValueFactory().setValue(patient.getAgeInYears());
         address.setText(PatientContactDetails.getCurrentPatientsContactDetails().getAddress());
