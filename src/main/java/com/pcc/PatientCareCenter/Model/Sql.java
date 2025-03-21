@@ -1,25 +1,62 @@
 package com.pcc.PatientCareCenter.Model;
 
+import com.pcc.PatientCareCenter.Database.Server.DatabaseConfigManager;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Sql {
 
     private static Sql instance;
-    private final Connection connection;
+    private Connection connection;
     private PreparedStatement preparedStatement;
-    public final String url = "jdbc:postgresql://localhost:5432/pcc";
-    public final String user = "postgres";
-    public final String password = "Password";
+    private String url;
+    private String user;
+    private String password;
 
-    public Sql() {
-        try {
-            connection = DriverManager.getConnection(url, user, password);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public Sql(String url, String user, String password) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
+    }
+
+    public void connect() throws SQLException {
+        connection = tryConnection(url, user, password);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public static Connection tryConnection(String url, String userName, String password) throws SQLException {
+        return DriverManager.getConnection(url, userName, password);
+    }
+
+    public static void setInstance(Sql sql) {
+        instance = sql;
     }
 
     public Connection getConnection() {
@@ -28,14 +65,18 @@ public class Sql {
 
     public static Sql getInstance() {
         if (instance == null) {
-            instance = new Sql();
+            Map<String, String> map = DatabaseConfigManager.readConfig();
+            try {
+                String url = map.get("url");
+                String username = map.get("username");
+                String password = PasswordEncryptor.decrypt(map.get("password"));
+                instance = new Sql(url, username, password);
+                instance.connect();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
         return instance;
-    }
-
-    public boolean execute(String query) throws SQLException {
-        preparedStatement = connection.prepareStatement(query);
-        return preparedStatement.execute();
     }
 
     public boolean execute(PreparedStatement preparedStatement) throws SQLException {
@@ -43,8 +84,8 @@ public class Sql {
     }
 
     public boolean execute(String query, Object... values) throws SQLException {
-        System.out.println(query+ Arrays.toString(values));
-       preparedStatement = connection.prepareStatement(query);
+        System.out.println(query + Arrays.toString(values));
+        preparedStatement = connection.prepareStatement(query);
         return execute(prepareValues(query, values));
     }
 
@@ -69,17 +110,8 @@ public class Sql {
         return executeQuery(preparedStatement);
     }
 
-    public int executeUpdate(String query) throws SQLException {
-        preparedStatement = connection.prepareStatement(query);
-        return executeUpdate(preparedStatement);
-    }
-
     public int executeUpdate(PreparedStatement pst) throws SQLException {
         return pst.executeUpdate();
-    }
-
-    public int executeUpdate(String query, Object... values) throws SQLException {
-        return executeUpdate(prepareValues(query, values));
     }
 
     public PreparedStatement prepareValues(String query, Object[] values) {
@@ -119,7 +151,7 @@ public class Sql {
 
 
     public List<Object> getColumn(ResultSet resultSet) throws SQLException {
-        List<Object> column = null;
+        List<Object> column;
         column = new ArrayList<>();
         while (resultSet.next()) {
             column.add(resultSet.getObject(1));
@@ -149,18 +181,8 @@ public class Sql {
     }
 
     public Object getObject(String query, Object... values) throws SQLException {
-        System.out.println(query+ Arrays.toString(values));
+        System.out.println(query + Arrays.toString(values));
         return getObject(prepareValues(query, values));
-    }
-
-    public static void main(String[] args) {
-        try {
-            List<Object> row = Sql.getInstance().getRow("SELECT * FROM user WHERE user_id=?", 2);
-//            System.out.println(row);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }
