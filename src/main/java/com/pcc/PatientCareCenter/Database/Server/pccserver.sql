@@ -1,105 +1,11 @@
 --
--- PostgreSQL database cluster dump
---
-
--- Started on 2025-03-21 19:08:45
-
-SET default_transaction_read_only = off;
-
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-
---
--- Roles
---
-
-CREATE ROLE postgres;
-ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:w5GcmVQFf8MOiegJmFxbfw==$i6u4jKqN86yr2XaPn5K4JT/t5Zv1taWh75UzJxW8kZU=:Awe7pndDpFtAk1E38T9Eb9w40A/cWXjY3DrfLPAY3tY=';
-
---
--- User Configurations
---
-
-
-
-
-
-
-
-
---
--- Databases
---
-
---
--- Database "template1" dump
---
-
-\connect template1
-
---
 -- PostgreSQL database dump
 --
 
 -- Dumped from database version 17.4
 -- Dumped by pg_dump version 17.4
 
--- Started on 2025-03-21 19:08:45
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
--- Completed on 2025-03-21 19:08:48
-
---
--- PostgreSQL database dump complete
---
-
---
--- Database "pcc" dump
---
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 17.4
--- Dumped by pg_dump version 17.4
-
--- Started on 2025-03-21 19:08:48
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- TOC entry 4937 (class 1262 OID 16388)
--- Name: pcc; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE pcc WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en-US';
-
-
-ALTER DATABASE pcc OWNER TO postgres;
-
-\connect pcc
+-- Started on 2025-03-21 23:29:15
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -124,7 +30,8 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.defaults (
     id text NOT NULL,
-    value text NOT NULL
+    value text NOT NULL,
+    pp_id integer
 );
 
 
@@ -162,7 +69,7 @@ CREATE SEQUENCE public.doctor_doctor_id_seq
 ALTER SEQUENCE public.doctor_doctor_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4938 (class 0 OID 0)
+-- TOC entry 4937 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: doctor_doctor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -196,7 +103,7 @@ CREATE TABLE public.stock_details (
     medicine_strength integer NOT NULL,
     medicine_unit text NOT NULL,
     price_per_medicine double precision NOT NULL,
-    medicine_dose_type text,
+    medicine_type text,
     pp_id integer
 );
 
@@ -220,7 +127,7 @@ CREATE SEQUENCE public.medicine_stock_stock_id_seq
 ALTER SEQUENCE public.medicine_stock_stock_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4939 (class 0 OID 0)
+-- TOC entry 4938 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: medicine_stock_stock_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -260,7 +167,7 @@ CREATE SEQUENCE public.medicines_medicine_id_seq
 ALTER SEQUENCE public.medicines_medicine_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4940 (class 0 OID 0)
+-- TOC entry 4939 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: medicines_medicine_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -353,7 +260,7 @@ CREATE SEQUENCE public.patient_demographics_patient_id_seq
 ALTER SEQUENCE public.patient_demographics_patient_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4941 (class 0 OID 0)
+-- TOC entry 4940 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: patient_demographics_patient_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -399,7 +306,7 @@ CREATE SEQUENCE public.patient_surgeries_surgery_id_seq
 ALTER SEQUENCE public.patient_surgeries_surgery_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4942 (class 0 OID 0)
+-- TOC entry 4941 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: patient_surgeries_surgery_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -441,7 +348,7 @@ CREATE SEQUENCE public.pp_details_pp_id_seq
 ALTER SEQUENCE public.pp_details_pp_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4943 (class 0 OID 0)
+-- TOC entry 4942 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: pp_details_pp_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -481,7 +388,7 @@ CREATE SEQUENCE public.prescription_id_seq
 ALTER SEQUENCE public.prescription_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4944 (class 0 OID 0)
+-- TOC entry 4943 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: prescription_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -533,7 +440,7 @@ CREATE SEQUENCE public.surgeries_surgery_id_seq
 ALTER SEQUENCE public.surgeries_surgery_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4945 (class 0 OID 0)
+-- TOC entry 4944 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: surgeries_surgery_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -609,7 +516,7 @@ CREATE SEQUENCE public.users_user_id_seq
 ALTER SEQUENCE public.users_user_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4946 (class 0 OID 0)
+-- TOC entry 4945 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -695,11 +602,11 @@ ALTER TABLE ONLY public."user" ALTER COLUMN user_id SET DEFAULT nextval('public.
 -- Data for Name: defaults; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.defaults (id, value) FROM stdin;
-DB_URL	jdbc:postgresql://localhost:5432/pcc
-DB_USERNAME	postgre
-DB_PASSWORD	Password
-WEBHOOK_URL	https://discord.com/api/webhooks/1352480180035125340/F2-nPfg77KuUcWzkelJu7T3FWxGhcfjh7Tbel26vTygblymCB4TYrkb6sx8idLXBEpDf
+COPY public.defaults (id, value, pp_id) FROM stdin;
+DB_URL	jdbc:postgresql://localhost:5432/pcc	1
+DB_USERNAME	postgre	1
+DB_PASSWORD	Password	1
+WEBHOOK_URL	https://discord.com/api/webhooks/1352480180035125340/F2-nPfg77KuUcWzkelJu7T3FWxGhcfjh7Tbel26vTygblymCB4TYrkb6sx8idLXBEpDf	1
 \.
 
 
@@ -844,8 +751,8 @@ COPY public.patient_demographics (patient_id, name, date_of_birth, gender, marit
 32	wr	2025-03-21	Male	Unmarried	\N	\N	Active
 33	satfsf	2025-03-21	Male	Unmarried	\N	\N	Active
 34	satfsf	2025-03-21	Male	Unmarried	Sri Lankan	Sinhala	Active
-35	fdsfs	2025-03-21	Male	Unmarried	\N	\N	Active
 2	Adithya Wijewickrama	2004-06-03	Male	Unmarried	\N	\N	Inactive
+35	fdsfs	2025-03-21	Male	Unmarried	\N	\N	Inactive
 \.
 
 
@@ -916,6 +823,13 @@ COPY public.prescription (id, description, patient_id, date) FROM stdin;
 36	Name:\tSunil Fernand\nAge:\t46 years\nAdd from our stock:-------------------------------\nTotal:\tRs. 0.00\nUnavailable medicines:-------------------------\nDescription------------------------------------	3	2025-03-21
 37	Name:\tLakmal Weerasinghe\nAge:\t44 years\nAdd from our stock:-------------------------------\nAmoxline 2mg\tFrequency: 3\tDays: 3\nTotal:\tRs. 45.00\nUnavailable medicines:-------------------------\nAmoxline 2mg\tFrequency: 3\tDays: 3\nDescription------------------------------------	10	2025-03-21
 38	Name:\tLakmal Weerasinghe\nAge:\t44 years\nAdd from our stock:-------------------------------\nAmoxline 2mg\tFrequency: 3\tDays: 3\nTotal:\tRs. 45.00\nUnavailable medicines:-------------------------\nAmoxline 2mg\tFrequency: 3\tDays: 3\nDescription------------------------------------	10	2025-03-21
+39	-------------------------------------------Name:\tLakmal Weerasinghe\nAge:\t44 years\nAdd from our stock:-------------------------------\nAmoxline 2mg\t1\tbd for \nAmoxicillin 250mg\t1\tbd for \t1 weeks\nTotal:\tRs. 360.50-------------------------------------------\nUnavailable medicines:-------------------------\nAmoxline 2mg\t1\tbd for \nAmoxicillin 250mg\t1\tbd for \t1 weeks\nDescription------------------------------------	10	2025-03-21
+40	-------------------------------------------\nName:\tSanduni Abeywickrama\nAge:\t27 years\nAdd from our stock:-------------------------------\nAmoxline 2mg\tbd for \t5 days\nAmoxicillin 250mg\tbd for \t6 daysPrice for medicines:\tRs. 359.00\nConsultant fee:\t0.00\n-------------------------------------------\nUnavailable medicines:-------------------------\nAmoxline 2mg\tbd for \t5 days\nAmoxicillin 250mg\tbd for \t6 days\nDescription------------------------------------	19	2025-03-21
+41	-----------------------------------------------\nName:\tSanduni Abeywickrama\nAge:\t27 years\nAdd from our stock:-------------------------------\nAmoxline 2mg\tbd for \t6 days\nAmoxicillin 250mg\tbd for \t5 days\nPrice for medicines:\tRs. 317.50\nConsultant fee:\t0.00\nTotal:\tRs. 317.50\n-----------------------------------------------\nUnavailable medicines:-------------------------\nAmoxline 2mg\tbd for \t6 days\nAmoxicillin 250mg\tbd for \t5 days\nDescription------------------------------------	19	2025-03-21
+42	-----------------------------------------------\nName:\tChamari Athapaththu\nAge:\t36 years\nAdd from our stock:-------------------------------\nAmoxicillin 250mg\tbd for \t2 months\nPrice for medicines:\tRs. 3090.00\nConsultant fee:\t0.00\nTotal:\tRs. 3090.00\n-----------------------------------------------\nUnavailable medicines:-------------------------\nAmoxicillin 250mg\tbd for \t2 months\nDescription------------------------------------	9	2025-03-21
+43	-----------------------------------------------\nName:\tChamari Athapaththu\nAge:\t36 years\nAdd from our stock:-------------------------------\nAmoxicillin 250mg\tbd for \t2 months\nPrice for medicines:\tRs. 3090.00\nConsultant fee:\t0.00\nTotal:\tRs. 3090.00\n-----------------------------------------------\nUnavailable medicines:-------------------------\nAmoxicillin 250mg\tbd for \t2 months\nDescription------------------------------------	9	2025-03-21
+44	-----------------------------------------------\nName:\tTharindu Mendis\nAge:\t30 years\nAdd from our stock:-------------------------------\nAmoxicillin 250mg\tbd for \t4 months\nPrice for medicines:\tRs. 6180.00\nConsultant fee:\t0.00\nTotal:\tRs. 6180.00\n-----------------------------------------------\nUnavailable medicines:-------------------------\nAmoxicillin 250mg\tbd for \t4 months\nDescription------------------------------------	15	2025-03-21
+45	-----------------------------------------------\nName:\tAnoma Rajapaksa\nAge:\t42 years\nAdd from our stock:----------------------------\nAmoxicillin 250mg\tbd for \t4 days\nPrice for medicines:\tRs. 206.00\nConsultant fee:\t0.00\nTotal:\tRs. 206.00\n-----------------------------------------------\nUnavailable medicines:-------------------------\nAmoxicillin 250mg\tbd for \t4 days\nDescription------------------------------------	4	2025-03-21
 \.
 
 
@@ -946,15 +860,15 @@ city	f
 -- Data for Name: stock_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.stock_details (stock_id, stock_quantity, stock_expire_date, medicine_name, medicine_strength, medicine_unit, price_per_medicine, medicine_dose_type, pp_id) FROM stdin;
-9	0	2024-08-12	Aspirin	81	mg	7	Pill	1
-10	0	2025-04-18	Losartan	50	mg	22.5	Pill	1
-1	100	2024-12-31	Paracetamol	500	mg	10.5	Pill	1
-2	1000	2025-06-30	Amoxicillin	250	mg	25.75	Pill	1
-4	10	2025-03-20	Metformin	500	mg	15	Pill	1
-6	1000	2025-03-20	Penadol	5	mg	5	Pill	1
-7	5	2024-09-25	Atorvastatin	10	mg	30	Pill	1
-3	221	2026-03-12	Amoxline	2	mg	5	Pill	1
+COPY public.stock_details (stock_id, stock_quantity, stock_expire_date, medicine_name, medicine_strength, medicine_unit, price_per_medicine, medicine_type, pp_id) FROM stdin;
+9	-562	2024-08-12	Aspirin	81	mg	7	Tablet	1
+2	438	2025-06-30	Amoxicillin	250	mg	25.75	Tablet	1
+4	-552	2025-03-20	Metformin	500	mg	15	Tablet	1
+6	438	2025-03-20	Penadol	5	mg	5	Tablet	1
+7	-557	2024-09-25	Atorvastatin	10	mg	30	Tablet	1
+3	-341	2026-03-12	Amoxline	2	mg	5	Tablet	1
+1	976	2024-12-31	Paracetamol	500	mg	10.5	Tablet	1
+10	4000	2029-03-21	Amoxicillin	67	mg	0.24	Tablet	1
 \.
 
 
@@ -1057,7 +971,7 @@ COPY public.user_images (user_id, profile_image) FROM stdin;
 
 
 --
--- TOC entry 4947 (class 0 OID 0)
+-- TOC entry 4946 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: doctor_doctor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1066,7 +980,7 @@ SELECT pg_catalog.setval('public.doctor_doctor_id_seq', 4, true);
 
 
 --
--- TOC entry 4948 (class 0 OID 0)
+-- TOC entry 4947 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: medicine_stock_stock_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1075,7 +989,7 @@ SELECT pg_catalog.setval('public.medicine_stock_stock_id_seq', 10, true);
 
 
 --
--- TOC entry 4949 (class 0 OID 0)
+-- TOC entry 4948 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: medicines_medicine_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1084,7 +998,7 @@ SELECT pg_catalog.setval('public.medicines_medicine_id_seq', 1, false);
 
 
 --
--- TOC entry 4950 (class 0 OID 0)
+-- TOC entry 4949 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: patient_demographics_patient_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1093,7 +1007,7 @@ SELECT pg_catalog.setval('public.patient_demographics_patient_id_seq', 35, true)
 
 
 --
--- TOC entry 4951 (class 0 OID 0)
+-- TOC entry 4950 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: patient_surgeries_surgery_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1102,7 +1016,7 @@ SELECT pg_catalog.setval('public.patient_surgeries_surgery_id_seq', 1, false);
 
 
 --
--- TOC entry 4952 (class 0 OID 0)
+-- TOC entry 4951 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: pp_details_pp_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1111,16 +1025,16 @@ SELECT pg_catalog.setval('public.pp_details_pp_id_seq', 4, true);
 
 
 --
--- TOC entry 4953 (class 0 OID 0)
+-- TOC entry 4952 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: prescription_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.prescription_id_seq', 38, true);
+SELECT pg_catalog.setval('public.prescription_id_seq', 45, true);
 
 
 --
--- TOC entry 4954 (class 0 OID 0)
+-- TOC entry 4953 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: surgeries_surgery_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1129,7 +1043,7 @@ SELECT pg_catalog.setval('public.surgeries_surgery_id_seq', 1, false);
 
 
 --
--- TOC entry 4955 (class 0 OID 0)
+-- TOC entry 4954 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1326,48 +1240,9 @@ ALTER TABLE ONLY public.patient_surgeries
     ADD CONSTRAINT patient_surgeries_patient_id_fkey FOREIGN KEY (patient_id) REFERENCES public.patient_demographics(patient_id);
 
 
--- Completed on 2025-03-21 19:08:48
+-- Completed on 2025-03-21 23:29:16
 
 --
 -- PostgreSQL database dump complete
---
-
---
--- Database "postgres" dump
---
-
-\connect postgres
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 17.4
--- Dumped by pg_dump version 17.4
-
--- Started on 2025-03-21 19:08:48
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
--- Completed on 2025-03-21 19:08:49
-
---
--- PostgreSQL database dump complete
---
-
--- Completed on 2025-03-21 19:08:49
-
---
--- PostgreSQL database cluster dump complete
 --
 

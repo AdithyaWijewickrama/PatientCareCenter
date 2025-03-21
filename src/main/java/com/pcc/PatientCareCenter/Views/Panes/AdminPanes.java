@@ -122,10 +122,10 @@ public class AdminPanes extends PaneViewFactory {
     }
 
     public Parent getMedicineSelector() {
-        if (stockDetails == null) {
-            stockDetails = GlobalsViews.loadFxml(FXML_PATH + "PharmacyStock/MedicineSelector.fxml", MEDICINE_SELECTOR_CONTROLLER);
+        if (medicineSelector == null) {
+            medicineSelector = GlobalsViews.loadFxml(FXML_PATH + "PharmacyStock/MedicineSelector.fxml", MEDICINE_SELECTOR_CONTROLLER);
         }
-        return stockDetails;
+        return medicineSelector;
     }
 
     public Parent getUltrasoundScanForm() {
