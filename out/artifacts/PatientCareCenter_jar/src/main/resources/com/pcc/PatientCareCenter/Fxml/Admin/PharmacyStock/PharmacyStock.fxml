@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane minHeight="560.0" minWidth="630.0" prefHeight="571.0" prefWidth="905.0" stylesheets="@../../../Styles/globals.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<!--            fx:controller="com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock.PharmacyStockController">-->
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <FlowPane alignment="CENTER_LEFT" columnHalignment="RIGHT" prefHeight="50.0" prefWidth="713.0">
+               <children>
+                  <FontAwesomeIconView glyphName="BOOK" size="30" styleClass="normal-text-p" wrappingWidth="34.0">
+                     <FlowPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </FlowPane.margin>
+                  </FontAwesomeIconView>
+                  <VBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="186.0">
+                     <children>
+                        <Label fx:id="pharmacyStock" contentDisplay="RIGHT" prefHeight="35.0" prefWidth="179.0" styleClass="h2-p" text="Pharmacy stock" textOverrun="LEADING_ELLIPSIS" />
+                     </children>
+                  </VBox>
+               </children>
+            </FlowPane>
+            <BorderPane prefHeight="13.0" prefWidth="761.0">
+               <top>
+                  <AnchorPane prefHeight="70.0" prefWidth="905.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField fx:id="searchTextField" layoutX="14.0" layoutY="13.0" prefHeight="36.0" prefWidth="260.0" promptText="Search in pharmacy stock" styleClass="textfield" />
+                        <ToggleButton fx:id="addStock" layoutX="772.0" layoutY="29.0" mnemonicParsing="false" styleClass="button-seconday" text="Add Stock" AnchorPane.rightAnchor="14.0">
+                           <graphic>
+                              <FontAwesomeIconView fx:id="addMedicineButton" glyphName="CHAIN_BROKEN" />
+                           </graphic>
+                        </ToggleButton>
+                        <Label layoutX="798.0" layoutY="6.0" text="Database options" AnchorPane.rightAnchor="14.0" />
+                     </children>
+                  </AnchorPane>
+               </top>
+            </BorderPane>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="448.0" prefWidth="693.0" BorderPane.alignment="CENTER">
+         <content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <TableView fx:id="tableView" prefHeight="402.0" prefWidth="742.0" stylesheets="@../../../Styles/Admin/stock.css" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </TableView>
+               </center>
+            </BorderPane>
+         </content>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </ScrollPane>
+   </center>
+</BorderPane>

@@ -59,10 +59,6 @@ public class Sql {
         instance = sql;
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
-
     public static Sql getInstance() {
         if (instance == null) {
             Map<String, String> map = DatabaseConfigManager.readConfig();
@@ -110,10 +106,6 @@ public class Sql {
         return executeQuery(preparedStatement);
     }
 
-    public int executeUpdate(PreparedStatement pst) throws SQLException {
-        return pst.executeUpdate();
-    }
-
     public PreparedStatement prepareValues(String query, Object[] values) {
         try {
             preparedStatement = connection.prepareStatement(query);
@@ -122,7 +114,6 @@ public class Sql {
                     preparedStatement.setObject(i + 1, values[i]);
                 }
             }
-//            System.out.println(query);
             return preparedStatement;
         } catch (SQLException e) {
             throw new RuntimeException(e);

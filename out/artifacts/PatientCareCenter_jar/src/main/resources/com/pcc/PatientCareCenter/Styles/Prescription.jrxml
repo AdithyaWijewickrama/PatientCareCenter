@@ -1,0 +1,80 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="Prescription" language="java" columnCount="1" pageWidth="300" pageHeight="420" orientation="Landscape" columnWidth="260" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ba7153e-a813-4bd9-90dc-efcd5c9332d8">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="patientName" class="java.lang.String"/>
+	<parameter name="appName" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="telephone" class="java.lang.String"/>
+	<parameter name="patientAge" class="java.lang.String"/>
+	<parameter name="doctorName" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="Field_1" class="java.sql.Date"/>
+	<sortField name="CURRENT_DATE" type="Variable"/>
+	<variable name="CURRENT_DATE" class="java.lang.String">
+		<expression><![CDATA[new SimpleDateFormat("dd/MM/yy").format(new Date())]]></expression>
+	</variable>
+	<background splitType="Stretch"/>
+	<title height="104" splitType="Stretch">
+		<element kind="textField" uuid="5facf7c9-7d05-47d4-a932-79479d08f1a1" x="0" y="0" width="260" height="23" fontName="SansSerif" fontSize="14.0" bold="true" hTextAlign="Center">
+			<expression><![CDATA[$P{appName}]]></expression>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="textField" uuid="5f0d1a8f-98a6-4fb0-b43d-36d32d06c08a" x="0" y="23" width="260" height="20" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Center">
+			<expression><![CDATA[$P{address}]]></expression>
+		</element>
+		<element kind="textField" uuid="f8011491-13bc-48c8-b08f-8aec26863541" x="0" y="40" width="260" height="23" fontName="SansSerif" fontSize="16.0" bold="true" hTextAlign="Center" vTextAlign="Top">
+			<expression><![CDATA[$P{doctorName}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="textField" uuid="e7d85606-79ee-470e-8771-2b9d2530e424" x="120" y="63" width="140" height="20" fontName="SansSerif" fontSize="11.0" bold="false" hTextAlign="Left">
+			<expression><![CDATA[$P{email}]]></expression>
+		</element>
+		<element kind="staticText" uuid="47b2c7cf-290b-4f6b-8450-5944f53eec34" x="0" y="63" width="110" height="20" fontName="SansSerif" fontSize="11.0" hTextAlign="Right">
+			<text><![CDATA[Email]]></text>
+		</element>
+		<element kind="staticText" uuid="728a06af-5dfc-405e-a0e0-19ed3e024466" x="0" y="83" width="110" height="20" fontName="SansSerif" fontSize="11.0" hTextAlign="Right">
+			<text><![CDATA[Telephone]]></text>
+		</element>
+		<element kind="textField" uuid="bf4fcbd7-5a71-4ab3-9f96-56816cdcd90f" x="120" y="83" width="140" height="20" fontName="SansSerif" fontSize="11.0" bold="false" hTextAlign="Left">
+			<expression><![CDATA[$P{telephone}]]></expression>
+		</element>
+		<element kind="line" uuid="b23c6240-5411-459b-914f-b7e9b8bbe972" x="1" y="103" width="259" height="1" direction="BottomUp">
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+	</title>
+	<pageHeader height="100">
+		<element kind="staticText" uuid="98b68de8-edc5-4e1c-b3ce-85abc5ae74af" x="1" y="20" width="40" height="20" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Left">
+			<text><![CDATA[Name]]></text>
+		</element>
+		<element kind="textField" uuid="5507369e-5a71-455a-97d3-682c539941e4" stretchType="ElementGroupBottom" x="41" y="20" width="220" height="30" fontName="SansSerif" fontSize="11.0" linkType="None" linkTarget="Self" blankWhenNull="true" bold="false" hTextAlign="Left">
+			<expression><![CDATA[$P{patientName}]]></expression>
+		</element>
+		<element kind="textField" uuid="edb3a09e-53ec-44b5-bf11-be0cd40ec1f4" x="41" y="50" width="220" height="20" fontName="SansSerif" fontSize="11.0" bold="false" hTextAlign="Left">
+			<expression><![CDATA[$P{patientAge}]]></expression>
+		</element>
+		<element kind="staticText" uuid="7ceda8f7-e89e-4847-adb8-22cd14d53c2c" x="1" y="50" width="40" height="20" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Left">
+			<text><![CDATA[Age]]></text>
+		</element>
+		<element kind="staticText" uuid="7f62e386-c2b5-4a28-8a36-40fda1c6c520" x="1" y="0" width="40" height="20" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Left">
+			<text><![CDATA[Date]]></text>
+		</element>
+		<element kind="textField" uuid="ceaeaef5-b13c-4347-a29d-aedb3c04637d" x="41" y="0" width="220" height="20" fontName="SansSerif" fontSize="11.0" bold="false" hTextAlign="Left">
+			<expression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").format(new Date())]]></expression>
+		</element>
+	</pageHeader>
+	<columnHeader height="15"/>
+	<detail>
+		<band height="87"/>
+	</detail>
+</jasperReport>

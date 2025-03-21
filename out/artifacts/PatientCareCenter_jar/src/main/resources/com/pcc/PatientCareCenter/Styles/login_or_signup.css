@@ -1,0 +1,11 @@
+.container {
+    -fx-background-color: -fx-primary-background-color;
+    -fx-padding: 20;
+    -fx-alignment: top-center;
+}
+
+.badge_container {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-background-color: -fx-secondary-pane-color;
+}

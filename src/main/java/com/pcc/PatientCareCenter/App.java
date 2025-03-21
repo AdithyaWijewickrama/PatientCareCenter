@@ -8,8 +8,6 @@ import com.pcc.PatientCareCenter.Model.Sql;
 import com.pcc.PatientCareCenter.Views.DatabaseConfigDialog;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -17,7 +15,6 @@ import java.util.Map;
 
 public class App extends Application {
 
-    private static final Logger log = LoggerFactory.getLogger(App.class);
 
     @Override
     public void start(Stage primaryStage) {
@@ -35,7 +32,7 @@ public class App extends Application {
             try {
                 sql.connect();
             } catch (SQLException e) {
-                log.error("e: ", e);
+                System.err.println(e.getMessage());
                 DatabaseConfigDialog configDialog=new DatabaseConfigDialog();
                 configDialog.start(new Stage());
             }

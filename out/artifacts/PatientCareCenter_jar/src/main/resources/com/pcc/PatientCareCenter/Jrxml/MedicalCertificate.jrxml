@@ -1,0 +1,142 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="MedicalReport" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="20" uuid="73bc1fae-cf56-403f-9e47-ac87822de754">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="appName" class="java.lang.String"/>
+	<parameter name="address" class="java.lang.String"/>
+	<parameter name="telephone" class="java.lang.String"/>
+	<parameter name="doctorName" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="patientName" class="java.lang.String"/>
+	<parameter name="patientAge" class="java.lang.Integer"/>
+	<parameter name="patientGender" class="java.lang.String"/>
+	<parameter name="patientAdress" class="java.lang.String"/>
+	<parameter name="fromDate" class="java.time.LocalDate"/>
+	<parameter name="patientNic" class="java.lang.String"/>
+	<parameter name="patientDesignation" class="java.lang.String"/>
+	<parameter name="patientDiagnosis" class="java.lang.String"/>
+	<parameter name="workPlace" class="java.lang.String"/>
+	<parameter name="daysForLeave" class="java.lang.Integer"/>
+	<query language="sql"><![CDATA[]]></query>
+	<variable name="pronoun" class="java.lang.String">
+		<expression><![CDATA["Male".equals($P{patientGender})?"he":"she"]]></expression>
+	</variable>
+	<variable name="CURRENT_DATE" class="java.lang.String">
+		<expression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").format(new Date())]]></expression>
+	</variable>
+	<title height="120" splitType="Stretch">
+		<element kind="textField" uuid="d7ebecdd-0410-4cfb-bc80-5831f15b0f9a" x="0" y="0" width="515" height="32" fontName="SansSerif" fontSize="24.0" bold="true" hTextAlign="Center">
+			<expression><![CDATA[$P{appName}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="c42047a4-b2ba-4403-ae7b-1d8368ebeb9f" x="0" y="32" width="515" height="20" fontName="SansSerif" fontSize="14.0" bold="true" hTextAlign="Center">
+			<expression><![CDATA[$P{address}]]></expression>
+		</element>
+		<element kind="textField" uuid="8e4e0f50-1c91-428d-91c6-d9990fd95f0d" x="0" y="50" width="515" height="32" fontName="SansSerif" fontSize="24.0" bold="true" hTextAlign="Center" vTextAlign="Top">
+			<expression><![CDATA[$P{doctorName}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="textField" uuid="22caa5db-f716-4a36-9e95-a8c9a961a17d" x="237" y="80" width="278" height="20" fontName="SansSerif" fontSize="14.0" bold="false" hTextAlign="Left">
+			<expression><![CDATA[$P{email}]]></expression>
+		</element>
+		<element kind="staticText" uuid="0396a32d-4f29-433c-85c7-51cdddb45b90" x="2" y="80" width="218" height="20" fontName="SansSerif" fontSize="14.0" hTextAlign="Right">
+			<text><![CDATA[Email]]></text>
+		</element>
+		<element kind="textField" uuid="8df13e2d-7a09-4f9e-93f8-a661a0b03c4b" x="237" y="100" width="278" height="20" fontName="SansSerif" fontSize="14.0" bold="false" hTextAlign="Left">
+			<expression><![CDATA[$P{telephone}]]></expression>
+		</element>
+		<element kind="staticText" uuid="f4e2f85b-f31c-4c9d-90b5-99486594b3a8" x="2" y="100" width="218" height="20" fontName="SansSerif" fontSize="14.0" hTextAlign="Right">
+			<text><![CDATA[Telephone]]></text>
+		</element>
+		<element kind="line" uuid="6061d294-27eb-4241-9dc9-e29ed733f275" x="230" y="80" width="1" height="37"/>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</title>
+	<pageHeader height="20" splitType="Stretch">
+		<element kind="line" uuid="214fbd1b-deee-4ffd-8135-7f79719d6d7b" x="0" y="10" width="515" height="1" direction="BottomUp">
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</pageHeader>
+	<columnHeader height="40" splitType="Stretch">
+		<element kind="staticText" uuid="a7b5ddc1-2e61-46fc-8f36-4df249c05f4f" x="0" y="0" width="515" height="40" fontName="SansSerif" fontSize="24.0" underline="true" bold="true" hTextAlign="Center">
+			<text><![CDATA[MEDICAL CERTIFICATE]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="580" splitType="Stretch">
+			<element kind="staticText" uuid="913a4f9f-d851-46f8-8b4f-4e64baff35ab" x="0" y="0" width="83" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Name]]></text>
+			</element>
+			<element kind="textField" uuid="01159c4f-36f4-423e-a54a-fad86ae1b72e" x="83" y="0" width="431" height="32" fontSize="11.0">
+				<expression><![CDATA[$P{patientName}]]></expression>
+			</element>
+			<element kind="textField" uuid="34fb7376-abdc-4468-8e88-ea6a7125f412" x="83" y="32" width="87" height="19" fontSize="11.0">
+				<expression><![CDATA[$P{patientAge}]]></expression>
+			</element>
+			<element kind="staticText" uuid="e61615b0-b6e1-465b-a10a-2073276ac2ee" x="0" y="32" width="83" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Age]]></text>
+			</element>
+			<element kind="staticText" uuid="e49a0236-43a5-4a95-bd05-f1ecf3de0f9e" x="170" y="32" width="58" height="18" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Sex]]></text>
+			</element>
+			<element kind="textField" uuid="8a5e96e6-edc0-4480-817d-d9572a56ec8e" x="228" y="32" width="102" height="19" fontSize="11.0">
+				<expression><![CDATA[$P{patientGender}]]></expression>
+			</element>
+			<element kind="staticText" uuid="4186e22b-2ae5-4310-8f44-d1f35ecac64e" x="330" y="31" width="58" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[ID No]]></text>
+			</element>
+			<element kind="textField" uuid="cf774ca8-4a00-4a16-802f-f2df1067d8c9" x="388" y="31" width="126" height="19" fontSize="11.0">
+				<expression><![CDATA[$P{patientNic}]]></expression>
+			</element>
+			<element kind="staticText" uuid="dcb9ffb1-708f-43ac-aa17-677399c15316" x="0" y="60" width="82" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Address]]></text>
+			</element>
+			<element kind="textField" uuid="8fabbb14-c9f5-4a2a-ab15-920e57560845" x="83" y="57" width="430" height="32" fontSize="11.0">
+				<expression><![CDATA[$P{patientAdress}]]></expression>
+			</element>
+			<element kind="textField" uuid="f618b83c-572e-490c-b044-f107a612c3e6" x="0" y="210" width="513" height="40" fontName="SansSerif" fontSize="11.0" bold="true">
+				<expression><![CDATA["I examined above patient and treated. As "+$V{pronoun}+" is not fit for work I recommend leave from "+$P{fromDate}+" for "+$P{daysForLeave}.toString()+"."]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="staticText" uuid="24e31c97-cff1-4c2a-b5d7-7099175e1e15" x="26" y="390" width="180" height="15" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Center">
+				<text><![CDATA[Signature of the medical officer]]></text>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="ffbcfb6f-46e1-44d1-b237-5184cffc992c" x="0" y="370" width="233" height="30" fontName="Sitka Text" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
+				<text><![CDATA[..................................................................]]></text>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="9ac1772c-bef9-4418-8ef7-b0e8942ad3c2" x="0" y="150" width="82" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Diagnosis]]></text>
+			</element>
+			<element kind="textField" uuid="907d3697-d7a5-4e93-8778-da19d3d185a9" x="83" y="150" width="430" height="30" fontSize="11.0">
+				<expression><![CDATA[$P{patientDiagnosis}]]></expression>
+			</element>
+			<element kind="staticText" uuid="adac2a26-70e7-483b-b5e7-66811988614d" x="0" y="90" width="83" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Place of work]]></text>
+			</element>
+			<element kind="textField" uuid="7f24fad9-c822-4a6e-8ac1-a1f9f84b68c8" x="83" y="91" width="439" height="19" fontSize="11.0">
+				<expression><![CDATA[$P{workPlace}]]></expression>
+			</element>
+			<element kind="staticText" uuid="b6c94e0b-c33b-4134-95be-619607576cd3" x="0" y="110" width="82" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Designation]]></text>
+			</element>
+			<element kind="textField" uuid="8a4afce5-0384-4dbd-8479-f626e357f28b" x="83" y="110" width="430" height="30" fontSize="11.0">
+				<expression><![CDATA[$P{patientDesignation}]]></expression>
+			</element>
+			<element kind="staticText" uuid="0fea8ff9-8d33-43b9-88e5-606f7ee347b6" x="273" y="560" width="240" height="20" fontName="SansSerif" fontSize="11.0" italic="true" bold="false" vTextAlign="Top">
+				<text><![CDATA[*This certificate is not for producing to the court.]]></text>
+			</element>
+			<element kind="staticText" uuid="fc0a2eff-6cc7-4bfa-84b8-66bedc099c9e" x="330" y="370" width="58" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+				<text><![CDATA[Date]]></text>
+			</element>
+			<element kind="textField" uuid="e606f440-52c6-492d-8e8d-188e839f7b76" x="388" y="370" width="126" height="19" fontSize="11.0">
+				<expression><![CDATA[$V{CURRENT_DATE}]]></expression>
+			</element>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+</jasperReport>

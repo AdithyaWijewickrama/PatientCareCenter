@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="543.0" stylesheets="@../../../Styles/globals.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<!--      fx:controller="com.pcc.PatientCareCenter.Controllers.Admin.Patients.PrescriptionController">-->
+   <children>
+      <Label styleClass="h1-p" text="Prescription" />
+      <VBox prefHeight="420.0" prefWidth="513.0">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+         <children>
+            <HBox prefHeight="57.0" prefWidth="513.0">
+               <children>
+                  <VBox prefHeight="57.0" prefWidth="326.0">
+                     <children>
+                        <Label styleClass="normal-text-p" text="Patient name">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="name" promptText="Enter the name" styleClass="textfield" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="60.0" prefWidth="180.0">
+                     <children>
+                        <Label styleClass="normal-text-p" text="Patient age">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Spinner fx:id="age" editable="true" styleClass="textfield">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Spinner>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="56.0" prefWidth="513.0">
+               <children>
+                  <VBox prefHeight="56.0" prefWidth="513.0">
+                     <children>
+                        <Label styleClass="normal-text-p" text="Patient histry">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></Label>
+                        <ToolBar fx:id="history" prefHeight="40.0" prefWidth="200.0" styleClass="textfield" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label styleClass="normal-text-p" text="Description about medicine">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <ScrollPane prefHeight="107.0" prefWidth="503.0">
+               <content>
+                  <ListView fx:id="descriptionList" prefHeight="162.0" prefWidth="488.0" />
+               </content>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </ScrollPane>
+            <HBox prefHeight="35.0" prefWidth="513.0">
+               <children>
+                  <Label text="Expired and out of stock will be added here" textFill="#838383">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <FontAwesomeIconView glyphName="ANGLE_DOWN" size="15">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
+               </children>
+            </HBox>
+            <TextArea fx:id="description" prefHeight="103.0" prefWidth="503.0" promptText="Enter description here..." styleClass="textfield" wrapText="true">
+               <VBox.margin>
+                  <Insets left="10.0" top="5.0" />
+               </VBox.margin>
+            </TextArea>
+            <HBox prefHeight="36.0" prefWidth="385.0">
+               <children>
+                  <Label text="Add a medicine">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="addMedicine" mnemonicParsing="false" styleClass="button-seconday">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="PLUS" />
+                     </graphic>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox prefHeight="92.0" prefWidth="513.0">
+         <children>
+            <Label styleClass="normal-text-p" text="Description" />
+            <TextArea fx:id="descriptionOther" prefHeight="70.0" prefWidth="503.0" promptText="Enter description here..." styleClass="textfield">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </TextArea>
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </VBox>
+      <FlowPane alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="395.0">
+         <children>
+            <Button fx:id="printAndSend" mnemonicParsing="false" styleClass="button-primary" text="Send">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <FlowPane.margin>
+                  <Insets right="10.0" />
+               </FlowPane.margin>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="SHARE_SQUARE" size="15" />
+               </graphic>
+            </Button>
+            <Button fx:id="print" mnemonicParsing="false" styleClass="button-primary" text="Print prescription">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="15" />
+               </graphic>
+            </Button>
+            <Button fx:id="printNoStock" mnemonicParsing="false" styleClass="button-primary" text="Print outside">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="15" />
+               </graphic>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </FlowPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>
