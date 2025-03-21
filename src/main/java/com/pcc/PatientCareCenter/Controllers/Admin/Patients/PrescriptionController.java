@@ -111,6 +111,7 @@ public class PrescriptionController implements Initializable {
                 GlobalsViews.showErrorAlert("Could not sent message!\n" + e.getLocalizedMessage());
                 throw new RuntimeException(e);
             }
+            printValues();
         });
         printNoStock.setOnAction(event -> {
             try {
@@ -156,18 +157,18 @@ public class PrescriptionController implements Initializable {
         return b;
     }
 
-    String msgBorder = "-------------------------------------------";
+    String msgBorder = "-----------------------------------------------";
 
     public String getSendMessage(int fee) {
         StringBuilder msg = new StringBuilder();
         msg.append(msgBorder).append("\n");
         msg.append("Name:\t").append(name.getText());
         msg.append("\nAge:\t").append(age.getValueFactory().getValue()).append(" years");
-        msg.append("\nAdd from our stock:-------------------------------");
+        msg.append("\nAdd from our stock:----------------------------");
         msg.append(getStockMedicineDescription(descriptionList.getItems()));
-        msg.append(String.format("Price for medicines:\tRs. %.02f\nConsultant fee:\t%.02f", getPrice(descriptionList.getItems()), fee));
+        msg.append(String.format("\nPrice for medicines:\tRs. %.02f\nConsultant fee:\t%.02f", getPrice(descriptionList.getItems()), (double)fee));
+        msg.append(String.format("\nTotal:\tRs. %.02f", getPrice(descriptionList.getItems())+(double)fee));
         msg.append("\n").append(msgBorder);
-        printValues();
         return msg.toString();
     }
 
@@ -222,6 +223,7 @@ public class PrescriptionController implements Initializable {
                     }
                 }
                 if (bool) continue;
+                System.out.println(med.hasStock(med.getTotalMedicine()));
                 if (med.hasStock(med.getTotalMedicine()) && !med.isExpired()) {
                     descriptionList.getItems().add(med);
                 } else {

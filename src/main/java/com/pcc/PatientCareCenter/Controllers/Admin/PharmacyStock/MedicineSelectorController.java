@@ -1,7 +1,7 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
 
 import com.pcc.PatientCareCenter.Controllers.Admin.Patients.GeneralDetailsType;
-import com.pcc.PatientCareCenter.Controllers.Admin.Patients.PrescriptionController;
+import com.pcc.PatientCareCenter.Database.DBObject;
 import com.pcc.PatientCareCenter.Database.Stock;
 import com.pcc.PatientCareCenter.Model.Medicine;
 import com.pcc.PatientCareCenter.Model.Model;
@@ -20,12 +20,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock.PharmacyStockController.validateRows;
 
@@ -44,13 +42,22 @@ public class MedicineSelectorController implements Initializable {
         pccTable = new PccTable(tableView);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         add.setOnAction(event -> {
-            tableView.getSelectionModel().getSelectedItems().forEach(dynamicTableRow -> {
+            for(DynamicTableRow dynamicTableRow :tableView.getSelectionModel().getSelectedItems()) {
                 int stockId = (Integer) dynamicTableRow.getData("Stock Id");
                 Stock stock;
+                AtomicBoolean cancelAll= new AtomicBoolean(false);
                 try {
                     stock = Stock.getStock(stockId);
                     Optional<Medicine.InputValues> result = InputDialogHelper.showInputDialog(stock);
                     result.ifPresent(inputValues -> {
+                        if(inputValues.getTotalDays()==0){
+                            if(inputValues.stock()==null){
+                                cancelAll.set(true);
+                                return;
+                            }
+                            GlobalsViews.showErrorAlert("Give a valid value to number of days!");
+                            return;
+                        }
                         Medicine med;
                         try {
                             med = new Medicine(stock, inputValues);
@@ -65,7 +72,11 @@ public class MedicineSelectorController implements Initializable {
                     GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                     throw new RuntimeException(e);
                 }
-            });
+                if(cancelAll.get()){
+                    PccMessage.showMessage(message, "Canceled!", MessageType.MESSAGE_TYPE_INFO);
+                    break;
+                }
+            }
         });
         searchTextField.textProperty().addListener(event -> {
             try {

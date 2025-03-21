@@ -28,16 +28,21 @@ public class Medicine {
     public Double calculatePrise() throws Exception {
         requireStock(stock);
         if (values.frequency == FrequencyType.WEEKLY) {
-            return stock.getPricePerMedicine() * values.frequency.getDailyFrequency() * values.getTotalDays();
+            return stock.getPricePerMedicine() * getTotalMedicine();
         }
-        return stock.getPricePerMedicine() * values.frequency.getDailyFrequency() * values.nOfDosesPerMedicine * values.getTotalDays();
+        return stock.getPricePerMedicine() * getTotalMedicine();
     }
 
     public int getTotalMedicine() throws SQLException {
+        int m;
         if (values.frequency == FrequencyType.WEEKLY) {
-
+            m = (values.getTotalWeeks());
+        } else {
+            m = (values.getTotalDays());
         }
-        return (int) Math.ceil((values.frequency.getDailyFrequency() * values.getTotalDays() * 1.) / values.nOfDosesPerMedicine());
+        double i = getStock().getStrength() * values.nOfMedicinePerDose();
+        double d = (values.frequency.getDailyFrequency() * m * 1.) * i;
+        return (int) (Math.ceil(d / getStock().getStrength()));
     }
 
     public static String getFrequencyType(int frq) {
@@ -66,7 +71,7 @@ public class Medicine {
         return stock.getExpireDate().isBefore(LocalDate.now());
     }
 
-    public record InputValues(Stock stock, FrequencyType frequency, int nOfDosesPerMedicine, int days, int weeks,
+    public record InputValues(Stock stock, FrequencyType frequency, double nOfMedicinePerDose, int days, int weeks,
                               int months) {
         public String getFrequency() {
             return "Frequency: " + frequency;
@@ -88,5 +93,15 @@ public class Medicine {
         public int getTotalDays() {
             return days + (weeks * 7) + (months * 30);
         }
+
+        public int getTotalWeeks() {
+            return (weeks) + (months * 4);
+        }
+    }
+
+    public static void main(String[] args) throws SQLException {
+        Stock stock1 = Stock.getStock(1);
+        Medicine medicine = new Medicine(stock1, new InputValues(stock1, FrequencyType.WEEKLY, 11, 5, 0, 0));
+        System.out.println(medicine.getTotalMedicine());
     }
 }

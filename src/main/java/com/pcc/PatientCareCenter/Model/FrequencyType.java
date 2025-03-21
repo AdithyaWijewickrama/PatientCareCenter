@@ -31,7 +31,7 @@ public enum FrequencyType {
             case BD -> f = 2;
             case QDS, SIX_HOURLY -> f = 4;
             case TDS -> f = 3;
-            case DAILY -> f = 1;
+            case DAILY,WEEKLY -> f = 1;
         }
         return f;
     }
