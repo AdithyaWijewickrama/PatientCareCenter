@@ -108,8 +108,6 @@ public class StockDetailsController implements Initializable {
         saveButton.setOnAction(eventHandler);
     }
 
-
-
     public void prepareToInsert() {
         resultConnection.clear();
         resultConnection.setInsert(new SQLQuery("""

@@ -43,7 +43,7 @@ public class WebhookSender {
     }
 
     public static void main(String[] args) {
-        String[] msgs = null;
+        String[] msgs;
         try {
             msgs = new String[]{new ObjectMapper().writeValueAsString("Name:	Sunil Fernand\nAge:	46 years\nAdd from our stock:\nAmoxline 2mg	| Frequency: 3	| Days: 3 |\nAmoxicillin 250mg	| Frequency: 3	| Days: 3 |\nLosartan 50mg	| Frequency: 3	| Days: 3 |\nTotal:	Rs. 479.25"),
                     "\"My name is adithya\"", "\"Name:\tSunil Fernand\\nAge:\t46 years\\nAdd from our stock:\\nAmoxline 2mg\t| Frequency: 3\t| Days: 3 |\\nAmoxicillin 250mg\t| Frequency: 3\t| Days: 3 |\\nLosartan 50mg\t| Frequency: 3\t| Days: 3 |\\nTotal:\tRs. 479.25\""

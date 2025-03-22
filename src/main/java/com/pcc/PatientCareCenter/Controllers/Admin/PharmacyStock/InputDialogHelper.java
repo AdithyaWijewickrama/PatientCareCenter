@@ -27,7 +27,7 @@ public class InputDialogHelper {
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL,cancelAllButton);
 
         Spinner<Integer> daysSpinner = new Spinner<>(0, 31, 0);
-        Spinner<Integer> noOfDosesPerMedicine = new Spinner<>(1, 100000, 1, 5);
+        Spinner<Integer> noOfDosesPerMedicine = new Spinner<>(1, 100000, 1, 1);
         TextField dose = new TextField();
         dose.setText(med.getStrength().toString());
 
@@ -62,7 +62,9 @@ public class InputDialogHelper {
             doseMultipleSelector.getSelectionModel().select("Divide");
         dose.setEditable(false);
         daysSpinner.setEditable(true);
+        noOfDosesPerMedicine.setEditable(true);
         monthsSpinner.setEditable(true);
+        dose.setEditable(true);
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
