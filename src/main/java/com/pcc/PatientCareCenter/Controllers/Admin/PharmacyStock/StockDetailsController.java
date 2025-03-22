@@ -14,7 +14,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class StockDetailsController implements Initializable {
     public Button saveButton;
 
     ResultConnection resultConnection;
-    private GeneralDetailsType generalDetailsType;
+    GeneralDetailsType generalDetailsType;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -108,42 +107,7 @@ public class StockDetailsController implements Initializable {
         saveButton.setOnAction(eventHandler);
     }
 
-
-
     public void prepareToInsert() {
-        resultConnection.clear();
-        resultConnection.setInsert(new SQLQuery("""
-                BEGIN TRANSACTION;
-                INSERT INTO stock_details
-                    (
-                    medicine_name,
-                    medicine_type,
-                    medicine_dose,
-                    medicine_dose_unit,
-                    price_per_medicine,
-                    stock_quantity,
-                    stock_expire_date,
-                    pp_id,
-                     )
-                    VALUES(?,?,?,?,?,?,?)
-                """, QueryReturnType.ROW, new Object[]{PPDetails.getCurrentPP().getPpId()}));
-        resultConnection.setUpdate(new SQLQuery("""
-                UPDATE stock_details
-                SET
-                    medicine_name=?,
-                    medicine_type=?,
-                    medicine_dose=?,
-                    medicine_dose_unit=?,
-                    price_per_medicine=?,
-                    stock_quantity=?,
-                    stock_expire_date=?
-                WHERE
-                    stock_id=? AND pp_id=?
-                """, QueryReturnType.NONE, new Object[]{Stock.getCurrentStock().getStockId(), PPDetails.getCurrentPP().getPpId()}));
-    }
-
-
-    public void prepareToUpdate() {
         resultConnection.clear();
         resultConnection.setInsert(new SQLQuery("""
                 BEGIN TRANSACTION;

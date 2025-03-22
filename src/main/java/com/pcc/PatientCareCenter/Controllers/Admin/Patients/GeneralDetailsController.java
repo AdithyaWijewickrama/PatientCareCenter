@@ -13,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-import javax.print.Doc;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -22,13 +21,7 @@ import java.util.ResourceBundle;
 public class GeneralDetailsController implements Initializable {
     public TextField name;
     public DatePicker dateOfBirth;
-    public RadioButton male;
-    public RadioButton female;
-    public RadioButton other;
     public ToggleGroup genderGroup;
-    public RadioButton unmarried;
-    public RadioButton married;
-    public RadioButton divorced;
     public ToggleGroup maritalStatusGroup;
     public ComboBox<String> nationality;
     public ComboBox<String> languagePreference;
@@ -42,7 +35,7 @@ public class GeneralDetailsController implements Initializable {
     public TextField postalCode;
     public Button saveButton;
 
-    private GeneralDetailsType generalDetailsType;
+    GeneralDetailsType generalDetailsType;
 
     ResultConnection resultConnection;
 

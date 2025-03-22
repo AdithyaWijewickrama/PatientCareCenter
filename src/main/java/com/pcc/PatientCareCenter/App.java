@@ -1,6 +1,5 @@
 package com.pcc.PatientCareCenter;
 
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.pcc.PatientCareCenter.Database.Server.DatabaseConfigManager;
 import com.pcc.PatientCareCenter.Model.Model;
 import com.pcc.PatientCareCenter.Model.PasswordEncryptor;
@@ -9,7 +8,6 @@ import com.pcc.PatientCareCenter.Views.DatabaseConfigDialog;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -18,11 +16,6 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        try {
-            UIManager.setLookAndFeel(new FlatIntelliJLaf());
-        } catch (UnsupportedLookAndFeelException e) {
-            throw new RuntimeException(e);
-        }
         Map<String, String> map = DatabaseConfigManager.readConfig();
         try {
             String url = map.get("url");
