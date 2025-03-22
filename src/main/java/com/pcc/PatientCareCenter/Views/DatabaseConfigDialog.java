@@ -14,6 +14,8 @@ public class DatabaseConfigDialog extends Application {
     @Override
     public void start(Stage primaryStage) {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setWidth(300);
+        dialog.setWidth(300);
         dialog.setTitle("Database Configuration");
         dialog.setHeaderText("Enter Database Credentials");
 
@@ -65,24 +67,24 @@ public class DatabaseConfigDialog extends Application {
         });
 
         dialog.showAndWait().ifPresent(result -> {
+            System.out.println("ksfjkaf");
             String url = result.getKey();
             String[] credentials = result.getValue().split(":");
             String username = credentials[0];
             String password = credentials[1];
-
             try {
-                DatabaseConfigManager.writeConfig(url,username, PasswordEncryptor.encrypt(password));
-                Sql sql=new Sql(url,username,password);
+                DatabaseConfigManager.writeConfig(url, username, PasswordEncryptor.encrypt(password));
+                Sql sql = new Sql(url, username, password);
                 sql.connect();
                 Sql.setInstance(sql);
             } catch (Exception e) {
+                System.exit(0);
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
             }
             System.out.println("Database URL: " + url);
             System.out.println("Username: " + username);
             System.out.println("Password: " + password);
-
         });
     }
 }

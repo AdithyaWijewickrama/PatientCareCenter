@@ -13,6 +13,12 @@ public class Defaults {
     }
 
     public static void setDefault(String id, String value) throws SQLException {
-        Sql.getInstance().execute("UPDATE defaults SET value=? WHERE id=? AND pp_id=?", value, id, PPDetails.getCurrentPP().getPpId());
+        Sql.getInstance().execute("""
+                INSERT INTO defaults
+                    (id,value,pp_id)
+                SET (?,?,?)
+                ON CONFLICT(id,pp_id)
+                DO UPDATE SET value=EXCLUDE.value
+                """, value, id, PPDetails.getCurrentPP().getPpId());
     }
 }

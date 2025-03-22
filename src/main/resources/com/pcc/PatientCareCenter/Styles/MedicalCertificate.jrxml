@@ -38,23 +38,23 @@
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<property name="com.jaspersoft.studio.unit.width" value="px"/>
 		</element>
-		<element kind="textField" uuid="835affbe-5e9a-4d5a-a0c8-084fd427cbe4" x="0" y="32" width="515" height="20" fontName="Yu Gothic UI" fontSize="14.0" bold="true" hTextAlign="Center">
+		<element kind="textField" uuid="835affbe-5e9a-4d5a-a0c8-084fd427cbe4" x="0" y="32" width="515" height="20" fontName="SansSerif" fontSize="14.0" bold="true" hTextAlign="Center">
 			<expression><![CDATA[$P{address}]]></expression>
 		</element>
-		<element kind="textField" uuid="64f34f40-9a65-4be3-96a1-58d8868dd13b" x="0" y="50" width="515" height="32" fontName="Yu Gothic UI" fontSize="24.0" bold="true" hTextAlign="Center" vTextAlign="Top">
+		<element kind="textField" uuid="64f34f40-9a65-4be3-96a1-58d8868dd13b" x="0" y="50" width="515" height="32" fontName="SansSerif" fontSize="24.0" bold="true" hTextAlign="Center" vTextAlign="Top">
 			<expression><![CDATA[$P{doctorName}]]></expression>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 		</element>
-		<element kind="textField" uuid="188b3b27-4ba6-47e7-b3bb-ae73b236a651" x="237" y="80" width="278" height="20" fontName="Yu Gothic UI" fontSize="14.0" bold="false" hTextAlign="Left">
+		<element kind="textField" uuid="188b3b27-4ba6-47e7-b3bb-ae73b236a651" x="237" y="80" width="278" height="20" fontName="SansSerif" fontSize="14.0" bold="false" hTextAlign="Left">
 			<expression><![CDATA[$P{email}]]></expression>
 		</element>
-		<element kind="staticText" uuid="e26e7ae2-6471-4d1e-af88-a110689cae11" x="2" y="80" width="218" height="20" fontName="Yu Gothic UI" fontSize="14.0" hTextAlign="Right">
+		<element kind="staticText" uuid="e26e7ae2-6471-4d1e-af88-a110689cae11" x="2" y="80" width="218" height="20" fontName="SansSerif" fontSize="14.0" hTextAlign="Right">
 			<text><![CDATA[Email]]></text>
 		</element>
-		<element kind="textField" uuid="218eeaeb-8f3a-472c-8d29-c0ef21b3acf8" x="237" y="100" width="278" height="20" fontName="Yu Gothic UI" fontSize="14.0" bold="false" hTextAlign="Left">
+		<element kind="textField" uuid="218eeaeb-8f3a-472c-8d29-c0ef21b3acf8" x="237" y="100" width="278" height="20" fontName="SansSerif" fontSize="14.0" bold="false" hTextAlign="Left">
 			<expression><![CDATA[$P{telephone}]]></expression>
 		</element>
-		<element kind="staticText" uuid="b75b7393-3949-431a-b571-04a788d84ee6" x="2" y="100" width="218" height="20" fontName="Yu Gothic UI" fontSize="14.0" hTextAlign="Right">
+		<element kind="staticText" uuid="b75b7393-3949-431a-b571-04a788d84ee6" x="2" y="100" width="218" height="20" fontName="SansSerif" fontSize="14.0" hTextAlign="Right">
 			<text><![CDATA[Telephone]]></text>
 		</element>
 		<element kind="line" uuid="70903840-4844-4a8b-a9d8-f67dc0cb3eff" x="230" y="80" width="1" height="37"/>
@@ -112,7 +112,7 @@
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			</element>
-			<element kind="staticText" uuid="00de6f0c-6978-4d38-aa39-6b2105fc81da" x="0" y="370" width="233" height="30" fontName="Sitka Text" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
+			<element kind="staticText" uuid="00de6f0c-6978-4d38-aa39-6b2105fc81da" x="0" y="370" width="233" height="30" fontName="SansSerif" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
 				<text><![CDATA[..................................................................]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>

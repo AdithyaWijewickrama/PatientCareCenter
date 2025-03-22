@@ -147,7 +147,7 @@ public class PrescriptionController implements Initializable {
                         + "\nUnavailable medicines:-------------------------"
                         + getNonStockMedicineDescription(descriptionList.getItems())
                         + "\nDescription------------------------------------"
-                        + descriptionOther.getText(), Patient.getCurrentPatient().getPatientId(), LocalDate.now());
+                        + descriptionOther.getText(), Patient.getCurrentPatient().getPatientIdByUserId(), LocalDate.now());
                 confiremed = true;
             }
             for (Medicine med : getStock(descriptionList.getItems())) {
@@ -183,14 +183,14 @@ public class PrescriptionController implements Initializable {
             }
             Patient currentPatient = Patient.getCurrentPatient();
             if (patient != null) {
-                if (patient == currentPatient.getPatientId()) {
+                if (patient == currentPatient.getPatientIdByUserId()) {
                     return;
                 }
             } else {
-                patient = currentPatient.getPatientId();
+                patient = currentPatient.getPatientIdByUserId();
             }
             clearFields();
-            List<PrescriptionHistory> historyList = PrescriptionHistory.getPrescriptionHistories(currentPatient.getPatientId());
+            List<PrescriptionHistory> historyList = PrescriptionHistory.getPrescriptionHistories(currentPatient.getPatientIdByUserId());
             if (historyList != null) {
                 for (PrescriptionHistory history : historyList) {
                     Button button = new Button("Prescription " + history.getId());

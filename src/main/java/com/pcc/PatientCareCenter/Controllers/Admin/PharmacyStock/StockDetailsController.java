@@ -1,6 +1,7 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
 
 import com.pcc.PatientCareCenter.Controllers.Admin.Patients.GeneralDetailsType;
+import com.pcc.PatientCareCenter.Database.DetailsController;
 import com.pcc.PatientCareCenter.Database.PPDetails;
 import com.pcc.PatientCareCenter.Database.Stock;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class StockDetailsController implements Initializable {
+public class StockDetailsController implements Initializable, DetailsController {
     public Spinner<Integer> strength;
     public ComboBox<String> unit;
     public ComboBox<String> medicineType;
@@ -27,6 +28,7 @@ public class StockDetailsController implements Initializable {
     public Spinner<Integer> quantity;
     public DatePicker expirationDate;
     public ComboBox<Object> name;
+    public ComboBox<Object> names;
     public Button saveButton;
 
     ResultConnection resultConnection;
@@ -45,9 +47,26 @@ public class StockDetailsController implements Initializable {
                 new DateDatePickerConnection(expirationDate),
         };
         resultConnection = new ResultConnection(connections);
-        setGeneralDetailsType(GeneralDetailsType.UPDATE);
+        setGeneralDetailsType(GeneralDetailsType.INSERT);
+        names.setOnAction(actionEvent -> {
+            try {
+                Stock stock = Stock.getLatestStock((String) names.getValue());
+                System.out.println((String) names.getValue());
+                System.out.println(stock);
+                if (stock != null) {
+                    System.out.println(stock.getStockId());
+                    Stock.setCurrentStock(stock);
+                    setGeneralDetailsType(GeneralDetailsType.DUPLICATE);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
+    public void pharmacyStockTableLoad() {
+        AdminPanes.getPharmacyStockController().tableLoad();
+    }
 
     public void setGeneralDetailsType(GeneralDetailsType generalDetailsType) {
         this.generalDetailsType = generalDetailsType;
@@ -62,7 +81,23 @@ public class StockDetailsController implements Initializable {
                         AdminPanes.getPharmacyStockController().tableLoad();
                         GlobalsViews.showInformationAlert("Updated successfully!");
                         resultConnection.clear();
+                        pharmacyStockTableLoad();
                     } catch (SQLException e) {
+                        GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+            case DUPLICATE -> {
+                saveButton.setText("Insert");
+                loadDataForCurrentMedicine();
+                setAction((action) -> {
+                    try {
+                        resultConnection.insertToDataBase();
+                        GlobalsViews.showInformationAlert("Inserted successfully!");
+                        pharmacyStockTableLoad();
+                    } catch (SQLException e) {
+                        GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                         throw new RuntimeException(e);
                     }
                 });
@@ -74,8 +109,9 @@ public class StockDetailsController implements Initializable {
                     try {
                         resultConnection.insertToDataBase();
                         GlobalsViews.showInformationAlert("Inserted successfully!");
-                        setGeneralDetailsType(GeneralDetailsType.UPDATE);
+                        pharmacyStockTableLoad();
                     } catch (SQLException e) {
+                        GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                         throw new RuntimeException(e);
                     }
                 });
@@ -94,8 +130,10 @@ public class StockDetailsController implements Initializable {
                             GlobalsViews.showInformationAlert("Deleted successfully!");
                             prepareToInsert();
                             setGeneralDetailsType(GeneralDetailsType.INSERT);
+                            pharmacyStockTableLoad();
                         }
                     } catch (SQLException e) {
+                        GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                         throw new RuntimeException(e);
                     }
                 });
@@ -110,33 +148,36 @@ public class StockDetailsController implements Initializable {
     public void prepareToInsert() {
         resultConnection.clear();
         resultConnection.setInsert(new SQLQuery("""
-                BEGIN TRANSACTION;
                 INSERT INTO stock_details
                     (
-                    medicine_name,
-                    medicine_type,
-                    medicine_dose,
-                    medicine_dose_unit,
-                    price_per_medicine,
-                    stock_quantity,
-                    stock_expire_date,
-                    pp_id,
+                        medicine_name,
+                        medicine_type,
+                        medicine_strength,
+                        medicine_unit,
+                        price_per_medicine,
+                        stock_quantity,
+                        stock_expire_date,
+                        pp_id
                      )
-                    VALUES(?,?,?,?,?,?,?)
+                VALUES(?,?,?,?,?,?,?,?)
                 """, QueryReturnType.ROW, new Object[]{PPDetails.getCurrentPP().getPpId()}));
-        resultConnection.setUpdate(new SQLQuery("""
-                UPDATE stock_details
-                SET
-                    medicine_name=?,
-                    medicine_type=?,
-                    medicine_dose=?,
-                    medicine_dose_unit=?,
-                    price_per_medicine=?,
-                    stock_quantity=?,
-                    stock_expire_date=?
-                WHERE
-                    stock_id=? AND pp_id=?
-                """, QueryReturnType.NONE, new Object[]{Stock.getCurrentStock().getStockId(), PPDetails.getCurrentPP().getPpId()}));
+    }
+
+    public void prepareDuplicateInsert() {
+        resultConnection.setInsert(new SQLQuery("""
+                INSERT INTO stock_details
+                    (
+                        medicine_name,
+                        medicine_type,
+                        medicine_strength,
+                        medicine_unit,
+                        price_per_medicine,
+                        stock_quantity,
+                        stock_expire_date,
+                        pp_id
+                     )
+                VALUES(?,?,?,?,?,?,?,?)
+                """, QueryReturnType.ROW, new Object[]{PPDetails.getCurrentPP().getPpId()}));
     }
 
     public void loadDataForCurrentMedicine() {
@@ -145,20 +186,19 @@ public class StockDetailsController implements Initializable {
         }
         try {
             resultConnection.setInsert(new SQLQuery("""
-                BEGIN TRANSACTION;
-                INSERT INTO stock_details
-                    (
-                    medicine_name,
-                    medicine_type,
-                    medicine_dose,
-                    medicine_dose_unit,
-                    price_per_medicine,
-                    stock_quantity,
-                    stock_expire_date,
-                    pp_id,
-                     )
-                    VALUES(?,?,?,?,?,?,?)
-                """, QueryReturnType.ROW, new Object[]{PPDetails.getCurrentPP().getPpId()}));
+                    INSERT INTO stock_details
+                        (
+                            medicine_name,
+                            medicine_type,
+                            medicine_strength,
+                            medicine_unit,
+                            price_per_medicine,
+                            stock_quantity,
+                            stock_expire_date,
+                            pp_id
+                         )
+                        VALUES(?,?,?,?,?,?,?,?)
+                    """, QueryReturnType.ROW, new Object[]{PPDetails.getCurrentPP().getPpId()}));
             resultConnection.setSelect(new SQLQuery(String.format("""
                     SELECT
                         medicine_name,
@@ -199,11 +239,11 @@ public class StockDetailsController implements Initializable {
         medicineType.getItems().addAll(MedicineType.getList());
         try {
             name.getItems().addAll(Stock.getMedicineNames(Doctor.getCurrentDoctor().getDoctorId()));
+            names.getItems().addAll(Stock.getMedicineNames(Doctor.getCurrentDoctor().getDoctorId()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     public void clear() {
         resultConnection.clear();

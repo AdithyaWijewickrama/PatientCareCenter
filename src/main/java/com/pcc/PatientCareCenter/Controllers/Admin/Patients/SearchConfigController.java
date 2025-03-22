@@ -131,6 +131,8 @@ public class SearchConfigController implements Initializable {
                 "pd.language_preference AS \"Language preference\"",
                 "pcd.city AS \"City\"");
         List<Boolean> finalValues = values;
+        System.out.println(columns);
+        System.out.println(values);
         return columns.stream().filter(s -> finalValues.get(columns.indexOf(s))).toList();
     }
 }

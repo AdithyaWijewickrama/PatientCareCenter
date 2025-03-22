@@ -1,5 +1,6 @@
 module com.ppcc.PatientCareCenter {
     requires javafx.controls;
+    requires javafx.graphics;
     requires javafx.fxml;
     requires de.jensd.fx.glyphs.fontawesome;
 
@@ -8,10 +9,12 @@ module com.ppcc.PatientCareCenter {
     requires com.google.zxing.javase;
     requires net.sf.jasperreports.core;
     requires org.eclipse.jdt.core;
+    requires org.jetbrains.annotations;
+    requires javafx.swing;
     requires com.fasterxml.jackson.databind;
     requires java.sql;
     requires org.apache.pdfbox;
-    requires javafx.swing;
+    requires com.formdev.flatlaf;
 
     opens com.pcc.PatientCareCenter to javafx.fxml;
     opens com.pcc.PatientCareCenter.Views to javafx.fxml;
@@ -20,7 +23,6 @@ module com.ppcc.PatientCareCenter {
     opens com.pcc.PatientCareCenter.Views.Components to javafx.fxml;
     opens com.pcc.PatientCareCenter.Controllers to javafx.fxml;
     opens com.pcc.PatientCareCenter.Controllers.LoginOrSignup to javafx.fxml;
-    opens com.pcc.PatientCareCenter.Controllers.Account to javafx.fxml;
     opens com.pcc.PatientCareCenter.Controllers.Client to javafx.fxml;
     opens com.pcc.PatientCareCenter.Controllers.Admin to javafx.fxml;
     opens com.pcc.PatientCareCenter.Database.User to javafx.base;
@@ -29,7 +31,6 @@ module com.ppcc.PatientCareCenter {
     exports com.pcc.PatientCareCenter.Controllers.Admin;
     exports com.pcc.PatientCareCenter.Controllers.Client;
     exports com.pcc.PatientCareCenter.Controllers.LoginOrSignup;
-    exports com.pcc.PatientCareCenter.Controllers.Account;
     exports com.pcc.PatientCareCenter.Model;
     exports com.pcc.PatientCareCenter.Views;
     exports com.pcc.PatientCareCenter.Views.Stages;
@@ -47,4 +48,6 @@ module com.ppcc.PatientCareCenter {
     opens com.pcc.PatientCareCenter.Views.Components.DCConnection to javafx.fxml;
     exports com.pcc.PatientCareCenter.Views.Components.ReportPrinting;
     opens com.pcc.PatientCareCenter.Views.Components.ReportPrinting to javafx.fxml;
+    exports com.pcc.PatientCareCenter.Controllers;
 }
+//java --module-path /Users/samadawalage/Downloads/javafx-sdk-24/lib --add-modules javafx.controls -jar PatientCareCenter.jar

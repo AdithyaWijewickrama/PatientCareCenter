@@ -49,6 +49,7 @@ public class AdminStages extends StageViewFactory {
         setCurrentPane("Patients");
         if (adminStage == null) {
             adminStage = createStage(mainStage);
+            adminStage.getIcons().add(GlobalsViews.APP_ICON);
         }
         return adminStage;
     }

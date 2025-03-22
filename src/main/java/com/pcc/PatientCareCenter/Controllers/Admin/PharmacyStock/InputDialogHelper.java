@@ -19,16 +19,15 @@ public class InputDialogHelper {
     public static Optional<Medicine.InputValues> showInputDialog(Stock med) throws SQLException {
         Dialog<Medicine.InputValues> dialog = new Dialog<>();
         dialog.setTitle("Select medicine");
-        dialog.setHeaderText(med.getName() + " " + med.getQuantity() + " in stock");
+        dialog.setHeaderText(med.getLocalizedName() + " " + med.getQuantity() + " in stock");
 
         ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelAllButton = new ButtonType("Cancel all", ButtonBar.ButtonData.CANCEL_CLOSE);
-        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL,cancelAllButton);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL, cancelAllButton);
 
         Spinner<Integer> daysSpinner = new Spinner<>(0, 31, 0);
         Spinner<Integer> noOfDosesPerMedicine = new Spinner<>(1, 100000, 1, 1);
-        TextField dose = new TextField();
-        dose.setText(med.getStrength().toString());
+        Spinner<Double> dose = new Spinner<>();
 
         Spinner<Integer> weeksSpinner = new Spinner<>(0, 52, 0);
         Spinner<Integer> monthsSpinner = new Spinner<>(0, 12, 0);
@@ -42,22 +41,32 @@ public class InputDialogHelper {
                 daysSpinner.getValueFactory().setValue(0);
             }
         });
-        String multiply="No. of "+med.getMedicineType().getDisplayName().toLowerCase(Locale.ROOT)+"s per dose:";
-        String divide="Divide "+med.getMedicineType().getDisplayName().toLowerCase(Locale.ROOT)+" in to:";
-        Label label=new Label(multiply);
-        ComboBox<String> doseMultipleSelector = new ComboBox<>(FXCollections.observableArrayList("1 or more","divide"));
+        String multiply = "No. of " + med.getMedicineType().getDisplayName().toLowerCase(Locale.ROOT) + "s per dose:";
+        String divide = "Divide " + med.getMedicineType().getDisplayName().toLowerCase(Locale.ROOT) + " in to:";
+        Label label = new Label(multiply);
+        ComboBox<String> doseMultipleSelector = new ComboBox<>(FXCollections.observableArrayList("1 or more", "divide"));
         doseMultipleSelector.getSelectionModel().select(FrequencyType.BD.getName());
         doseMultipleSelector.valueProperty().addListener((observable, oldValue, newValue) -> {
             boolean b = newValue.equals("1 or more");
-            if(b){
+            if (b) {
+                try {
+                    dose.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(med.getStrength(),100000,med.getStrength(),med.getStrength()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 label.setText(multiply);
-            }else{
+            } else {
+                try {
+                    dose.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0,med.getStrength(),med.getStrength()/10.,med.getStrength()/10.));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 label.setText(divide);
             }
         });
-        if(med.getMedicineType()== MedicineType.TABLET){
+        if (med.getMedicineType() == MedicineType.TABLET) {
             doseMultipleSelector.getSelectionModel().select("1 or more");
-        }else
+        } else
             doseMultipleSelector.getSelectionModel().select("Divide");
         dose.setEditable(false);
         daysSpinner.setEditable(true);
@@ -72,8 +81,9 @@ public class InputDialogHelper {
         int row = 0;
         grid.add(new Label("Frequency:"), 0, row++);
         grid.add(frequencyCombo, 1, 0);
-        grid.add(new Label("Dose(" + med.getUnit() + "):"), 0, row++);
+        grid.add(new Label("Strength:"), 0, row++);
         grid.add(dose, 1, row - 1);
+        grid.add(new Label(med.getUnit()), 3, row - 1);
         grid.add(new Label("Dose multiply by:"), 0, row++);
         grid.add(doseMultipleSelector, 1, row - 1);
         grid.add(label, 0, row++);
@@ -92,11 +102,11 @@ public class InputDialogHelper {
                 int days = daysSpinner.valueProperty().getValue();
                 int weeks = weeksSpinner.valueProperty().getValue();
                 int months = monthsSpinner.valueProperty().getValue();
-                Medicine.InputValues inputValues = new Medicine.InputValues(med,FrequencyType.getFrequencyType(frequencyCombo.getValue()), (doseMultipleSelector.getSelectionModel().getSelectedItem().equals("1 or more")?noOfDosesPerMedicine.valueProperty().getValue():1./noOfDosesPerMedicine.valueProperty().getValue()), days, weeks, months);
+                Medicine.InputValues inputValues = new Medicine.InputValues(med, FrequencyType.getFrequencyType(frequencyCombo.getValue()), (doseMultipleSelector.getSelectionModel().getSelectedItem().equals("1 or more") ? noOfDosesPerMedicine.valueProperty().getValue() : 1. / noOfDosesPerMedicine.valueProperty().getValue()), days, weeks, months);
                 System.out.println(inputValues);
                 return inputValues;
-            }else if(dialogButton==cancelAllButton){
-                return new Medicine.InputValues(null,null,0,0,0,0);
+            } else if (dialogButton == cancelAllButton) {
+                return new Medicine.InputValues(null, null, 0, 0, 0, 0);
             }
             return null;
         });

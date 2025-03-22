@@ -28,13 +28,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock.PharmacyStockController.validateRows;
 
 public class MedicineSelectorController implements Initializable {
-    public Label pharmacyStock;
     public TextField searchTextField;
     public Button add;
     public TableView<DynamicTableRow> tableView;
     public List<Medicine> selectedStocks = new ArrayList<>();
     public Label message;
-    public Button addToPrescription;
     private PccTable pccTable;
 
     @Override

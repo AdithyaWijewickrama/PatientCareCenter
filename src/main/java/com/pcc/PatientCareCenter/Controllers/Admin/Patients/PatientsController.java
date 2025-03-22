@@ -17,11 +17,9 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -150,6 +148,22 @@ public class PatientsController implements Initializable {
     public void tableLoad(){
         try {
             tableLoad(getTableQuery());
+            setSelectedPatient(null);
+        } catch (SQLException e) {
+            GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setSelectedPatient(Patient p){
+        selectedPatient=p;
+    }
+
+    public Patient getSelectedPatient(){
+        if(patientsTable.getSelectionModel().getSelectedItem()==null)return null;
+        int patientId = (int) patientsTable.getSelectionModel().getSelectedItem().getData("Patient Id");
+        try {
+            return new Patient(patientId);
         } catch (SQLException e) {
             GlobalsViews.showErrorAlert(e.getLocalizedMessage());
             throw new RuntimeException(e);
@@ -170,6 +184,7 @@ public class PatientsController implements Initializable {
                     dop.doctor_id = ?\s
                     AND pd.status = 'Active'
                 """, String.join(",", getColumnsWithNaming())));
+        System.out.println(sql);
         String searchString = searchTextField.getText();
         if (searchString.isEmpty())
             return Sql.getInstance().executeQuery(sql + ";", Doctor.getCurrentDoctor().getDoctorId());

@@ -1,5 +1,6 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
+import com.pcc.PatientCareCenter.Database.DetailsController;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.Patient;
 import com.pcc.PatientCareCenter.Model.Sql;
@@ -18,7 +19,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class GeneralDetailsController implements Initializable {
+public class GeneralDetailsController implements Initializable, DetailsController {
     public TextField name;
     public DatePicker dateOfBirth;
     public ToggleGroup genderGroup;
@@ -34,9 +35,7 @@ public class GeneralDetailsController implements Initializable {
     public ComboBox<String> province;
     public TextField postalCode;
     public Button saveButton;
-
     GeneralDetailsType generalDetailsType;
-
     ResultConnection resultConnection;
 
     @Override
@@ -68,7 +67,11 @@ public class GeneralDetailsController implements Initializable {
         setGeneralDetailsType(GeneralDetailsType.UPDATE);
     }
 
+    public void patientsTableLoad(){
+        AdminPanes.getPatientsController().tableLoad();
+    }
 
+    @Override
     public void setGeneralDetailsType(GeneralDetailsType generalDetailsType) {
         this.generalDetailsType = generalDetailsType;
         resultConnection.clear();
@@ -80,7 +83,7 @@ public class GeneralDetailsController implements Initializable {
                     try {
                         resultConnection.updateToDataBase();
                         GlobalsViews.showInformationAlert("Updated successfully!");
-                        AdminPanes.getPatientsController().tableLoad();
+                        patientsTableLoad();
                     } catch (SQLException e) {
                         GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                         throw new RuntimeException(e);
@@ -98,7 +101,9 @@ public class GeneralDetailsController implements Initializable {
                         Sql.getInstance().execute("""
                                 INSERT INTO doctors_of_patients VALUES(?,?)
                                 """, patientId, Doctor.getCurrentDoctor().getDoctorId());
+                        Patient.setCurrentPatient(new Patient(patientId));
                         setGeneralDetailsType(GeneralDetailsType.UPDATE);
+                        patientsTableLoad();
                     } catch (SQLException e) {
                         GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                         throw new RuntimeException(e);
@@ -115,6 +120,7 @@ public class GeneralDetailsController implements Initializable {
                             GlobalsViews.showInformationAlert("Deleted successfully!");
                             AdminPanes.getPatientsController().tableLoad();
                             setGeneralDetailsType(GeneralDetailsType.UPDATE);
+                            patientsTableLoad();
                         }
                     } catch (SQLException e) {
                         GlobalsViews.showErrorAlert(e.getLocalizedMessage());
@@ -170,7 +176,7 @@ public class GeneralDetailsController implements Initializable {
                     JOIN
                     patient_contact_details pcd
                     ON pd.patient_id=pcd.patient_id
-                     WHERE pd.patient_id=%d""", Patient.getCurrentPatient().getPatientId()), QueryReturnType.ROW));
+                     WHERE pd.patient_id=%d""", Patient.getCurrentPatient().getPatientIdByUserId()), QueryReturnType.ROW));
             resultConnection.setUpdate(new SQLQuery(String.format("""
                     WITH updated_patient AS (
                         UPDATE patient_demographics pd
@@ -198,7 +204,7 @@ public class GeneralDetailsController implements Initializable {
                         postal_code = ?
                     FROM updated_patient up
                     WHERE pcd.patient_id = up.patient_id;
-                    """, Patient.getCurrentPatient().getPatientId()), QueryReturnType.NONE));
+                    """, Patient.getCurrentPatient().getPatientIdByUserId()), QueryReturnType.NONE));
             resultConnection.loadDataFromDatabase();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage());
