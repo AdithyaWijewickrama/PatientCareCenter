@@ -3,7 +3,6 @@ package com.pcc.PatientCareCenter.Model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pcc.PatientCareCenter.Database.Defaults;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,7 +26,7 @@ public class WebhookSender {
         }
     }
 
-    private static @NotNull HttpURLConnection getHttpURLConnection(String webhookUrl, String message) throws IOException {
+    private static HttpURLConnection getHttpURLConnection(String webhookUrl, String message) throws IOException {
         message = String.format("{\"content\": %s}", new ObjectMapper().writeValueAsString(message));
         System.out.println(message);
         URL url = new URL(webhookUrl);

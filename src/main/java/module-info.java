@@ -8,12 +8,10 @@ module com.ppcc.PatientCareCenter {
     requires com.google.zxing.javase;
     requires net.sf.jasperreports.core;
     requires org.eclipse.jdt.core;
-    requires org.jetbrains.annotations;
-    requires javafx.swing;
-    requires com.formdev.flatlaf;
     requires com.fasterxml.jackson.databind;
     requires java.sql;
     requires org.apache.pdfbox;
+    requires javafx.swing;
 
     opens com.pcc.PatientCareCenter to javafx.fxml;
     opens com.pcc.PatientCareCenter.Views to javafx.fxml;
