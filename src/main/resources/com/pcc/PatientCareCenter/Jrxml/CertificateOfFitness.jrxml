@@ -1,5 +1,5 @@
-<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
-<jasperReport name="CertificateOfFitness" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="20" uuid="53baa72d-3b9c-4e4b-b36a-d0a2d70889cf">
+<!-- Created with Jaspersoft Studio version 7.0.2.final using JasperReports Library version 7.0.2-31532122640f516c6d17238ae0e41a08113d5ac0  -->
+<jasperReport name="CertificateOfFitness" language="java" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="20" uuid="53baa72d-3b9c-4e4b-b36a-d0a2d70889cf">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="appName" class="java.lang.String"/>
 	<parameter name="address" class="java.lang.String"/>
@@ -100,16 +100,16 @@
 			<element kind="staticText" uuid="e4f9245d-72f1-44fa-94f3-3ed79b9806d7" x="0" y="230" width="119" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
 				<text><![CDATA[Urine examinatoin]]></text>
 			</element>
-			<element kind="textField" uuid="e4d92e60-5342-4e91-b9db-b76bce1921d2" x="0" y="340" width="513" height="40" fontName="Yu Gothic UI" fontSize="11.0" bold="true">
+			<element kind="textField" uuid="e4d92e60-5342-4e91-b9db-b76bce1921d2" x="0" y="340" width="513" height="40" fontName="SansSerif" fontSize="11.0" bold="true">
 				<expression><![CDATA["I here by certify that the above person is examined by me on "+$P{examinedDate}+" and found "+$P{physicalAbility}.toLowerCase()+" ,physically and mentally for performing any physical and mental activity at the time of examination."]]></expression>
 				<property name="com.jaspersoft.studio.unit.width" value="px"/>
 			</element>
-			<element kind="staticText" uuid="21942e76-5d04-4409-9b25-dbf00a70b4c1" x="26" y="540" width="180" height="15" fontName="Yu Gothic UI" fontSize="11.0" bold="true" hTextAlign="Center">
+			<element kind="staticText" uuid="21942e76-5d04-4409-9b25-dbf00a70b4c1" x="26" y="540" width="180" height="15" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Center">
 				<text><![CDATA[Signature of the medical officer]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			</element>
-			<element kind="staticText" uuid="b6428715-2045-4c25-aac8-c1386a26b9a9" x="0" y="520" width="233" height="30" fontName="Sitka Text" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
+			<element kind="staticText" uuid="b6428715-2045-4c25-aac8-c1386a26b9a9" x="0" y="520" width="233" height="30" fontName="SansSerif" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
 				<text><![CDATA[..................................................................]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>

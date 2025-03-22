@@ -61,7 +61,7 @@ public class SettingsController implements Initializable {
                 new StringTextfieldConnection(ppTelephone),
         };
         rsPPDetails = new ResultConnection(connPPDetails);
-        rsPPDetails.setSelect(new SQLQuery("SELECT name, address, email, telephone FROM public.pp_details WHERE doctor_id=?;", QueryReturnType.ROW, new Object[]{Doctor.getCurrentDoctor().getDoctorId()}));
+        rsPPDetails.setSelect(new SQLQuery("SELECT name, address, email, telephone FROM pp_details WHERE doctor_id=?;", QueryReturnType.ROW, new Object[]{Doctor.getCurrentDoctor().getDoctorId()}));
         ppSaveButton.setOnAction(event -> {
             try {
                 updateUserDetails();

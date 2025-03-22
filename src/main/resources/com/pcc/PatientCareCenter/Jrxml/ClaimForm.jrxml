@@ -67,7 +67,7 @@
 			<element kind="staticText" uuid="1c1320dd-7bc3-4f6b-aeaf-ac300e4a7263" x="280" y="135" width="30" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
 				<text><![CDATA[Date]]></text>
 			</element>
-			<element kind="staticText" uuid="0a4add5d-ca0e-46f1-b0a5-edb800b11981" x="5" y="130" width="160" height="30" fontName="Sitka Text" fontSize="11.0" bold="true" strikeThrough="false" hTextAlign="Center">
+			<element kind="staticText" uuid="0a4add5d-ca0e-46f1-b0a5-edb800b11981" x="5" y="130" width="160" height="30" fontName="SansSerif" fontSize="11.0" bold="true" strikeThrough="false" hTextAlign="Center">
 				<text><![CDATA[..................................]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>

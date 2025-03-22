@@ -112,16 +112,16 @@
 			<element kind="staticText" uuid="df0e6e73-d7fe-4f04-912d-82fef5ab390a" x="0" y="230" width="119" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
 				<text><![CDATA[Urine examinatoin]]></text>
 			</element>
-			<element kind="textField" uuid="f38be419-ab0f-4558-9431-3fc4bb87cd07" x="0" y="340" width="513" height="40" fontName="Yu Gothic UI" fontSize="11.0" bold="true">
+			<element kind="textField" uuid="f38be419-ab0f-4558-9431-3fc4bb87cd07" x="0" y="340" width="513" height="40" fontName="SansSerif" fontSize="11.0" bold="true">
 				<expression><![CDATA["I here by certify that the above person is examined by me on "+$P{examinedDate}+" and found "+$P{physicalAbility}+" physically and mentally for performing any physical and mental activity at the time of examination."]]></expression>
 				<property name="com.jaspersoft.studio.unit.width" value="px"/>
 			</element>
-			<element kind="staticText" uuid="3f07c409-dc4a-4b21-8503-101303a9b6f7" x="26" y="540" width="180" height="15" fontName="Yu Gothic UI" fontSize="11.0" bold="true" hTextAlign="Center">
+			<element kind="staticText" uuid="3f07c409-dc4a-4b21-8503-101303a9b6f7" x="26" y="540" width="180" height="15" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Center">
 				<text><![CDATA[Signature of the medical officer]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			</element>
-			<element kind="staticText" uuid="00de6f0c-6978-4d38-aa39-6b2105fc81da" x="0" y="520" width="233" height="30" fontName="Sitka Text" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
+			<element kind="staticText" uuid="00de6f0c-6978-4d38-aa39-6b2105fc81da" x="0" y="520" width="233" height="30" fontName="SansSerif" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
 				<text><![CDATA[..................................................................]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>

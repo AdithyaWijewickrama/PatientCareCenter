@@ -1,4 +1,4 @@
-<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<!-- Created with Jaspersoft Studio version 7.0.2.final using JasperReports Library version 7.0.2-31532122640f516c6d17238ae0e41a08113d5ac0  -->
 <jasperReport name="MedicalReport" language="java" columnCount="1" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="20" uuid="73bc1fae-cf56-403f-9e47-ac87822de754">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="appName" class="java.lang.String"/>
@@ -103,7 +103,7 @@
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			</element>
-			<element kind="staticText" uuid="ffbcfb6f-46e1-44d1-b237-5184cffc992c" x="0" y="370" width="233" height="30" fontName="Sitka Text" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
+			<element kind="staticText" uuid="ffbcfb6f-46e1-44d1-b237-5184cffc992c" x="0" y="370" width="233" height="30" fontName="SansSerif" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
 				<text><![CDATA[..................................................................]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -126,7 +126,7 @@
 			<element kind="textField" uuid="8a4afce5-0384-4dbd-8479-f626e357f28b" x="83" y="110" width="430" height="30" fontSize="11.0">
 				<expression><![CDATA[$P{patientDesignation}]]></expression>
 			</element>
-			<element kind="staticText" uuid="0fea8ff9-8d33-43b9-88e5-606f7ee347b6" x="273" y="560" width="240" height="20" fontName="SansSerif" fontSize="11.0" italic="true" bold="false" vTextAlign="Top">
+			<element kind="staticText" uuid="0fea8ff9-8d33-43b9-88e5-606f7ee347b6" x="273" y="560" width="240" height="20" fontName="SansSerif" fontSize="11.0" bold="false" italic="true" vTextAlign="Top">
 				<text><![CDATA[*This certificate is not for producing to the court.]]></text>
 			</element>
 			<element kind="staticText" uuid="fc0a2eff-6cc7-4bfa-84b8-66bedc099c9e" x="330" y="370" width="58" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">

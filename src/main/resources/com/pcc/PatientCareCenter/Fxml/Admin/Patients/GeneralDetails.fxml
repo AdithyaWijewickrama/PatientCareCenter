@@ -166,7 +166,7 @@
                         <Insets bottom="5.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <ComboBox fx:id="country" prefHeight="27.0" prefWidth="418.0" styleClass="textfield" />
+                  <ComboBox fx:id="country" editable="true" prefHeight="27.0" prefWidth="418.0" promptText="Select or enter country" styleClass="textfield" />
                   <HBox prefHeight="58.0" prefWidth="400.0">
                      <VBox prefHeight="58.0" prefWidth="198.0">
                         <Label styleClass="normal-text-p" text="City">

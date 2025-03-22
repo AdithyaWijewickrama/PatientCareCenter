@@ -16,6 +16,15 @@ public class Stock implements DBObject {
 
     private Stock(int stockId) throws SQLException {
         this.stockId = stockId;
+        load();
+    }
+
+    public static Stock getLatestStock(String name) throws SQLException {
+        Object id = Sql.getInstance().getObject("SELECT stock_id FROM stock_details WHERE medicine_name=? ORDER BY stock_expire_date ASC", name);
+        if(id!=null){
+            return new Stock((int)id);
+        }
+        return null;
     }
 
     public int getStockId() {

@@ -15,8 +15,9 @@ public class Patient {
     private final int patientId;
     private ResultSet data;
 
-    public Patient(int patientId) {
+    public Patient(int patientId) throws SQLException {
         this.patientId = patientId;
+        load();
     }
 
     public ResultSet loadAndGetData() throws SQLException {
@@ -39,6 +40,7 @@ public class Patient {
     public String getGender() throws SQLException {
         return data.getString("gender");
     }
+
     public Patient load() throws SQLException {
         data = Sql.getInstance().executeQuery("SELECT * FROM public.patient_demographics WHERE patient_id=?", patientId);
         data.next();
@@ -51,12 +53,12 @@ public class Patient {
         return period.getYears();
     }
 
-    public int getPatientId() {
+    public int getPatientIdByUserId() {
         return patientId;
     }
 
     public List<Object> getDataList() throws SQLException {
-        List<Object> list=new ArrayList<>();
+        List<Object> list = new ArrayList<>();
         for (int i = 1; i <= data.getMetaData().getColumnCount(); i++) {
             list.add(data.getObject(i));
         }
@@ -76,16 +78,16 @@ public class Patient {
         }
     }
 
-    public static int getPatientId(int userId) throws SQLException {
+    public static int getPatientIdByUserId(int userId) throws SQLException {
         return (int) Sql.getInstance().getObject("SELECT patient_id FROM patient_demographics WHERE user_id=?", userId);
     }
 
-    public static Patient getPatient(int userId) throws SQLException {
-        return new Patient(getPatientId(userId));
+    public static Patient getPatientById(int patientId) throws SQLException {
+        return new Patient(patientId);
     }
 
     public void deletePatient() throws SQLException {
-        Sql.getInstance().execute("UPDATE patient_demographics SET status='Inactive' WHERE patient_id=?",patientId);
+        Sql.getInstance().execute("UPDATE patient_demographics SET status='Inactive' WHERE patient_id=?", patientId);
     }
 
 }

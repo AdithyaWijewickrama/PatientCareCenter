@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseConfigManager {
-    public static final String DB_FILE="src\\main\\java\\com\\pcc\\PatientCareCenter\\Database\\Server\\db_config.xml";
+    public static final String DB_FILE="db_config.xml";
 
     public static void writeConfig(String url,String username,String password){
         writeConfig(DB_FILE,url,username,password);
@@ -41,7 +41,12 @@ public class DatabaseConfigManager {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(filePath));
+            File xlm=new File(filePath);
+            StreamResult result;
+            if(!xlm.exists()){
+                xlm.createNewFile();
+            }
+            result = new StreamResult(filePath);
             transformer.transform(source, result);
 
         } catch (Exception e) {
@@ -52,22 +57,27 @@ public class DatabaseConfigManager {
     public static Map<String, String> readConfig(String filePath) {
         try {
             File xmlFile = new File(filePath);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(xmlFile);
-            doc.getDocumentElement().normalize();
+            if(xmlFile.exists()) {
 
-            Map<String, String> config = new HashMap<>();
-            NodeList nodes = doc.getDocumentElement().getChildNodes();
 
-            for (int i = 0; i < nodes.getLength(); i++) {
-                if (nodes.item(i) instanceof Element element) {
-                    config.put(element.getTagName(), element.getTextContent());
+                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(xmlFile);
+                doc.getDocumentElement().normalize();
+
+                Map<String, String> config = new HashMap<>();
+                NodeList nodes = doc.getDocumentElement().getChildNodes();
+
+                for (int i = 0; i < nodes.getLength(); i++) {
+                    if (nodes.item(i) instanceof Element element) {
+                        config.put(element.getTagName(), element.getTextContent());
+                    }
                 }
+
+                return config;
+            }else{
+                return null;
             }
-
-            return config;
-
         } catch (Exception e) {
             throw new RuntimeException("Failed to read database config", e);
         }
