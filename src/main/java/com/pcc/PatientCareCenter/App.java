@@ -12,6 +12,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.Map;
 import java.util.Objects;
 
@@ -21,6 +22,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        File file = new File("src/main/resources/com/pcc/PatientCareCenter/Images/logo.png");
+        System.out.println(file.exists());
         try {
             UIManager.setLookAndFeel(new FlatIntelliJLaf());
         } catch (UnsupportedLookAndFeelException e) {
@@ -60,7 +63,7 @@ public class App extends Application {
             readConfigToSqlInstance();
             if(sql==null)throw new Exception("Database connection failed!");
             sql.connect();
-            RunSQLFile.runSQLFile(sql.getConnection(), Objects.requireNonNull(App.class.getResource("/com/pcc/PatientCareCenter/Database/Servers/pccserver.sql")).getFile());
+            RunSQLFile.runSQLFile(sql.getConnection());
             startApp();
     }
 

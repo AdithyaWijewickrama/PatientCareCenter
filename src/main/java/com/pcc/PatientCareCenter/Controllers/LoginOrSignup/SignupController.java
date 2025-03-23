@@ -9,11 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,7 +20,7 @@ public class SignupController extends LoginOrSignupController implements Initial
     public Label loginLink;
     public Label signupMessage;
     public TextField signupEmail;
-    public TextField signupPassword;
+    public PasswordField signupPassword;
     public TextField signupConfirmPassword;
     public Button signupButton;
     public ComboBox<String> accountType;
@@ -31,7 +29,6 @@ public class SignupController extends LoginOrSignupController implements Initial
     @FXML
     public boolean signup() {
         String email = signupEmail.getText();
-        String password = signupPassword.getText();
         String userType = accountType.getValue();
         System.out.println(userType);
         if (!isValidEmail(email)) {
@@ -56,17 +53,17 @@ public class SignupController extends LoginOrSignupController implements Initial
         return false;
     }
 
-    public static String getSignupEmail() {
-        return ((TextField) LoginOrSignupPanes.getInstance().getSignupPane().lookup("#signupEmail")).getText();
+    public String getSignupEmail() {
+        return signupEmail.getText();
     }
 
-    public static String getSignupPassword() {
-        return ((TextField) LoginOrSignupPanes.getInstance().getSignupPane().lookup("#signupPassword")).getText();
+    public String getSignupPassword() {
+        return signupPassword.getText();
     }
 
-    public static UserType getAccountType() {
+    public UserType getAccountType() {
         return UserType.getUserTypeByName(
-                (String) ((ComboBox<?>) LoginOrSignupPanes.getInstance().getSignupPane().lookup("#accountType")).getValue()
+                accountType.getValue()
         );
     }
 

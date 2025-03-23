@@ -1,6 +1,5 @@
 module com.ppcc.PatientCareCenter {
     requires javafx.controls;
-    requires javafx.graphics;
     requires javafx.fxml;
     requires de.jensd.fx.glyphs.fontawesome;
 
@@ -10,12 +9,13 @@ module com.ppcc.PatientCareCenter {
     requires net.sf.jasperreports.core;
     requires org.eclipse.jdt.core;
     requires org.jetbrains.annotations;
-    requires javafx.swing;
+//    requires javafx.swing;
     requires com.fasterxml.jackson.databind;
     requires java.sql;
     requires org.apache.pdfbox;
     requires com.formdev.flatlaf;
     requires java.management;
+    requires javafx.swing;
 
     opens com.pcc.PatientCareCenter to javafx.fxml;
     opens com.pcc.PatientCareCenter.Views to javafx.fxml;
@@ -53,4 +53,4 @@ module com.ppcc.PatientCareCenter {
     exports com.pcc.PatientCareCenter.Database.Server;
     opens com.pcc.PatientCareCenter.Database.Server to javafx.fxml;
 }
-//java --module-path /Users/samadawalage/Downloads/javafx-sdk-24/lib --add-modules javafx.controls -jar PatientCareCenter.jar
+

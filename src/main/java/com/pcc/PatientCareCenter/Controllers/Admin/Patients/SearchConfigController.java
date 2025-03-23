@@ -1,8 +1,8 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
+import com.pcc.PatientCareCenter.Controllers.AdminControllers;
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
-import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -11,9 +11,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 public class SearchConfigController implements Initializable {
     public CheckBox id;
@@ -49,7 +46,7 @@ public class SearchConfigController implements Initializable {
         applyButton.setOnAction(event -> {
             try {
                 resultConnection.updateToDataBase();
-                AdminPanes.getPatientsController().tableLoad();
+                AdminControllers.getPatientsController().tableLoad();
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);

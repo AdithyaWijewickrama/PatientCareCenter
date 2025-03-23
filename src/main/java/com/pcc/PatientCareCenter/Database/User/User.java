@@ -96,7 +96,7 @@ public class User {
     }
 
     public static boolean authenticateUser(String email, String password) throws Exception {
-        return Sql.getInstance().execute("SELECT email FROM public.user WHERE email=? AND password=?", email, encrypt(password));
+        return Sql.getInstance().execute("SELECT email FROM public.user WHERE email=? AND password=?", email, decrypt(password));
     }
 
     public static User createUser(String email, String password, UserType userType) throws Exception {

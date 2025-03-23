@@ -1,9 +1,7 @@
 package com.pcc.PatientCareCenter.Views.Components.JRXMLPrinter;
 
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.DataComponentConnection;
-import com.pcc.PatientCareCenter.Views.Components.ReportPrinting.PrintDialog;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.JRLoader;
 
@@ -17,7 +15,7 @@ import java.util.Objects;
 
 
 public class PccJRXmlLoader {
-    public static final String JRXML_PATH = "/com/pcc/PatientCareCenter/Jrxml/";
+    public static final String JRXML_PATH = "src/main/resources/com/pcc/PatientCareCenter/Jrxml/";
     private String fileName;
     String jasperPath;
     Map<String, Object> parameters = new HashMap<>();
@@ -25,7 +23,7 @@ public class PccJRXmlLoader {
 
     public PccJRXmlLoader(String fileName) throws JRException {
         this.fileName = fileName;
-        File file = new File(Objects.requireNonNull(getClass().getResource(JRXML_PATH + fileName + ".jasper")).getFile());
+        File file = new File(JRXML_PATH + fileName + ".jasper");
         jasperPath = file.getAbsolutePath();
         jasperReport = (JasperReport) JRLoader.loadObjectFromFile(jasperPath);
     }

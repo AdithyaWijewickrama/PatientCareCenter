@@ -1,5 +1,6 @@
 package com.pcc.PatientCareCenter.Views.Stages;
 
+import com.pcc.PatientCareCenter.Controllers.AdminControllers;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
 import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import javafx.beans.property.SimpleStringProperty;
@@ -8,7 +9,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.sql.SQLException;
 
@@ -62,7 +62,7 @@ public class AdminStages extends StageViewFactory {
         Dialog<?> dialog = GlobalsViews.getDialog();
         dialog.getDialogPane().setContent(AdminPanes.getInstance().getGeneralDetails());
         dialog.onCloseRequestProperty().addListener(event -> {
-            AdminPanes.getPatientsController().tableLoad();
+            AdminControllers.getPatientsController().tableLoad();
         });
         dialog.show();
     }
@@ -96,7 +96,7 @@ public class AdminStages extends StageViewFactory {
         dialog.getDialogPane().setContent(AdminPanes.getInstance().getProfile());
         dialog.onCloseRequestProperty().addListener(event -> {
             try {
-                AdminPanes.getPatientsController().updateFrame();
+                AdminControllers.getPatientsController().updateFrame();
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);

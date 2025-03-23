@@ -1,11 +1,10 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
 
 import com.pcc.PatientCareCenter.Controllers.Admin.Patients.GeneralDetailsType;
-import com.pcc.PatientCareCenter.Database.DBObject;
+import com.pcc.PatientCareCenter.Controllers.AdminControllers;
 import com.pcc.PatientCareCenter.Database.Stock;
 import com.pcc.PatientCareCenter.Model.Medicine;
 import com.pcc.PatientCareCenter.Model.Model;
-import com.pcc.PatientCareCenter.Model.Sql;
 import com.pcc.PatientCareCenter.Views.Components.MessageType;
 import com.pcc.PatientCareCenter.Views.Components.PccMessage;
 import com.pcc.PatientCareCenter.Views.Components.PccTable.ButtonElements;
@@ -60,7 +59,7 @@ public class MedicineSelectorController implements Initializable {
                         try {
                             med = new Medicine(stock, inputValues);
                             selectedStocks.add(med);
-                            AdminPanes.getPrescriptionController().addToList(med);
+                            AdminControllers.getPrescriptionController().addToList(med);
                             PccMessage.showMessage(message, med.getValues() + " added\n" + med, MessageType.MESSAGE_TYPE_INFO);
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -85,7 +84,7 @@ public class MedicineSelectorController implements Initializable {
             }
         });
         try {
-            tableLoad(getTableQuery());
+            tableLoad(PharmacyStockController.getTableQuery(searchTextField.getText()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -99,46 +98,9 @@ public class MedicineSelectorController implements Initializable {
         pccTable.resultSetToPccTable(resultSet);
         validateRows(tableView);
     }
-
-    public ResultSet getTableQuery() throws SQLException {
-        StringBuilder sql = new StringBuilder("""
-                SELECT
-                    stock_id AS "Stock Id",
-                    medicine_name "Name",
-                    medicine_strength "Strength",
-                    medicine_unit "Unit",
-                    price_per_medicine AS "Price",
-                    stock_quantity AS "Stock quantity",
-                    stock_expire_date AS "Expire date"
-                FROM public.stock_details
-                """);
-        String searchString = searchTextField.getText();
-        if (searchString.isEmpty())
-            return Sql.getInstance().executeQuery(sql + " ORDER BY stock_expire_date DESC, medicine_name ASC;");
-        List<String> columns = Arrays.asList(
-                "stock_id::TEXT",
-                "medicine_name",
-                "medicine_strength::TEXT",
-                "medicine_unit",
-                "price_per_medicine::TEXT",
-                "stock_quantity::TEXT",
-                "stock_expire_date::TEXT"
-        );
-        sql.append("WHERE\n\t");
-        for (String column : columns) {
-            sql.append(column).append(" ILIKE ").append("'%").append(searchString).append("%'");
-            if (columns.indexOf(column) < columns.size() - 1) {
-                sql.append("\n\tOR ");
-            } else {
-                sql.append(" ORDER BY stock_expire_date DESC, medicine_name ASC;");
-            }
-        }
-        return Sql.getInstance().executeQuery(sql.toString());
-    }
-
     public void tableLoad() {
         try {
-            tableLoad(getTableQuery());
+            tableLoad(PharmacyStockController.getTableQuery(searchTextField.getText()));
             validateRows(tableView);
         } catch (SQLException e) {
             GlobalsViews.showErrorAlert(e.getLocalizedMessage());

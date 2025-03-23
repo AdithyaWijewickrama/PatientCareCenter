@@ -1,6 +1,7 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
 import com.google.zxing.WriterException;
+import com.pcc.PatientCareCenter.Controllers.AdminControllers;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.Patient;
 import com.pcc.PatientCareCenter.Model.Model;
@@ -14,6 +15,7 @@ import com.pcc.PatientCareCenter.Views.GlobalsViews;
 import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+//import javafx.embed.swing.SwingFXUtils;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -68,7 +70,7 @@ public class PatientsController implements Initializable {
         });
         addPatientButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showGeneralDetails();
-            AdminPanes.getGeneralDetailsController().setGeneralDetailsType(GeneralDetailsType.INSERT);
+            AdminControllers.getGeneralDetailsController().setGeneralDetailsType(GeneralDetailsType.INSERT);
 
         });
         searchConfigButton.setOnAction(event -> {
@@ -83,7 +85,7 @@ public class PatientsController implements Initializable {
         medicalCertificateButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showMedicalCertificate();
             try {
-                AdminPanes.getMedicalCertificateController().loadForCurrentPerson();
+                AdminControllers.getMedicalCertificateController().loadForCurrentPerson();
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
@@ -92,7 +94,7 @@ public class PatientsController implements Initializable {
         certificateOfFitnessButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showCertificateOfFitness();
             try {
-                AdminPanes.getCertificateOfFitnessController().loadForCurrentPerson();
+                AdminControllers.getCertificateOfFitnessController().loadForCurrentPerson();
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
@@ -101,7 +103,7 @@ public class PatientsController implements Initializable {
         writePrescriptionButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showPrescription();
             try {
-                AdminPanes.getPrescriptionController().loadForCurrentPatient();
+                AdminControllers.getPrescriptionController().loadForCurrentPatient();
             } catch (Exception e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
@@ -110,7 +112,7 @@ public class PatientsController implements Initializable {
         claimReportButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showClaimForm();
             try {
-                AdminPanes.getClaimFormController().loadForCurrentPerson();
+                AdminControllers.getClaimFormController().loadForCurrentPerson();
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
@@ -118,7 +120,7 @@ public class PatientsController implements Initializable {
         });
         ultrasoundScanButton.setOnAction(event -> {
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showUltrasoundScanForm();
-            AdminPanes.getUltrasoundScanController().load();
+            AdminControllers.getUltrasoundScanController().load();
         });
         try {
             updateFrame();
@@ -218,12 +220,12 @@ public class PatientsController implements Initializable {
         editButton.setOnAction(event -> {
             Patient.setCurrentPatient(selectedPatient);
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().showGeneralDetails();
-            AdminPanes.getGeneralDetailsController().setGeneralDetailsType(GeneralDetailsType.UPDATE);
+            AdminControllers.getGeneralDetailsController().setGeneralDetailsType(GeneralDetailsType.UPDATE);
         });
         deleteButton.setOnAction(event -> {
             Patient.setCurrentPatient(selectedPatient);
             Model.getInstance().getCommonViewFactory().getAdminViewFactory().showGeneralDetails();
-            AdminPanes.getGeneralDetailsController().setGeneralDetailsType(GeneralDetailsType.DELETE);
+            AdminControllers.getGeneralDetailsController().setGeneralDetailsType(GeneralDetailsType.DELETE);
         });
         ButtonElements.bindIconFillProperty(editButton, "edit-button", new FontAwesomeIconView(FontAwesomeIcon.EDIT, iconSize));
         ButtonElements.bindIconFillProperty(deleteButton, "delete-button", new FontAwesomeIconView(FontAwesomeIcon.TRASH, iconSize));

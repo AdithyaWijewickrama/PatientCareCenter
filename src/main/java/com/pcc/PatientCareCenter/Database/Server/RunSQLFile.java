@@ -9,16 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class RunSQLFile {
-    public static void runSQLFile(Connection connection, String sqlFilePath) throws IOException, SQLException {
-        File file = new File(sqlFilePath);
-        StringBuilder sql = new StringBuilder();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sql.append(line).append("\n");
-            }
-        }
+    public static void runSQLFile(Connection connection) throws IOException, SQLException {
         connection.prepareStatement("""
                 -- Create the database if it doesn't exist
                 DO $$

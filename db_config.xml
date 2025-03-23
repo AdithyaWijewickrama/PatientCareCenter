@@ -2,5 +2,5 @@
 <databaseConfig>
   <url>jdbc:postgresql://localhost:5432/pcc</url>
   <username>postgres</username>
-  <password>7yayzvYwIUg6H96lNWX7ug==:Cd/plju83BeFTWj4wq+Gpg==:gcNAW1pdr5JVSGAJai5BSA==</password>
+  <password>ZDgYydyyrb6rDvLzITrppQ==:c4NGTdC5VseRUx9EyqS5VQ==:5Wfl4sls91esyieK8dOl3g==</password>
 </databaseConfig>
