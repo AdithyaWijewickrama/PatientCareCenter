@@ -17,7 +17,7 @@
 		<expression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").format(new Date())]]></expression>
 	</variable>
 	<variable name="BORDER" class="java.lang.String">
-		<expression><![CDATA["\n----------------------------------------------------\n"]]></expression>
+		<expression><![CDATA["\n-----------------------------------------------\n"]]></expression>
 	</variable>
 	<background splitType="Stretch"/>
 	<title height="167" splitType="Stretch">
@@ -62,10 +62,6 @@
 		<element kind="staticText" uuid="98b68de8-edc5-4e1c-b3ce-85abc5ae74af" x="2" y="122" width="40" height="20" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Left">
 			<text><![CDATA[Name]]></text>
 		</element>
-		<element kind="textField" uuid="ceaeaef5-b13c-4347-a29d-aedb3c04637d" x="42" y="102" width="216" height="20" markup="rtf" fontName="SansSerif" fontSize="9.0" bold="false" hTextAlign="Left">
-			<expression><![CDATA[$V{CURRENT_DATE}]]></expression>
-			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-		</element>
 		<element kind="textField" uuid="5507369e-5a71-455a-97d3-682c539941e4" stretchType="ElementGroupBottom" x="42" y="122" width="216" height="25" fontName="SansSerif" fontSize="11.0" linkType="None" linkTarget="Self" blankWhenNull="true" bold="false" hTextAlign="Left">
 			<expression><![CDATA[$P{patientName}]]></expression>
 			<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -76,6 +72,9 @@
 		</element>
 		<element kind="textField" uuid="edb3a09e-53ec-44b5-bf11-be0cd40ec1f4" x="41" y="147" width="216" height="20" fontName="SansSerif" fontSize="11.0" bold="false" hTextAlign="Left">
 			<expression><![CDATA[$P{patientAge}==null?"-":$P{patientAge}]]></expression>
+		</element>
+		<element kind="textField" uuid="2ecba512-69b3-4d71-b82e-707ba085b03b" x="41" y="102" width="216" height="20" evaluationTime="Report" bold="true">
+			<expression><![CDATA[$V{CURRENT_DATE}]]></expression>
 		</element>
 	</title>
 	<detail>
