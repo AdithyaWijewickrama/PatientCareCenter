@@ -38,7 +38,7 @@ public class PharmacyStockController implements Initializable {
         pccTable = new PccTable(tableView);
         tableView.getSelectionModel().selectedIndexProperty().addListener((e) -> {
             try {
-                patientSelected();
+                stockSelected();
             } catch (SQLException ex) {
                 GlobalsViews.showErrorAlert(ex.getLocalizedMessage());
                 throw new RuntimeException(ex);
@@ -69,6 +69,7 @@ public class PharmacyStockController implements Initializable {
         pccTable.setTableColumns(columns);
         pccTable.addTableColumn(PccTable.getNodeColumn("Action", cell -> new PatientsButtonCell(getButtonSet())));
         pccTable.resultSetToPccTable(resultSet);
+        validateRows(tableView);
     }
 
     public ResultSet getTableQuery() throws SQLException {
@@ -112,6 +113,7 @@ public class PharmacyStockController implements Initializable {
         try {
             tableLoad(getTableQuery());
             validateRows(tableView);
+            stockSelected();
         } catch (SQLException e) {
             GlobalsViews.showErrorAlert(e.getLocalizedMessage());
             throw new RuntimeException(e);
@@ -125,23 +127,28 @@ public class PharmacyStockController implements Initializable {
         Button editButton = new Button();
         Button deleteButton = new Button();
         editButton.setOnAction(event -> {
-            Stock.setCurrentStock(selectedStock);
-            Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
-            AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
+            if(selectedStock==null) {
+                GlobalsViews.showErrorAlert("Select a stock first");
+            }else{
+                Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
+                AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
+                AdminPanes.getStockDetailsController().setGeneralDetailsType(GeneralDetailsType.UPDATE);
+            }
         });
         deleteButton.setOnAction(event -> {
-            Stock.setCurrentStock(selectedStock);
-            Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
-            AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
-            AdminPanes.getStockDetailsController().setGeneralDetailsType(GeneralDetailsType.DELETE);
+            if(selectedStock==null){
+                GlobalsViews.showErrorAlert("Select a stock first");
+            }else {
+                Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
+                AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
+                AdminPanes.getStockDetailsController().setGeneralDetailsType(GeneralDetailsType.DELETE);
+            }
         });
         ButtonElements.bindIconFillProperty(editButton, "edit-button", new FontAwesomeIconView(FontAwesomeIcon.EDIT, iconSize));
         ButtonElements.bindIconFillProperty(deleteButton, "delete-button", new FontAwesomeIconView(FontAwesomeIcon.TRASH, iconSize));
 //        ButtonElements.bindIconFillProperty(viewButton, "view-button", new FontAwesomeIconView(FontAwesomeIcon.EYE, iconSize));
         return new Button[]{editButton, deleteButton};
     }
-
-
 
     public static void validateRows(TableView<DynamicTableRow> tableView) {
         Map<Integer,Integer> dates=new HashMap<>();
@@ -225,11 +232,14 @@ public class PharmacyStockController implements Initializable {
         return style;
     }
 
-    public void patientSelected() throws SQLException {
-        if (tableView.getSelectionModel().getSelectedItem() == null) return;
+    public void stockSelected() throws SQLException {
+        if (tableView.getSelectionModel().getSelectedItem() == null) {
+            selectedStock=null;
+            Stock.setCurrentStock(null);
+            return;
+        }
         int stockId = (int) tableView.getSelectionModel().getSelectedItem().getData("Stock Id");
         selectedStock = Stock.getStock(stockId);
-        selectedStock.load();
         Stock.setCurrentStock(selectedStock);
     }
 

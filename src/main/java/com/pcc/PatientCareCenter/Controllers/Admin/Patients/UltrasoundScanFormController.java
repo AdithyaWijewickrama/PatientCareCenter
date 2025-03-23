@@ -67,9 +67,9 @@ public class UltrasoundScanFormController implements Initializable {
 
     public void load() {
         try {
-            if (Patient.getCurrentPatient() != null)
-                name.setText(Patient.getCurrentPatient().getName());
-        } catch (SQLException e) {
+//            if (Patient.getCurrentPatient() != null)
+//                name.setText(Patient.getCurrentPatient().getName());
+        } catch (Exception e) {
             GlobalsViews.showErrorAlert(e.getLocalizedMessage());
             throw new RuntimeException(e);
         }

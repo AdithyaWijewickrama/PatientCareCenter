@@ -15,6 +15,7 @@ module com.ppcc.PatientCareCenter {
     requires java.sql;
     requires org.apache.pdfbox;
     requires com.formdev.flatlaf;
+    requires java.management;
 
     opens com.pcc.PatientCareCenter to javafx.fxml;
     opens com.pcc.PatientCareCenter.Views to javafx.fxml;
@@ -49,5 +50,7 @@ module com.ppcc.PatientCareCenter {
     exports com.pcc.PatientCareCenter.Views.Components.ReportPrinting;
     opens com.pcc.PatientCareCenter.Views.Components.ReportPrinting to javafx.fxml;
     exports com.pcc.PatientCareCenter.Controllers;
+    exports com.pcc.PatientCareCenter.Database.Server;
+    opens com.pcc.PatientCareCenter.Database.Server to javafx.fxml;
 }
 //java --module-path /Users/samadawalage/Downloads/javafx-sdk-24/lib --add-modules javafx.controls -jar PatientCareCenter.jar

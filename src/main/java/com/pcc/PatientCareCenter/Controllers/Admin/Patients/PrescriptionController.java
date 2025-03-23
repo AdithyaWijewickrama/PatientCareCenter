@@ -1,5 +1,6 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
+import com.pcc.PatientCareCenter.Database.Defaults;
 import com.pcc.PatientCareCenter.Database.PrescriptionHistory;
 import com.pcc.PatientCareCenter.Database.User.Patient;
 import com.pcc.PatientCareCenter.Model.*;
@@ -74,6 +75,7 @@ public class PrescriptionController implements Initializable {
                 if (confirmPrescription()) {
                     try {
                         print();
+                        setConfirmed();
                     } catch (JRException | SQLException e) {
                         GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                         throw new RuntimeException(e);
@@ -83,28 +85,24 @@ public class PrescriptionController implements Initializable {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
             }
-
         });
         printAndSend.setOnAction(event -> {
             try {
                 if (confirmPrescription()) {
-                    TextInputDialog dialog = new TextInputDialog("");
-                    dialog.setTitle("Input Medical Fee");
-                    dialog.setHeaderText("Enter medical fee");
-                    dialog.setContentText("Rs. ");
-                    dialog.showAndWait().ifPresent(input -> {
-                        fee = Integer.parseInt(input);
-                        int res = 0;
+                    String webhookUrl = Defaults.getDefault("WEBHOOK_URL");
+                    if (webhookUrl != null) {
                         try {
-                            res = WebhookSender.sendMessage(getSendMessage(fee));
-                        } catch (IOException e) {
+                            int res = WebhookSender.sendMessage("Connecting...");
+                            if (res > 200 && res < 300) {
+                                sendMessage();
+                                setConfirmed();
+                            } else {
+                                GlobalsViews.showErrorAlert("Can not connect to the webhook url: Error" + res);
+                            }
+                        } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-                        if (res < 300 && res >= 200)
-                            GlobalsViews.showInformationAlert("Message sent!");
-                        else
-                            GlobalsViews.showWarningAlert("Error cannot send message:" + res);
-                    });
+                    }
 
                 }
             } catch (SQLException e) {
@@ -115,17 +113,36 @@ public class PrescriptionController implements Initializable {
         });
         printNoStock.setOnAction(event -> {
             try {
-                if (confirmPrescription()) {
-                    try {
-                        printOutStock();
-                    } catch (JRException | SQLException e) {
-                        GlobalsViews.showErrorAlert(e.getLocalizedMessage());
-                        throw new RuntimeException(e);
-                    }
+                try {
+                    printOutStock();
+                } catch (JRException | SQLException e) {
+                    GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+                    throw new RuntimeException(e);
                 }
-            } catch (SQLException e) {
+
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        });
+    }
+
+    private void sendMessage() {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Input Medical Fee");
+        dialog.setHeaderText("Enter medical fee");
+        dialog.setContentText("Rs. ");
+        dialog.showAndWait().ifPresent(input -> {
+            fee = Integer.parseInt(input);
+            int res = 0;
+            try {
+                res = WebhookSender.sendMessage(getSendMessage(fee));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            if (res < 300 && res >= 200)
+                GlobalsViews.showInformationAlert("Message sent!");
+            else
+                GlobalsViews.showWarningAlert("Error cannot send message:" + res);
         });
     }
 
@@ -166,8 +183,8 @@ public class PrescriptionController implements Initializable {
         msg.append("\nAge:\t").append(age.getValueFactory().getValue()).append(" years");
         msg.append("\nAdd from our stock:----------------------------");
         msg.append(getStockMedicineDescription(descriptionList.getItems()));
-        msg.append(String.format("\nPrice for medicines:\tRs. %.02f\nConsultant fee:\t%.02f", getPrice(descriptionList.getItems()), (double)fee));
-        msg.append(String.format("\nTotal:\tRs. %.02f", getPrice(descriptionList.getItems())+(double)fee));
+        msg.append(String.format("\nPrice for medicines:\tRs. %.02f\nConsultant fee:\t%.02f", getPrice(descriptionList.getItems()), (double) fee));
+        msg.append(String.format("\nTotal:\tRs. %.02f", getPrice(descriptionList.getItems()) + (double) fee));
         msg.append("\n").append(msgBorder);
         return msg.toString();
     }
@@ -230,6 +247,7 @@ public class PrescriptionController implements Initializable {
                     description.appendText((description.getText().isEmpty() ? "" : "\n") + getShowName(med));
                 }
             }
+                System.out.println("-------------------------------"+descriptionList.getItems());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -345,10 +363,10 @@ public class PrescriptionController implements Initializable {
     }
 
     public String getShowName(Medicine medicine) {
-        return String.format("%s",medicine.getValues());
+        return String.format("%s", medicine.getValues());
     }
 
-    public void printValues(){
+    public void printValues() {
         System.out.println(getSendMessage(0));
         System.out.println("Price");
         System.out.println(getPrice(descriptionList.getItems()));

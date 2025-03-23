@@ -27,6 +27,10 @@ public class Sql {
         connection = tryConnection(url, user, password);
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     public String getPassword() {
         return password;
     }

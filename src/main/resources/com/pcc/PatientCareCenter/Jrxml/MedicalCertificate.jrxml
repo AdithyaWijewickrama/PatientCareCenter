@@ -98,12 +98,12 @@
 				<expression><![CDATA["I examined above patient and treated. As "+$V{pronoun}+" is not fit for work I recommend leave from "+$P{fromDate}+" for "+$P{daysForLeave}.toString()+"."]]></expression>
 				<property name="com.jaspersoft.studio.unit.width" value="px"/>
 			</element>
-			<element kind="staticText" uuid="24e31c97-cff1-4c2a-b5d7-7099175e1e15" x="26" y="390" width="180" height="15" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Center">
+			<element kind="staticText" uuid="24e31c97-cff1-4c2a-b5d7-7099175e1e15" x="28" y="350" width="180" height="15" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Center">
 				<text><![CDATA[Signature of the medical officer]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			</element>
-			<element kind="staticText" uuid="ffbcfb6f-46e1-44d1-b237-5184cffc992c" x="0" y="370" width="233" height="30" fontName="SansSerif" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
+			<element kind="staticText" uuid="ffbcfb6f-46e1-44d1-b237-5184cffc992c" x="2" y="330" width="233" height="30" fontName="SansSerif" fontSize="11.0" strikeThrough="false" bold="true" hTextAlign="Center">
 				<text><![CDATA[..................................................................]]></text>
 				<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -126,13 +126,13 @@
 			<element kind="textField" uuid="8a4afce5-0384-4dbd-8479-f626e357f28b" x="83" y="110" width="430" height="30" fontSize="11.0">
 				<expression><![CDATA[$P{patientDesignation}]]></expression>
 			</element>
-			<element kind="staticText" uuid="0fea8ff9-8d33-43b9-88e5-606f7ee347b6" x="273" y="560" width="240" height="20" fontName="SansSerif" fontSize="11.0" bold="false" italic="true" vTextAlign="Top">
+			<element kind="staticText" uuid="0fea8ff9-8d33-43b9-88e5-606f7ee347b6" x="0" y="560" width="240" height="20" fontName="SansSerif" fontSize="11.0" bold="false" italic="true" vTextAlign="Top">
 				<text><![CDATA[*This certificate is not for producing to the court.]]></text>
 			</element>
-			<element kind="staticText" uuid="fc0a2eff-6cc7-4bfa-84b8-66bedc099c9e" x="330" y="370" width="58" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
+			<element kind="staticText" uuid="fc0a2eff-6cc7-4bfa-84b8-66bedc099c9e" x="330" y="330" width="58" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
 				<text><![CDATA[Date]]></text>
 			</element>
-			<element kind="textField" uuid="e606f440-52c6-492d-8e8d-188e839f7b76" x="388" y="370" width="126" height="19" fontSize="11.0">
+			<element kind="textField" uuid="e606f440-52c6-492d-8e8d-188e839f7b76" x="388" y="330" width="126" height="19" fontSize="11.0">
 				<expression><![CDATA[$V{CURRENT_DATE}]]></expression>
 			</element>
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>

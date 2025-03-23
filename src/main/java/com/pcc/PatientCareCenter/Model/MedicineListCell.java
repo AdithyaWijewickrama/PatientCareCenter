@@ -11,7 +11,7 @@ public class MedicineListCell extends ListCell<Medicine> {
         if (empty || medicine == null) {
             setText(null);
         } else {
-            setText(medicine.getName() + " " + medicine.getValues().toString());
+            setText(medicine.getValues().toString());
             ContextMenu contextMenu = new ContextMenu();
             MenuItem deleteItem = new MenuItem("Delete");
             deleteItem.setOnAction(e -> {

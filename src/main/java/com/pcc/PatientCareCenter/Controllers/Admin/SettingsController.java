@@ -20,17 +20,17 @@ public class SettingsController implements Initializable {
     public PasswordField password;
     public PasswordField newPassword;
     public PasswordField confirmNewPassword;
-    public Button saveUserDetailsButton;
     public TextField ppName;
     public TextField ppAddress;
     public TextField ppEmail;
     public TextField ppTelephone;
-    public Button ppSaveButton;
     public TextField postgresUrl;
     public TextField postgresUsername;
     public PasswordField postgresPassword;
-    public Button postgresSaveButton;
     public TextField webhook;
+    public Button ppSaveButton;
+    public Button saveUserDetailsButton;
+    public Button postgresSaveButton;
     public Button webhookButton;
     DataComponentConnection[] connUserDetails;
     DataComponentConnection[] connPPDetails;
@@ -41,7 +41,7 @@ public class SettingsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         connUserDetails = new DataComponentConnection[]{
                 new StringTextfieldConnection(email),
-                new StringTextfieldConnection(password),
+                new StringPasswordFieldConnection(password)
         };
         rsUserDetails = new ResultConnection(connUserDetails);
         rsUserDetails.setSelect(new SQLQuery("SELECT email,password FROM public.user WHERE user_id=?", QueryReturnType.ROW, new Object[]{User.getCurrentUser().getUserId()}));
@@ -49,7 +49,7 @@ public class SettingsController implements Initializable {
             try {
                 updateUserDetails();
                 GlobalsViews.showInformationAlert("Update successfully!");
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
             }
@@ -58,13 +58,13 @@ public class SettingsController implements Initializable {
                 new StringTextfieldConnection(ppName),
                 new StringTextfieldConnection(ppAddress),
                 new StringTextfieldConnection(ppEmail),
-                new StringTextfieldConnection(ppTelephone),
+                new StringTextfieldConnection(ppTelephone)
         };
         rsPPDetails = new ResultConnection(connPPDetails);
         rsPPDetails.setSelect(new SQLQuery("SELECT name, address, email, telephone FROM pp_details WHERE doctor_id=?;", QueryReturnType.ROW, new Object[]{Doctor.getCurrentDoctor().getDoctorId()}));
         ppSaveButton.setOnAction(event -> {
             try {
-                updateUserDetails();
+                upDatePPDetails();
                 GlobalsViews.showInformationAlert("Update successfully!");
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
@@ -125,15 +125,13 @@ public class SettingsController implements Initializable {
         clearNewPassWordFields();
     }
 
-    public void updateUserDetails() throws SQLException {
+    public void updateUserDetails() throws Exception {
         if (newPassword.getText().isEmpty() && confirmNewPassword.getText().isEmpty()) {
-
         } else if (!confirmPassword()) {
-            GlobalsViews.showErrorAlert("Password is not valid!");
-            return;
+            throw new Exception("Passwords doesn't match or aren't valid password");
         }
         password.setText(newPassword.getText());
-        rsUserDetails.setUpdate(new SQLQuery("UPDATE public.user SET email=?,password=? WHERE user_id=?", QueryReturnType.ROW, new Object[]{User.getCurrentUser().getUserId()}));
+        rsUserDetails.setUpdate(new SQLQuery("UPDATE \"user\" SET email=?,password=? WHERE user_id=?", QueryReturnType.ROW, new Object[]{User.getCurrentUser().getUserId()}));
         rsUserDetails.updateToDataBase();
         rsUserDetails.loadDataFromDatabase();
         clearNewPassWordFields();

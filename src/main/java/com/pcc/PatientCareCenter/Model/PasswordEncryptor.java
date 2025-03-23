@@ -67,7 +67,7 @@ public class PasswordEncryptor {
     }
     public static void main(String[] args) throws Exception {
         String masterPassword = "YourSecureMasterPassword123!"; // Store securely!
-        String originalPassword = "sarath1964";
+        String originalPassword = "1234";
 
         // Encrypt
         String encrypted;

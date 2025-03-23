@@ -78,8 +78,8 @@ public class MedicineSelectorController implements Initializable {
         });
         searchTextField.textProperty().addListener(event -> {
             try {
-                tableLoad(getTableQuery());
-            } catch (SQLException e) {
+                tableLoad();
+            } catch (Exception e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
             }
@@ -148,31 +148,33 @@ public class MedicineSelectorController implements Initializable {
 
     private Stock selectedStock;
 
+
     private Button[] getButtonSet() {
         String iconSize = "20";
         Button editButton = new Button();
         Button deleteButton = new Button();
         editButton.setOnAction(event -> {
-            Stock.setCurrentStock(selectedStock);
-            Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
-            AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
+            if(selectedStock==null) {
+                GlobalsViews.showErrorAlert("Select a stock first");
+            }else{
+                Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
+                AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
+                AdminPanes.getStockDetailsController().setGeneralDetailsType(GeneralDetailsType.UPDATE);
+            }
         });
         deleteButton.setOnAction(event -> {
-            Stock.setCurrentStock(selectedStock);
-            Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
-            AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
-            AdminPanes.getStockDetailsController().setGeneralDetailsType(GeneralDetailsType.DELETE);
+            if(selectedStock==null){
+                GlobalsViews.showErrorAlert("Select a stock first");
+            }else {
+                Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
+                AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
+                AdminPanes.getStockDetailsController().setGeneralDetailsType(GeneralDetailsType.DELETE);
+            }
         });
         ButtonElements.bindIconFillProperty(editButton, "edit-button", new FontAwesomeIconView(FontAwesomeIcon.EDIT, iconSize));
         ButtonElements.bindIconFillProperty(deleteButton, "delete-button", new FontAwesomeIconView(FontAwesomeIcon.TRASH, iconSize));
+//        ButtonElements.bindIconFillProperty(viewButton, "view-button", new FontAwesomeIconView(FontAwesomeIcon.EYE, iconSize));
         return new Button[]{editButton, deleteButton};
     }
 
-    public void patientSelected() throws SQLException {
-        if (tableView.getSelectionModel().getSelectedItem() == null) return;
-        int stockId = (int) tableView.getSelectionModel().getSelectedItem().getData("Stock Id");
-        selectedStock = Stock.getStock(stockId);
-        selectedStock.load();
-        Stock.setCurrentStock(selectedStock);
-    }
 }

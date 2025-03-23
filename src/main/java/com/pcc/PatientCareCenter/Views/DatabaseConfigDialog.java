@@ -67,7 +67,6 @@ public class DatabaseConfigDialog extends Application {
         });
 
         dialog.showAndWait().ifPresent(result -> {
-            System.out.println("ksfjkaf");
             String url = result.getKey();
             String[] credentials = result.getValue().split(":");
             String username = credentials[0];
@@ -78,9 +77,10 @@ public class DatabaseConfigDialog extends Application {
                 sql.connect();
                 Sql.setInstance(sql);
             } catch (Exception e) {
-                System.exit(0);
-                GlobalsViews.showErrorAlert(e.getLocalizedMessage());
-                throw new RuntimeException(e);
+                boolean b = GlobalsViews.showConfirmationAlert(e.getLocalizedMessage());
+                if (b) {
+                    System.exit(0);
+                }
             }
             System.out.println("Database URL: " + url);
             System.out.println("Username: " + username);

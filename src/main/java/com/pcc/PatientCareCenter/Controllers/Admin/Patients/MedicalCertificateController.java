@@ -34,8 +34,8 @@ public class MedicalCertificateController implements Initializable {
         connections = new DataComponentConnection[]{
                 new StringTextfieldConnection(name),
                 new IntegerSpinnerConnection(age, 0, 200, 18, 5),
-                new StringTextfieldConnection(nic),
                 new ValueButtonGroupConnection(genderGroup),
+                new StringTextfieldConnection(nic),
                 new StringTextfieldConnection(address),
                 new StringTextfieldConnection(placeOfWork),
                 new StringTextAreaConnection(designation),

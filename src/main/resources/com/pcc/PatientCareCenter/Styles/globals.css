@@ -271,11 +271,13 @@
     -fx-text-fill: red;
     -fx-background-color: -fx-primary-pane-color;
 }
+
 .edit-button{
     -fx-fill:#0c9e20;
     -fx-text-fill: #0c9e20;
     -fx-background-color: -fx-primary-pane-color;
 }
+
 .view-button{
     -fx-text-fill: #256ad1;
     -fx-fill: #256ad1;
@@ -284,6 +286,9 @@
 
 .low-quantity {
     -fx-border-color: #ff2929; /* Red */
+    -fx-background-color: #ff2929; /* Red */
+    -fx-text-fill: -fx-secondary-text-color;
+    -fx-background-radius: 5;
     -fx-padding: 5;
     -fx-border-width: 0.6px;
     -fx-border-radius: 5px;
@@ -291,6 +296,9 @@
 
 .medium-quantity {
     -fx-border-color: #e9a72e; /* Orange */
+    -fx-text-fill: -fx-secondary-text-color;
+    -fx-background-color: #e9a72e; /* Orange */
+    -fx-background-radius: 5;
     -fx-padding: 5;
     -fx-border-width: 0.6px;
     -fx-border-radius: 5px;
@@ -298,6 +306,9 @@
 
 .high-quantity {
     -fx-border-color: #33e433; /* Green */
+    -fx-background-color: #33e433; /* Green */
+    -fx-text-fill: -fx-secondary-text-color;
+    -fx-background-radius: 5;
     -fx-border-width: 0.6px;
     -fx-padding: 5;
     -fx-border-radius: 5px;
@@ -305,6 +316,9 @@
 
 .very-high-quantity {
     -fx-border-color: #2020e0; /* Blue */
+    -fx-background-color: #2020e0; /* Blue */
+    -fx-text-fill: -fx-secondary-text-color;
+    -fx-background-radius: 5;
     -fx-padding: 5;
     -fx-border-width: 0.6px;
     -fx-border-radius: 5px;

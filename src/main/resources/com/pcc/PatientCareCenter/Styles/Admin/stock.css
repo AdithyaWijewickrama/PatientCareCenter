@@ -23,7 +23,7 @@
 
 .table-view .column-header .label {
     -fx-font-size: 1em;
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Sans";
     -fx-text-fill: rgb(0, 0, 0);
     -fx-alignment: center-left;
     -fx-opacity: 1;
@@ -42,6 +42,10 @@
     -fx-padding: 5;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);
+}
+
+.table-row-cell:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0, 0, 0);
 }
 
 .table-row-cell:selected {
