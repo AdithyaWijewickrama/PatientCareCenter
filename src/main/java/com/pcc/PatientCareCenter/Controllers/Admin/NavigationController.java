@@ -1,8 +1,8 @@
 package com.pcc.PatientCareCenter.Controllers.Admin;
 
+import com.pcc.PatientCareCenter.Controllers.AdminControllers;
 import com.pcc.PatientCareCenter.Model.Model;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
-import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -31,7 +31,7 @@ public class NavigationController implements Initializable {
 
     public void onPharmacyStockPane() {
         Model.getInstance().getCommonViewFactory().getAdminViewFactory().showPharmacyStockPane();
-        AdminPanes.getPharmacyStockController().tableLoad();
+        AdminControllers.getPharmacyStockController().tableLoad();
 
     }
 
@@ -43,7 +43,7 @@ public class NavigationController implements Initializable {
     public void onProfileDialog() {
         Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showProfile();
         try {
-            AdminPanes.getProfileController().load();
+            AdminControllers.getProfileController().load();
         } catch (SQLException e) {
             GlobalsViews.showErrorAlert(e.getLocalizedMessage());
             throw new RuntimeException(e);
@@ -53,7 +53,7 @@ public class NavigationController implements Initializable {
     public void onSettingsDialog() {
         Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showSettings();
         try {
-            AdminPanes.getSettingsController().loadSettings();
+            AdminControllers.getSettingsController().loadSettings();
         } catch (SQLException e) {
             GlobalsViews.showErrorAlert(e.getLocalizedMessage());
             throw new RuntimeException(e);

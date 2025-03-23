@@ -1,6 +1,7 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
 
 import com.pcc.PatientCareCenter.Controllers.Admin.Patients.GeneralDetailsType;
+import com.pcc.PatientCareCenter.Database.PPDetails;
 import com.pcc.PatientCareCenter.Database.Stock;
 import com.pcc.PatientCareCenter.Model.Model;
 import com.pcc.PatientCareCenter.Model.Sql;
@@ -15,7 +16,6 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.Callback;
-import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 import java.sql.Date;
@@ -32,6 +32,41 @@ public class PharmacyStockController implements Initializable {
     public TableView<DynamicTableRow> tableView;
 
     private PccTable pccTable;
+
+    public static ResultSet getTableQuery(String searchString) throws SQLException {
+        StringBuilder sql = new StringBuilder("""
+                SELECT
+                    stock_id AS "Stock Id",
+                    medicine_name "Name",
+                    medicine_strength "Strength",
+                    medicine_unit "Unit",
+                    price_per_medicine AS "Price",
+                    stock_quantity AS "Stock quantity",
+                    stock_expire_date AS "Expire date"
+                FROM public.stock_details
+                """);
+        if (searchString.isEmpty())
+            return Sql.getInstance().executeQuery(sql + " WHERE pp_id=? ORDER BY stock_expire_date DESC, medicine_name ASC;", PPDetails.getCurrentPP().getPpId());
+        List<String> columns = Arrays.asList(
+                "stock_id::TEXT",
+                "medicine_name",
+                "medicine_strength::TEXT",
+                "medicine_unit",
+                "price_per_medicine::TEXT",
+                "stock_quantity::TEXT",
+                "stock_expire_date::TEXT"
+        );
+        sql.append("WHERE\n\t");
+        for (String column : columns) {
+            sql.append(column).append(" ILIKE ").append("'%").append(searchString).append("%'");
+            if (columns.indexOf(column) < columns.size() - 1) {
+                sql.append("\n\tOR ");
+            } else {
+                sql.append(" WHERE pp_id=? ORDER BY stock_expire_date DESC, medicine_name ASC;");
+            }
+        }
+        return Sql.getInstance().executeQuery(sql.toString(),PPDetails.getCurrentPP().getPpId());
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -50,14 +85,14 @@ public class PharmacyStockController implements Initializable {
         });
         searchTextField.textProperty().addListener(event -> {
             try {
-                tableLoad(getTableQuery());
+                tableLoad(getTableQuery(searchTextField.getText()));
             } catch (SQLException e) {
                 GlobalsViews.showErrorAlert(e.getLocalizedMessage());
                 throw new RuntimeException(e);
             }
         });
         try {
-            tableLoad(getTableQuery());
+            tableLoad(getTableQuery(searchTextField.getText()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -71,47 +106,9 @@ public class PharmacyStockController implements Initializable {
         pccTable.resultSetToPccTable(resultSet);
         validateRows(tableView);
     }
-
-    public ResultSet getTableQuery() throws SQLException {
-        StringBuilder sql = new StringBuilder("""
-                SELECT
-                    stock_id AS "Stock Id",
-                    medicine_name "Name",
-                    medicine_strength "Strength",
-                    medicine_unit "Unit",
-                    price_per_medicine AS "Prise",
-                    stock_quantity AS "Stock quantity",
-                    stock_expire_date AS "Expire date"
-                FROM public.stock_details
-                """);
-        String searchString = searchTextField.getText();
-        if (searchString.isEmpty())
-            return Sql.getInstance().executeQuery(sql + " ORDER BY stock_expire_date ASC, medicine_name ASC;");
-        List<String> columns = Arrays.asList(
-                "stock_id::TEXT",
-                "medicine_name",
-                "medicine_strength::TEXT",
-                "medicine_unit",
-                "price_per_medicine::TEXT",
-                "stock_quantity::TEXT",
-                "stock_expire_date::TEXT"
-        );
-        sql.append("WHERE\n\t");
-        for (String column : columns) {
-            sql.append(column).append(" ILIKE ").append("'%").append(searchString).append("%'");
-            if (columns.indexOf(column) < columns.size() - 1) {
-                sql.append("\n\tOR ");
-            } else {
-                sql.append(" ORDER BY stock_expire_date DESC, medicine_name ASC;");
-            }
-        }
-        System.out.println(sql);
-        return Sql.getInstance().executeQuery(sql.toString());
-    }
-
     public void tableLoad() {
         try {
-            tableLoad(getTableQuery());
+            tableLoad(getTableQuery(searchTextField.getText()));
             validateRows(tableView);
             stockSelected();
         } catch (SQLException e) {
@@ -127,18 +124,18 @@ public class PharmacyStockController implements Initializable {
         Button editButton = new Button();
         Button deleteButton = new Button();
         editButton.setOnAction(event -> {
-            if(selectedStock==null) {
+            if (selectedStock == null) {
                 GlobalsViews.showErrorAlert("Select a stock first");
-            }else{
+            } else {
                 Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
                 AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
                 AdminPanes.getStockDetailsController().setGeneralDetailsType(GeneralDetailsType.UPDATE);
             }
         });
         deleteButton.setOnAction(event -> {
-            if(selectedStock==null){
+            if (selectedStock == null) {
                 GlobalsViews.showErrorAlert("Select a stock first");
-            }else {
+            } else {
                 Model.getInstance().getCommonViewFactory().getAdminViewFactory().getAdmin().showStockDetails();
                 AdminPanes.getStockDetailsController().loadDataForCurrentMedicine();
                 AdminPanes.getStockDetailsController().setGeneralDetailsType(GeneralDetailsType.DELETE);
@@ -151,8 +148,7 @@ public class PharmacyStockController implements Initializable {
     }
 
     public static void validateRows(TableView<DynamicTableRow> tableView) {
-        Map<Integer,Integer> dates=new HashMap<>();
-        final int[] j ={0};
+        Map<Integer, Integer> dates = new HashMap<>();
         tableView.setRowFactory(tv -> {
             TableRow<DynamicTableRow> row = new TableRow<>() {
                 @Override
@@ -164,7 +160,6 @@ public class PharmacyStockController implements Initializable {
 
                         Object expireDateObj = item.getData("Expire date");
                         if (expireDateObj instanceof Date) {
-                            j[0]+=9;
                             LocalDate expireDate = ((Date) expireDateObj).toLocalDate();
                             dates.put((Integer) item.getData("Stock Id"), (Integer) item.getData("Stock quantity"));
                             LocalDate today = LocalDate.now();
@@ -200,14 +195,12 @@ public class PharmacyStockController implements Initializable {
                             setGraphic(null);
                         } else {
                             Label label = new Label();
-                            label.getStyleClass().add("first-column-label");
-                            getStyleClass().add("label-table-cell");
-                            int quantity=item;
+                            int quantity = item;
                             QuantityLimit quantityLimit = QuantityLimit.getQuantityByLimit(quantity);
                             String style = getStyleByLimit(quantityLimit);
                             label.getStyleClass().add(style);
                             assert quantityLimit != null;
-                            label.setText(quantityLimit.toString().replace("_"," ")+"("+quantity+")");
+                            label.setText(quantityLimit.toString().replace("_", " ") + "(" + quantity + ")");
                             setGraphic(label);
                         }
                     }
@@ -216,17 +209,20 @@ public class PharmacyStockController implements Initializable {
         });
     }
 
-    private static @NotNull String getStyleByLimit(QuantityLimit quantityLimit) {
-        String style="";
-        switch (Objects.requireNonNull(quantityLimit)){
+    private static String getStyleByLimit(QuantityLimit quantityLimit) {
+        String style = "";
+        switch (Objects.requireNonNull(quantityLimit)) {
             case LOW -> {
-                style="low-quantity";
-            }case MEDIUM -> {
-                style="medium-quantity";
-            }case HIGH -> {
-                style="high-quantity";
-            }case VERY_HIGH -> {
-                style="very-high-quantity";
+                style = "low-quantity";
+            }
+            case MEDIUM -> {
+                style = "medium-quantity";
+            }
+            case HIGH -> {
+                style = "high-quantity";
+            }
+            case VERY_HIGH -> {
+                style = "very-high-quantity";
             }
         }
         return style;
@@ -234,7 +230,7 @@ public class PharmacyStockController implements Initializable {
 
     public void stockSelected() throws SQLException {
         if (tableView.getSelectionModel().getSelectedItem() == null) {
-            selectedStock=null;
+            selectedStock = null;
             Stock.setCurrentStock(null);
             return;
         }
@@ -244,15 +240,18 @@ public class PharmacyStockController implements Initializable {
     }
 
     public enum QuantityLimit {
-        LOW(100),MEDIUM(500),HIGH(2000),VERY_HIGH(10000);
+        LOW(100), MEDIUM(500), HIGH(2000), VERY_HIGH(10000);
         private final int limit;
-        QuantityLimit(int limit){
+
+        QuantityLimit(int limit) {
             this.limit = limit;
         }
-        public static QuantityLimit getQuantityByLimit(int limit){
-            for(QuantityLimit q:values()){
-                if(q.limit>limit)return q;
+
+        public static QuantityLimit getQuantityByLimit(int limit) {
+            for (QuantityLimit q : values()) {
+                if (q.limit > limit) return q;
             }
+            if (limit > values()[values().length - 1].limit) return values()[values().length - 1];
             return null;
         }
     }

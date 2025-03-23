@@ -1,6 +1,7 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock;
 
 import com.pcc.PatientCareCenter.Controllers.Admin.Patients.GeneralDetailsType;
+import com.pcc.PatientCareCenter.Controllers.AdminControllers;
 import com.pcc.PatientCareCenter.Database.DetailsController;
 import com.pcc.PatientCareCenter.Database.PPDetails;
 import com.pcc.PatientCareCenter.Database.Stock;
@@ -8,7 +9,6 @@ import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Model.MedicineType;
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
-import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -65,7 +65,7 @@ public class StockDetailsController implements Initializable, DetailsController 
     }
 
     public void pharmacyStockTableLoad() {
-        AdminPanes.getPharmacyStockController().tableLoad();
+        AdminControllers.getPharmacyStockController().tableLoad();
     }
 
     public void setGeneralDetailsType(GeneralDetailsType generalDetailsType) {
@@ -78,7 +78,7 @@ public class StockDetailsController implements Initializable, DetailsController 
                 setAction((action) -> {
                     try {
                         resultConnection.updateToDataBase();
-                        AdminPanes.getPharmacyStockController().tableLoad();
+                        AdminControllers.getPharmacyStockController().tableLoad();
                         GlobalsViews.showInformationAlert("Updated successfully!");
                         resultConnection.clear();
                         pharmacyStockTableLoad();
@@ -126,7 +126,7 @@ public class StockDetailsController implements Initializable, DetailsController 
                                     DELETE FROM stock_details WHERE stock_id=? AND pp_id=?
                                     """, QueryReturnType.NONE, new Object[]{Stock.getCurrentStock().getStockId(), PPDetails.getCurrentPP().getPpId()}));
                             resultConnection.deleteFromDataBase();
-                            AdminPanes.getPharmacyStockController().tableLoad();
+                            AdminControllers.getPharmacyStockController().tableLoad();
                             GlobalsViews.showInformationAlert("Deleted successfully!");
                             prepareToInsert();
                             setGeneralDetailsType(GeneralDetailsType.INSERT);

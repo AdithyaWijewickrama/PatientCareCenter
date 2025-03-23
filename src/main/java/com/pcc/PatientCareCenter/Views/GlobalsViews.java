@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
@@ -27,9 +28,9 @@ public class GlobalsViews {
     public static final int STAGE_HEIGHT = 400;
     public static final String APP_NAME = "Patient Care Center";
     public static final Color APP_COLOR = Color.NAVY;
-    public static final Image APP_ICON = new Image(Objects.requireNonNull(GlobalsViews.class.getResource("/com/pcc/PatientCareCenter/Images/logo.png")).toString());
-    public static final java.awt.Image APP_ICON_IMAGE = new ImageIcon(Objects.requireNonNull(GlobalsViews.class.getResource("/com/pcc/PatientCareCenter/Images/logo.png")).toString()).getImage();
-    public static final String FXML_PATH = "/com/pcc/PatientCareCenter/Fxml";
+    public static final Image APP_ICON = new Image(new File("src/main/resources/com/pcc/PatientCareCenter/Images/logo.png").toURI().toString());
+    public static final java.awt.Image APP_ICON_IMAGE = new ImageIcon(new File("src/main/resources/com/pcc/PatientCareCenter/Images/logo.png").getAbsolutePath()).getImage();
+    public static final String FXML_PATH = "src/main/resources/com/pcc/PatientCareCenter/Fxml";
 
     public static Stage createPrimaryStage(Parent pane, StringProperty title, Image icon) {
         Scene scene;
@@ -67,7 +68,7 @@ public class GlobalsViews {
 
     public static synchronized Parent loadFxml(String fxmlPath) {
         try {
-            return new FXMLLoader(GlobalsViews.class.getResource(fxmlPath)).load();
+            return new FXMLLoader(new File(fxmlPath).toURI().toURL()).load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +76,7 @@ public class GlobalsViews {
 
     public static synchronized Parent loadFxml(String fxmlPath, Object controller) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(GlobalsViews.class.getResource(fxmlPath));
+            FXMLLoader fxmlLoader = new FXMLLoader(new File(fxmlPath).toURI().toURL());
             fxmlLoader.setController(controller);
             return fxmlLoader.load();
         } catch (IOException e) {
@@ -92,7 +93,7 @@ public class GlobalsViews {
 
     public static Dialog<?> getDialog() {
         Dialog<?> dialog = new Dialog<>();
-        dialog.getDialogPane().getStylesheets().add(GlobalsViews.class.getResource("/com/pcc/PatientCareCenter/Styles/globals.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(new File("src/main/resources/com/pcc/PatientCareCenter/Styles/globals.css").toURI().toString());
         Window window = dialog.getDialogPane().getScene().getWindow();
         window.setOnCloseRequest(event -> window.hide());
         ((Stage) dialog.getDialogPane().getScene().getWindow()).getIcons().add(APP_ICON);

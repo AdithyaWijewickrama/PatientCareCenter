@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Pair;
 
 public class DatabaseConfigDialog extends Application {
@@ -65,7 +66,9 @@ public class DatabaseConfigDialog extends Application {
             }
             return null;
         });
-
+        primaryStage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
         dialog.showAndWait().ifPresent(result -> {
             String url = result.getKey();
             String[] credentials = result.getValue().split(":");

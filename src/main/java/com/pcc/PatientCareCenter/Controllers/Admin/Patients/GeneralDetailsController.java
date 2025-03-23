@@ -1,12 +1,12 @@
 package com.pcc.PatientCareCenter.Controllers.Admin.Patients;
 
+import com.pcc.PatientCareCenter.Controllers.AdminControllers;
 import com.pcc.PatientCareCenter.Database.DetailsController;
 import com.pcc.PatientCareCenter.Database.User.Admin.Doctor;
 import com.pcc.PatientCareCenter.Database.User.Patient;
 import com.pcc.PatientCareCenter.Model.Sql;
 import com.pcc.PatientCareCenter.Views.Components.DCConnection.*;
 import com.pcc.PatientCareCenter.Views.GlobalsViews;
-import com.pcc.PatientCareCenter.Views.Panes.AdminPanes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,7 +68,7 @@ public class GeneralDetailsController implements Initializable, DetailsControlle
     }
 
     public void patientsTableLoad(){
-        AdminPanes.getPatientsController().tableLoad();
+        AdminControllers.getPatientsController().tableLoad();
     }
 
     @Override
@@ -97,7 +97,7 @@ public class GeneralDetailsController implements Initializable, DetailsControlle
                     try {
                         int patientId = (int) resultConnection.insertToDataBase();
                         GlobalsViews.showInformationAlert("Inserted successfully!\nPatient id:\t"+patientId);
-                        AdminPanes.getPatientsController().tableLoad();
+                        AdminControllers.getPatientsController().tableLoad();
                         Sql.getInstance().execute("""
                                 INSERT INTO doctors_of_patients VALUES(?,?)
                                 """, patientId, Doctor.getCurrentDoctor().getDoctorId());
@@ -118,7 +118,7 @@ public class GeneralDetailsController implements Initializable, DetailsControlle
                         if (GlobalsViews.showWarningAlert("Are you sure want to delete!")) {
                             Patient.getCurrentPatient().deletePatient();
                             GlobalsViews.showInformationAlert("Deleted successfully!");
-                            AdminPanes.getPatientsController().tableLoad();
+                            AdminControllers.getPatientsController().tableLoad();
                             setGeneralDetailsType(GeneralDetailsType.UPDATE);
                             patientsTableLoad();
                         }
