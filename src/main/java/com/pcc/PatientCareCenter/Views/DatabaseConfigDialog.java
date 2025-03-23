@@ -78,9 +78,10 @@ public class DatabaseConfigDialog extends Application {
                 sql.connect();
                 Sql.setInstance(sql);
             } catch (Exception e) {
-                System.exit(0);
-                GlobalsViews.showErrorAlert(e.getLocalizedMessage());
-                throw new RuntimeException(e);
+                boolean b = GlobalsViews.showConfirmationAlert(e.getLocalizedMessage());
+                if (b) {
+                    System.exit(0);
+                }
             }
             System.out.println("Database URL: " + url);
             System.out.println("Username: " + username);

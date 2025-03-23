@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class App extends Application {
+    Map<String, String> map;
+    Sql sql;
 
     @Override
     public void start(Stage primaryStage) {
@@ -23,21 +25,19 @@ public class App extends Application {
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
-        Map<String, String> map = DatabaseConfigManager.readConfig();
+        readConfigToSqlInstance();
         try {
             if (map != null) {
-                String url = map.get("url");
-                String user = map.get("username");
-                String password = PasswordEncryptor.decrypt(map.get("password"));
-                Sql sql = new Sql(url, user, password);
                 try {
                     sql.connect();
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     System.err.println(e.getMessage());
                     boolean b = GlobalsViews.showConfirmationAlert("Can not connected to local database server yet\nYou can connect to the server by inserting URL,Username & Password");
                     if (b) {
                         DatabaseConfigDialog configDialog = new DatabaseConfigDialog();
                         configDialog.start(new Stage());
+                        readConfigToSqlInstance();
+                        tryStartingApp();
                     }
                 }
             } else {
@@ -45,11 +45,36 @@ public class App extends Application {
                 if (b) {
                     DatabaseConfigDialog configDialog = new DatabaseConfigDialog();
                     configDialog.start(new Stage());
+                    readConfigToSqlInstance();
+                    tryStartingApp();
                 }
             }
-            Model.getInstance().getCommonViewFactory().getLoginOrSignupViewFactory().showLoginOrSignupWindow();
         } catch (Exception e) {
             GlobalsViews.showErrorAlert(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void tryStartingApp() throws Exception {
+            readConfigToSqlInstance();
+            if(sql==null)throw new Exception("Database connection failed!");
+            sql.connect();
+            startApp();
+    }
+
+    private void startApp() {
+        Model.getInstance().getCommonViewFactory().getLoginOrSignupViewFactory().showLoginOrSignupWindow();
+    }
+
+    private void readConfigToSqlInstance() {
+        map = DatabaseConfigManager.readConfig();
+        try {
+            if(map==null)return;
+            String url = map.get("url");
+            String user = map.get("username");
+            String password = PasswordEncryptor.decrypt(map.get("password"));
+            sql = new Sql(url, user, password);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

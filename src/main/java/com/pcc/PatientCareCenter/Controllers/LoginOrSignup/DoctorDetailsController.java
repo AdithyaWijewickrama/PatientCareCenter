@@ -25,7 +25,7 @@ public class DoctorDetailsController extends LoginOrSignupController implements 
         try {
             User.setCurrentUser(User.createUser(SignupController.getSignupEmail(), SignupController.getSignupPassword(), SignupController.getAccountType()));
             Doctor doctorAccount = Doctor.createDoctorAccount(User.getCurrentUser(), doctorDetailsName.getText(), doctorDetailsOccupation.getText());
-            PPDetails.setCurrentPP(PPDetails.createPPpDetails(doctorAccount.getName().toUpperCase() + " PATIENT CARE CENTER", User.getCurrentUser().getEmail(), null, null, doctorAccount.getDoctorId()));
+            PPDetails.setCurrentPP(PPDetails.createPPpDetails(doctorAccount.getName().toUpperCase() + " PATIENT CARE CENTER", null, User.getCurrentUser().getEmail(), null, doctorAccount.getDoctorId()));
             Doctor.setCurrentDoctor(doctorAccount);
             showLogin();
         } catch (Exception e) {
