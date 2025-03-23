@@ -60,7 +60,7 @@ public class App extends Application {
             readConfigToSqlInstance();
             if(sql==null)throw new Exception("Database connection failed!");
             sql.connect();
-            RunSQLFile.runSQLFile(sql.getConnection(), Objects.requireNonNull(App.class.getResource("/com/pcc/PatientCareCenter/Database/Servers/pccserver.sql")).getFile());
+            RunSQLFile.runSQLFile(sql.getConnection());
             startApp();
     }
 
