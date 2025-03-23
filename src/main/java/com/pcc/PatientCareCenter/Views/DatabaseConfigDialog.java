@@ -67,7 +67,6 @@ public class DatabaseConfigDialog extends Application {
         });
 
         dialog.showAndWait().ifPresent(result -> {
-            System.out.println("ksfjkaf");
             String url = result.getKey();
             String[] credentials = result.getValue().split(":");
             String username = credentials[0];

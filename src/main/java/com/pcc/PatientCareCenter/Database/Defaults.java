@@ -14,11 +14,11 @@ public class Defaults {
 
     public static void setDefault(String id, String value) throws SQLException {
         Sql.getInstance().execute("""
+                DELETE FROM defaults WHERE
+                id=? AND pp_id=?;
                 INSERT INTO defaults
                     (id,value,pp_id)
-                SET (?,?,?)
-                ON CONFLICT(id,pp_id)
-                DO UPDATE SET value=EXCLUDE.value
-                """, value, id, PPDetails.getCurrentPP().getPpId());
+                VALUES(?,?,?);
+                """, id, PPDetails.getCurrentPP().getPpId(), id, value, PPDetails.getCurrentPP().getPpId());
     }
 }

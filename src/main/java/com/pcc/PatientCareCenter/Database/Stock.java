@@ -21,8 +21,8 @@ public class Stock implements DBObject {
 
     public static Stock getLatestStock(String name) throws SQLException {
         Object id = Sql.getInstance().getObject("SELECT stock_id FROM stock_details WHERE medicine_name=? ORDER BY stock_expire_date ASC", name);
-        if(id!=null){
-            return new Stock((int)id);
+        if (id != null) {
+            return new Stock((int) id);
         }
         return null;
     }
@@ -71,8 +71,8 @@ public class Stock implements DBObject {
     }
 
     public void removeStockMedicine(int q) throws SQLException {
-        if(q<=getQuantity()){
-            Sql.getInstance().execute("UPDATE stock_details SET stock_quantity=stock_quantity-?",q);
+        if (q <= getQuantity()) {
+            Sql.getInstance().execute("UPDATE stock_details SET stock_quantity=stock_quantity-? WHERE stock_id=?", q, stockId);
         }
     }
 
@@ -83,6 +83,7 @@ public class Stock implements DBObject {
     public String getName() throws SQLException {
         return data.getString("medicine_name");
     }
+
     public String getUnit() throws SQLException {
         return data.getString("medicine_unit");
     }
@@ -97,7 +98,7 @@ public class Stock implements DBObject {
     }
 
     public String getLocalizedName() throws SQLException {
-        return String.format("%s %d%s", getName(),getStrength(),getUnit());
+        return String.format("%s %d%s", getName(), getStrength(), getUnit());
     }
 
     public static void setCurrentStock(Stock stock) {
@@ -110,9 +111,8 @@ public class Stock implements DBObject {
 
     public static void main(String[] args) {
         try {
-            Stock stock1 = new Stock(1);
-            stock1.load();
-        System.out.println(stock1.getLocalizedName());
+            Stock stock1 = new Stock(3);
+            System.out.println(stock1.getLocalizedName());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

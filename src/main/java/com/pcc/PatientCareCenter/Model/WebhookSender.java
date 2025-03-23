@@ -13,17 +13,12 @@ import java.sql.SQLException;
 
 public class WebhookSender {
 
-    public static int sendMessage(String message) throws IOException {
-        String webhookUrl; // Replace with your webhook URL
-        try {
-            webhookUrl = Defaults.getDefault("WEBHOOK_URL");
-            HttpURLConnection conn = getHttpURLConnection(webhookUrl, message);
-            int responseCode = conn.getResponseCode();
-            conn.disconnect();
-            return responseCode;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static int sendMessage(String message) throws Exception {
+        String webhookUrl = Defaults.getDefault("WEBHOOK_URL");
+        HttpURLConnection conn = getHttpURLConnection(webhookUrl, message);
+        int responseCode = conn.getResponseCode();
+        conn.disconnect();
+        return responseCode;
     }
 
     private static HttpURLConnection getHttpURLConnection(String webhookUrl, String message) throws IOException {
@@ -54,7 +49,7 @@ public class WebhookSender {
         for (String msg : msgs) {
             try {
                 System.out.println(sendMessage(msg));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }

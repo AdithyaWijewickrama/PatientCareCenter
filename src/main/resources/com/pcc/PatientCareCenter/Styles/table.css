@@ -49,6 +49,7 @@
     -fx-text-fill: -fx-secondary-text-color;
     -fx-background-insets: 2;
 }
+
 .table-row-cell:selected .table-cell {
     -fx-text-fill: -fx-secondary-text-color;
 }

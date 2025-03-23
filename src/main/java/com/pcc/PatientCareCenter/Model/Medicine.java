@@ -71,6 +71,14 @@ public class Medicine {
         return stock.getExpireDate().isBefore(LocalDate.now());
     }
 
+    public boolean equals(Object med) {
+        if (med instanceof Medicine) {
+            Medicine m = (Medicine) med;
+            return m.getStock().getStockId() == getStock().getStockId();
+        }
+        return false;
+    }
+
     public record InputValues(Stock stock, FrequencyType frequency, double nOfMedicinePerDose, int days, int weeks,
                               int months) {
         public String getFrequency() {
@@ -99,9 +107,10 @@ public class Medicine {
         }
     }
 
+
     public static void main(String[] args) throws SQLException {
-        Stock stock1 = Stock.getStock(1);
-        Medicine medicine = new Medicine(stock1, new InputValues(stock1, FrequencyType.WEEKLY, 11, 5, 0, 0));
+        Stock stock1 = Stock.getStock(3);
+        Medicine medicine = new Medicine(stock1, new InputValues(stock1, FrequencyType.BD, 10, 5, 0, 0));
         System.out.println(medicine.getTotalMedicine());
     }
 }
