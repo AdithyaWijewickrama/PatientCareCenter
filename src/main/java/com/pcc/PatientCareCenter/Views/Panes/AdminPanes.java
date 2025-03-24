@@ -125,7 +125,7 @@ public class AdminPanes extends PaneViewFactory {
 
     public Parent getPatientViewPane() {
         if (patientViewPane == null) {
-            patientViewPane = GlobalsViews.loadFxml(FXML_PATH + "PatientView.fxml");
+            patientViewPane = GlobalsViews.loadFxml(FXML_PATH + "LetterHead.fxml",AdminControllers.getLetterHeadController());
         }
         return patientViewPane;
     }

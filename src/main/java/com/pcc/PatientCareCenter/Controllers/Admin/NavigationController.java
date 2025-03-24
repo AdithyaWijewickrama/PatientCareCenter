@@ -37,7 +37,6 @@ public class NavigationController implements Initializable {
 
     public void onBudgetPane() {
         Model.getInstance().getCommonViewFactory().getAdminViewFactory().showBudgetPane();
-
     }
 
     public void onProfileDialog() {

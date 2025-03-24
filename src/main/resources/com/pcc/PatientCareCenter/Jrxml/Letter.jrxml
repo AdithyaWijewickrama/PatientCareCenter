@@ -9,6 +9,7 @@
 	<parameter name="telephone" class="java.lang.String"/>
 	<parameter name="doctorName" class="java.lang.String"/>
 	<parameter name="email" class="java.lang.String"/>
+	<parameter name="letter" class="java.lang.String"/>
 	<query language="sql"><![CDATA[]]></query>
 	<variable name="CURRENT_DATE" class="java.lang.String">
 		<expression><![CDATA[new SimpleDateFormat("yyyy/MM/dd").format(new Date())]]></expression>
@@ -46,20 +47,14 @@
 	</title>
 	<detail>
 		<band height="411" splitType="Stretch">
-			<element kind="textField" uuid="6b1eb2dd-681f-4841-a4cc-d8fa93681311" x="0" y="0" width="380" height="80" fontSize="14.0">
-				<expression><![CDATA["Dr."+$P{otherDoctorName}+"\n"+"Consultant Radiologist"+"\n"+$P{hospital}+"\n"+"Dear sir,"]]></expression>
-			</element>
-			<element kind="staticText" uuid="a41aec47-5723-440c-9442-e1f16d20ed76" x="0" y="80" width="380" height="30" fontName="SansSerif" fontSize="16.0" underline="true" bold="true" hTextAlign="Center">
-				<text><![CDATA[Request for Ultrasound scan]]></text>
-			</element>
-			<element kind="textField" uuid="95ba3d40-dbbb-439a-af32-9b7acb5d16fc" x="0" y="110" width="380" height="210" fontSize="14.0">
-				<expression><![CDATA["Please arrange Ultrasound Scan "+$P{scanType}+" of this patient.\n"+$P{description}+"\nThank you."]]></expression>
-			</element>
 			<element kind="staticText" uuid="e882f218-1c78-4c1e-94bd-25732f114886" x="290" y="390" width="30" height="20" fontName="SansSerif" fontSize="11.0" bold="true" vTextAlign="Top">
 				<text><![CDATA[Date]]></text>
 			</element>
 			<element kind="textField" uuid="963a6fa5-fdaf-426b-90ec-b80a7229ca3d" x="320" y="391" width="60" height="19" fontName="SansSerif" fontSize="10.0" bold="true">
 				<expression><![CDATA[$V{CURRENT_DATE}]]></expression>
+			</element>
+			<element kind="textField" uuid="c72d9839-dd11-4373-9264-032585346524" x="2" y="0" width="378" height="330" fontSize="16.0">
+				<expression><![CDATA[$P{letter}]]></expression>
 			</element>
 		</band>
 	</detail>
