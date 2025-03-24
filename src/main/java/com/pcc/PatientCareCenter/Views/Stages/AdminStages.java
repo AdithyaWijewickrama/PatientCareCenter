@@ -26,7 +26,7 @@ public class AdminStages extends StageViewFactory {
         this.currentPane.addListener(event -> {
             switch (currentPane.getValue()) {
                 case "Patients" -> mainStage.setCenter(AdminPanes.getInstance().getPatientsPane());
-                case "PatientView" -> mainStage.setCenter(AdminPanes.getInstance().getPatientViewPane());
+                case "Letter" -> mainStage.setCenter(AdminPanes.getInstance().getPatientViewPane());
                 case "PharmacyStock" -> mainStage.setCenter(AdminPanes.getInstance().getPharmacyStockPane());
                 case "DataAnalyze" -> mainStage.setCenter(AdminPanes.getInstance().getDataAnalyzePane());
                 case "Budget" -> mainStage.setCenter(AdminPanes.getInstance().getBudgetPane());

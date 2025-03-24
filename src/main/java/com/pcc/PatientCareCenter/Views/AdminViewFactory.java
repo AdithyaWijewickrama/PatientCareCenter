@@ -18,7 +18,7 @@ public class AdminViewFactory {
     }
 
     public void showPatientViewPane() {
-        admin.setCurrentPane("PatientView");
+        admin.setCurrentPane("Letter");
     }
 
     public void showDataAnalyzePane() {

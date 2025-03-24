@@ -1,5 +1,6 @@
 package com.pcc.PatientCareCenter.Controllers;
 
+import com.pcc.PatientCareCenter.Controllers.Admin.LetterHeadController;
 import com.pcc.PatientCareCenter.Controllers.Admin.Patients.*;
 import com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock.MedicineSelectorController;
 import com.pcc.PatientCareCenter.Controllers.Admin.PharmacyStock.PharmacyStockController;
@@ -23,6 +24,7 @@ public class AdminControllers {
     public static final StockDetailsController STOCK_DETAILS_CONTROLLER = new StockDetailsController();
     public static final PharmacyStockController PHARMACY_STOCK_CONTROLLER = new PharmacyStockController();
     public static final MedicineSelectorController MEDICINE_SELECTOR_CONTROLLER = new MedicineSelectorController();
+    public static final LetterHeadController LETTER_HEAD_CONTROLLER=new LetterHeadController();
 
     public static PatientsController getPatientsController() {
         return PATIENTS_CONTROLLER;
@@ -50,6 +52,10 @@ public class AdminControllers {
 
     public static UltrasoundScanFormController getUltrasoundScanController() {
         return ultrasoundScanController;
+    }
+
+    public static LetterHeadController getLetterHeadController(){
+        return  LETTER_HEAD_CONTROLLER;
     }
 
     public static ProfileController getProfileController() {
