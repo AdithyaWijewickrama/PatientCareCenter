@@ -56,13 +56,13 @@ public class PharmacyStockController implements Initializable {
                 "stock_quantity::TEXT",
                 "stock_expire_date::TEXT"
         );
-        sql.append("WHERE\n\t");
+        sql.append("WHERE\n\t(");
         for (String column : columns) {
             sql.append(column).append(" ILIKE ").append("'%").append(searchString).append("%'");
             if (columns.indexOf(column) < columns.size() - 1) {
                 sql.append("\n\tOR ");
             } else {
-                sql.append(" WHERE pp_id=? ORDER BY stock_expire_date DESC, medicine_name ASC;");
+                sql.append(") AND pp_id=? ORDER BY stock_expire_date DESC, medicine_name ASC;");
             }
         }
         return Sql.getInstance().executeQuery(sql.toString(),PPDetails.getCurrentPP().getPpId());
