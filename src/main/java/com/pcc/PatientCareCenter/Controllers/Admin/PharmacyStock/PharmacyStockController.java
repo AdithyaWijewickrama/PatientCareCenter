@@ -197,6 +197,7 @@ public class PharmacyStockController implements Initializable {
                             Label label = new Label();
                             int quantity = item;
                             QuantityLimit quantityLimit = QuantityLimit.getQuantityByLimit(quantity);
+                            System.out.println(quantity);
                             String style = getStyleByLimit(quantityLimit);
                             label.getStyleClass().add(style);
                             assert quantityLimit != null;
@@ -251,7 +252,7 @@ public class PharmacyStockController implements Initializable {
             for (QuantityLimit q : values()) {
                 if (q.limit > limit) return q;
             }
-            if (limit > values()[values().length - 1].limit) return values()[values().length - 1];
+            if (limit >= values()[values().length - 1].limit) return values()[values().length - 1];
             return null;
         }
     }

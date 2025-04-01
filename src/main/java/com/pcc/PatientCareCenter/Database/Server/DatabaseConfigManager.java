@@ -1,23 +1,27 @@
 package com.pcc.PatientCareCenter.Database.Server;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DatabaseConfigManager {
-    public static final String DB_FILE="db_config.xml";
+    public static final String DB_FILE = "db_config.xml";
 
-    public static void writeConfig(String url,String username,String password){
-        writeConfig(DB_FILE,url,username,password);
+    public static void writeConfig(String url, String username, String password) {
+        writeConfig(DB_FILE, url, username, password);
     }
+
     public static Map<String, String> readConfig() {
         return readConfig(DB_FILE);
     }
@@ -31,9 +35,18 @@ public class DatabaseConfigManager {
             Element rootElement = doc.createElement("databaseConfig");
             doc.appendChild(rootElement);
 
-            addElement(doc, rootElement, "url", url);
-            addElement(doc, rootElement, "username", username);
-            addElement(doc, rootElement, "password", password);
+            if (url != null)
+                addElement(doc, rootElement, "url", url);
+            if (username != null)
+                addElement(doc, rootElement, "username", username);
+            else
+                addElement(doc, rootElement, "username", "postgres");
+
+            if (password != null)
+                addElement(doc, rootElement, "password", password);
+            else
+                addElement(doc, rootElement, "password", "FEaXf2tDOcI9iSm6/yeHTg==:FMZkYFNNBwDLUf4q7hCjvw==:UHeNy/Ak6F4L7tdoj0vKWA==");
+
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -41,9 +54,9 @@ public class DatabaseConfigManager {
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
             DOMSource source = new DOMSource(doc);
-            File xlm=new File(filePath);
+            File xlm = new File(filePath);
             StreamResult result;
-            if(!xlm.exists()){
+            if (!xlm.exists()) {
                 xlm.createNewFile();
             }
             result = new StreamResult(filePath);
@@ -57,7 +70,7 @@ public class DatabaseConfigManager {
     public static Map<String, String> readConfig(String filePath) {
         try {
             File xmlFile = new File(filePath);
-            if(xmlFile.exists()) {
+            if (xmlFile.exists()) {
 
 
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -75,7 +88,7 @@ public class DatabaseConfigManager {
                 }
 
                 return config;
-            }else{
+            } else {
                 return null;
             }
         } catch (Exception e) {
@@ -99,6 +112,7 @@ public class DatabaseConfigManager {
         );
 
         Map<String, String> config = readConfig(configFile);
+        assert config != null;
         System.out.println("Database URL: " + config.get("url"));
         System.out.println("Username: " + config.get("username"));
         System.out.println("Password: " + config.get("password"));

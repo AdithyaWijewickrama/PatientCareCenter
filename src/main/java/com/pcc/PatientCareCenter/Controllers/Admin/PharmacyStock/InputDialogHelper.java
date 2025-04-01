@@ -50,7 +50,7 @@ public class InputDialogHelper {
         ComboBox<String> doseMultipleSelector = new ComboBox<>(FXCollections.observableArrayList("1 or more", "divide"));
         doseMultipleSelector.getSelectionModel().select(FrequencyType.BD.getName());
 
-        ChangeListener<Double> nodListener = (observableValue, o, t1) -> {
+        InvalidationListener nodListener = (o) -> {
             if(noOfDosesPerMedicine.isDisable())return;
             int nod = noOfDosesPerMedicine.getValue();
             if (nod != 0) {
@@ -61,7 +61,7 @@ public class InputDialogHelper {
                 }
             }
         };
-        ChangeListener<Double> dListener = (observableValue, o, t1) -> {
+        InvalidationListener dListener = (o) -> {
             if(dose.isDisable())return;
             double dos = dose.getValue();
             if (dos != 0) {
@@ -78,20 +78,21 @@ public class InputDialogHelper {
             if (b) {
                 try {
                     dose.valueProperty().removeListener(dListener);
-                    noOfDosesPerMedicine.valueProperty().removeListener((InvalidationListener) nodListener);
+                    noOfDosesPerMedicine.valueProperty().removeListener(nodListener);
                     dose.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(med.getStrength(), 100000, med.getStrength(), med.getStrength()));
                     noOfDosesPerMedicine.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100000, 1, 1));
                     dose.setDisable(true);
                     noOfDosesPerMedicine.setDisable(false);
-                    noOfDosesPerMedicine.valueProperty().addListener((InvalidationListener) nodListener);
+                    noOfDosesPerMedicine.valueProperty().addListener(nodListener);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
                 label.setText(multiply);
             } else {
+                
                 try {
                     dose.valueProperty().removeListener(dListener);
-                    noOfDosesPerMedicine.valueProperty().removeListener((InvalidationListener) nodListener);
+                    noOfDosesPerMedicine.valueProperty().removeListener(nodListener);
                     dose.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0, med.getStrength(), med.getStrength() / 100., med.getStrength() / 100.));
                     noOfDosesPerMedicine.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 100, 1));
                     dose.setDisable(false);

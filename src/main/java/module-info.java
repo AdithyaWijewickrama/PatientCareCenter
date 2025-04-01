@@ -7,7 +7,7 @@ module com.ppcc.PatientCareCenter {
     requires com.google.zxing;
     requires com.google.zxing.javase;
     requires net.sf.jasperreports.core;
-    requires org.eclipse.jdt.core;
+//    requires org.eclipse.jdt.core;
     requires org.jetbrains.annotations;
 //    requires javafx.swing;
     requires com.fasterxml.jackson.databind;

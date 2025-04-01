@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databaseConfig>
-  <url>jdbc:postgresql://localhost:5432/pcc</url>
-  <username>postgres</username>
-  <password>ZDgYydyyrb6rDvLzITrppQ==:c4NGTdC5VseRUx9EyqS5VQ==:5Wfl4sls91esyieK8dOl3g==</password>
+  <url>jdbc:postgresql://localhost:5432/pcc_db</url>
+  <username>pcc</username>
+  <password>vxzYTCyFr5a0OjkBRRtZ0w==:e1+C7g4uLcy3bG+YhYWlnA==:ToIlboGwkmLFvyoh8y2LiA==</password>
 </databaseConfig>
