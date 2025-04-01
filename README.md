@@ -1,6 +1,7 @@
 # Patient Care Center - Medical Management System  
 
-![Banner](https://via.placeholder.com/1024x300/2a4365/ffffff?text=Patient+Care+Center)  
+![Pcc](https://github.com/user-attachments/assets/8e4f547e-761e-48e8-9ee7-8f1dbbe75781)
+
 *A comprehensive JavaFX application for healthcare management with PostgreSQL backend*
 
 ---
@@ -18,6 +19,8 @@
 - **Search & Filter**:
   - Quick access to patient records
   - Action buttons for editing/viewing
+  - >![Screenshot (61)](https://github.com/user-attachments/assets/38cf8148-7e5f-4642-afda-867da7f05ef0)
+
 
 ### 💊 **Pharmacy & Prescriptions**
 - **Smart Prescription System**:
@@ -36,15 +39,23 @@
 ### 📄 **Medical Documentation**
 - **Certificate Generation**:
   - Medical certificates
+  - >![Screenshot (48)](https://github.com/user-attachments/assets/42e0b49f-0b60-4161-8f74-bc0231794b7b)
+
   - Fitness certificates
+  - >![Screenshot (49)](https://github.com/user-attachments/assets/918c8882-1f9b-4ad0-ba52-ff3b93e200ae)
+
   - Ultrasound reports
+  - >![Screenshot (51)](https://github.com/user-attachments/assets/fb61ab21-a674-42ab-9e82-b1752221c2a2)
   
 
 ### 🔐 **Security & Administration**
 - **Role-based Access**:
   - Doctor/staff accounts
   - Secure authentication
-  ![Login](Screenshot (55).png)
+  >![Screenshot (55)](https://github.com/user-attachments/assets/028f6f04-ae4c-4470-a16a-4264e322dc09)
+  >![Screenshot (56)](https://github.com/user-attachments/assets/2764e805-edd4-480d-856a-07dae1623637)
+
+
 
 ---
 
@@ -52,10 +63,11 @@
 
 | Module | Screenshot |
 |--------|------------|
-| **Dashboard** | ![Dashboard](Screenshot (61).png) |
-| **Patient Registration** | ![Registration](Screenshot (67).png) |
-| **Prescription** | ![Prescription](Screenshot (66).png) |
-| **Settings** | ![Settings](Screenshot (53).png) |
+| **Dashboard** | ![Screenshot (61)](https://github.com/user-attachments/assets/88c920b7-a552-4d10-aed0-7e111499fb2c) |
+| **Patient Registration** |  |
+| **Prescription** | ![Screenshot (64)](https://github.com/user-attachments/assets/fca8ef42-22c4-445b-8e3f-386cfb289127) |
+| **Settings** | ![Screenshot (53)](https://github.com/user-attachments/assets/9a31962b-2f96-49ca-a1af-0f1a0a569d08) |
+| **Profile** | ![Screenshot (54)](https://github.com/user-attachments/assets/1bd4edd6-f235-4794-b460-500c1a59650b) |
 
 ---
 
@@ -114,9 +126,7 @@ MIT License © 2025 Adithya Wijewickrama
 - **Reliable**: PostgreSQL-backed data storage
 - **Customizable**: Modular design for clinic-specific needs
 
-**GitHub**: [github.com/your-repo](https://github.com/your-repo)  
-**Demo**: [Insert Demo Link]  
+**GitHub**: [github.com/AdithyaWijewickrama](https://github.com/AdithyaWijewickrama/PatientCareCenter)  
+**Demo**: [video link will be available soon]  
 
 ---
-
-Let me know if you'd like to add any additional sections like contribution guidelines or API documentation!
