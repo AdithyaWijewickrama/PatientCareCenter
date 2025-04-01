@@ -28,7 +28,7 @@ public class App extends Application {
         } catch (UnsupportedLookAndFeelException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(createPccLocalDataBase());
+        createPccLocalDataBase();
         readConfigToSqlInstance();
         try {
             if (map != null) {
@@ -41,6 +41,7 @@ public class App extends Application {
                         DatabaseConfigDialog configDialog = new DatabaseConfigDialog();
                         configDialog.start(new Stage());
                         readConfigToSqlInstance();
+                        createPccLocalDataBase();
                         tryStartingApp();
                     }
                     throw new RuntimeException(e);
@@ -51,6 +52,7 @@ public class App extends Application {
                     DatabaseConfigDialog configDialog = new DatabaseConfigDialog();
                     configDialog.start(new Stage());
                     readConfigToSqlInstance();
+                    createPccLocalDataBase();
                     tryStartingApp();
                 }
             }
@@ -60,7 +62,7 @@ public class App extends Application {
         }
     }
 
-    private boolean createPccLocalDataBase() {
+    private void createPccLocalDataBase() {
         try {
             Sql defaultInstance = Sql.getDefaultInstance();
             defaultInstance.execute(String.format("""
@@ -101,22 +103,22 @@ public class App extends Application {
                         GRANT CREATE ON DATABASE %s TO pcc;
                         """.replaceAll("TO pcc", "TO " + DB_USERNAME), DB_NAME, DB_NAME));
             } catch (Exception ex) {
+                GlobalsViews.showErrorAlert(ex.getLocalizedMessage());
                 throw new RuntimeException(ex);
             }
         } catch (Exception e) {
-            if(e.getMessage().contains(String.format("database \"%s\" already exists",DB_NAME))){
-                return true;
+            if (!e.getMessage().contains(String.format("database \"%s\" already exists", DB_NAME))) {
+                GlobalsViews.showErrorAlert(e.getLocalizedMessage());
+                throw new RuntimeException(e);
             }
-            throw new RuntimeException(e);
         }
-        return true;
     }
 
     private void tryStartingApp() throws Exception {
         readConfigToSqlInstance();
         if (sql == null) throw new Exception("Database connection failed!");
         sql.connect();
-        if(!sql.getUrl().equals("jdbc:postgresql://localhost:5432/" + DB_NAME))
+        if (!sql.getUrl().equals("jdbc:postgresql://localhost:5432/" + DB_NAME))
             RunSQLFile.runSQLFile(sql.getConnection());
         startApp();
     }

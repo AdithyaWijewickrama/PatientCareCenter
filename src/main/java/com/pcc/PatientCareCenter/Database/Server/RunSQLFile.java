@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class RunSQLFile {
-    public static void runSQLFile(Connection connection) throws IOException, SQLException {
+    public static void runSQLFile(Connection connection) throws SQLException {
         connection.prepareStatement("""
                 SET statement_timeout = 0;
                 SET lock_timeout = 0;

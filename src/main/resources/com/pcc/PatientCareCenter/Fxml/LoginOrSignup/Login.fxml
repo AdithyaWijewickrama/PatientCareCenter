@@ -49,15 +49,14 @@
       </VBox.margin>
    </PasswordField>
    <AnchorPane prefHeight="20.0" prefWidth="400.0">
-      <children>
-         <Label fx:id="forgotPasswordLink" layoutX="235.0" prefHeight="20.0" prefWidth="100.0" text="Forgot password" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <styleClass>
-               <String fx:value="normal-text-p" />
-               <String fx:value="link" />
-               <String fx:value="forgot-password-link" />
-            </styleClass>
-         </Label>
-      </children>
+      <Label fx:id="forgotPasswordLink" layoutX="235.0" prefHeight="20.0" prefWidth="100.0" text="Forgot password"
+             AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <styleClass>
+            <String fx:value="normal-text-p"/>
+            <String fx:value="link"/>
+            <String fx:value="forgot-password-link"/>
+         </styleClass>
+      </Label>
    </AnchorPane>
    <Label fx:id="loginMessage" prefHeight="18.0" prefWidth="368.0" text="Message" textAlignment="CENTER" visible="false">
       <VBox.margin>

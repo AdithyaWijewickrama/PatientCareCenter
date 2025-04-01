@@ -14,6 +14,7 @@ import org.w3c.dom.NodeList;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class DatabaseConfigManager {
     public static final String DB_FILE = "db_config.xml";
@@ -37,16 +38,10 @@ public class DatabaseConfigManager {
 
             if (url != null)
                 addElement(doc, rootElement, "url", url);
-            if (username != null)
-                addElement(doc, rootElement, "username", username);
-            else
-                addElement(doc, rootElement, "username", "postgres");
 
-            if (password != null)
-                addElement(doc, rootElement, "password", password);
-            else
-                addElement(doc, rootElement, "password", "FEaXf2tDOcI9iSm6/yeHTg==:FMZkYFNNBwDLUf4q7hCjvw==:UHeNy/Ak6F4L7tdoj0vKWA==");
+            addElement(doc, rootElement, "username", Objects.requireNonNullElse(username, "postgres"));
 
+            addElement(doc, rootElement, "password", Objects.requireNonNullElse(password, "FEaXf2tDOcI9iSm6/yeHTg==:FMZkYFNNBwDLUf4q7hCjvw==:UHeNy/Ak6F4L7tdoj0vKWA=="));
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
@@ -56,12 +51,14 @@ public class DatabaseConfigManager {
             DOMSource source = new DOMSource(doc);
             File xlm = new File(filePath);
             StreamResult result;
+            boolean newFile = xlm.exists();
             if (!xlm.exists()) {
-                xlm.createNewFile();
+                newFile = xlm.createNewFile();
             }
-            result = new StreamResult(filePath);
-            transformer.transform(source, result);
-
+            if (newFile) {
+                result = new StreamResult(filePath);
+                transformer.transform(source, result);
+            }
         } catch (Exception e) {
             throw new RuntimeException("Failed to write database config", e);
         }

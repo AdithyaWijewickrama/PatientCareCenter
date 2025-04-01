@@ -5,8 +5,6 @@ import com.pcc.PatientCareCenter.Model.FrequencyType;
 import com.pcc.PatientCareCenter.Model.Medicine;
 import com.pcc.PatientCareCenter.Model.MedicineType;
 import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
