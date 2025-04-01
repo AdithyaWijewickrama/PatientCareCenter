@@ -2,6 +2,7 @@ package com.pcc.PatientCareCenter.Model;
 
 import com.pcc.PatientCareCenter.Database.Server.DatabaseConfigManager;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +18,7 @@ public class Sql {
     private String user;
     private String password;
 
-    public Sql(String url, String user, String password) {
+    public Sql(String url, String user, String password) throws IOException {
         this.url = url;
         this.user = user;
         this.password = password;
@@ -56,11 +57,22 @@ public class Sql {
     }
 
     public static Connection tryConnection(String url, String userName, String password) throws SQLException {
+        System.out.printf("Trying to connect:\nURL:\t%s\nUSERNAME:\t%s\nPASSWORD:\t%s\n",url,userName,password);
         return DriverManager.getConnection(url, userName, password);
     }
 
     public static void setInstance(Sql sql) {
         instance = sql;
+    }
+
+    public static Sql getDefaultInstance() throws Exception {
+        Map<String, String> map = DatabaseConfigManager.readConfig();
+        String url = map.get("url");
+        String username = map.get("username");
+        String password = PasswordEncryptor.decrypt(map.get("password"));
+        Sql ins = new Sql(url, username, password);
+        ins.connect();
+        return ins;
     }
 
     public static Sql getInstance() {

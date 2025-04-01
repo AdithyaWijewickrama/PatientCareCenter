@@ -61,19 +61,23 @@ public class SearchConfigController implements Initializable {
     private ResultConnection getResultConnection() {
         ResultConnection resultConnection = new ResultConnection(connections);
         resultConnection.setUpdate(new SQLQuery("""
-                INSERT INTO search_config (id, value) VALUES
-                    ('id', ?),
-                    ('name' ,?),
-                    ('dateOfBirth', ?),
-                    ('mobileNumber', ?),
-                    ('whatsappNumber', ?),
-                    ('address', ?),
-                    ('gender', ?),
-                    ('maritalStatus', ?),
-                    ('nationality', ?),
-                    ('languagePreference', ?),
-                    ('city', ?)
-                ON CONFLICT (id) DO UPDATE SET value = EXCLUDED.value;
+                UPDATE public.search_config
+                SET value = CASE id
+                    WHEN 'id' THEN ?
+                    WHEN 'name' THEN ?
+                    WHEN 'dateOfBirth' THEN ?
+                    WHEN 'mobileNumber' THEN ?
+                    WHEN 'whatsappNumber' THEN ?
+                    WHEN 'address' THEN ?
+                    WHEN 'gender' THEN ?
+                    WHEN 'maritalStatus' THEN ?
+                    WHEN 'nationality' THEN ?
+                    WHEN 'languagePreference' THEN ?
+                    WHEN 'city' THEN ?
+                END
+                WHERE id IN ('id', 'name', 'dateOfBirth', 'mobileNumber', 'whatsappNumber',\s
+                             'address', 'gender', 'maritalStatus', 'nationality',\s
+                             'languagePreference', 'city');
                 """, QueryReturnType.NONE));
         resultConnection.setSelect(new SQLQuery("""
                 SELECT value FROM search_config

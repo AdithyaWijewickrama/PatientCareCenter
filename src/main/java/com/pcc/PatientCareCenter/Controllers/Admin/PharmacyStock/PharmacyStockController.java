@@ -23,10 +23,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class PharmacyStockController implements Initializable {
-    public Label pharmacyStock;
     public TextField searchTextField;
     public ToggleButton addStock;
     public TableView<DynamicTableRow> tableView;
@@ -65,7 +67,7 @@ public class PharmacyStockController implements Initializable {
                 sql.append(") AND pp_id=? ORDER BY stock_expire_date DESC, medicine_name ASC;");
             }
         }
-        return Sql.getInstance().executeQuery(sql.toString(),PPDetails.getCurrentPP().getPpId());
+        return Sql.getInstance().executeQuery(sql.toString(), PPDetails.getCurrentPP().getPpId());
     }
 
     @Override
@@ -106,6 +108,7 @@ public class PharmacyStockController implements Initializable {
         pccTable.resultSetToPccTable(resultSet);
         validateRows(tableView);
     }
+
     public void tableLoad() {
         try {
             tableLoad(getTableQuery(searchTextField.getText()));
@@ -143,12 +146,10 @@ public class PharmacyStockController implements Initializable {
         });
         ButtonElements.bindIconFillProperty(editButton, "edit-button", new FontAwesomeIconView(FontAwesomeIcon.EDIT, iconSize));
         ButtonElements.bindIconFillProperty(deleteButton, "delete-button", new FontAwesomeIconView(FontAwesomeIcon.TRASH, iconSize));
-//        ButtonElements.bindIconFillProperty(viewButton, "view-button", new FontAwesomeIconView(FontAwesomeIcon.EYE, iconSize));
         return new Button[]{editButton, deleteButton};
     }
 
     public static void validateRows(TableView<DynamicTableRow> tableView) {
-        Map<Integer, Integer> dates = new HashMap<>();
         tableView.setRowFactory(tv -> {
             TableRow<DynamicTableRow> row = new TableRow<>() {
                 @Override
@@ -161,7 +162,6 @@ public class PharmacyStockController implements Initializable {
                         Object expireDateObj = item.getData("Expire date");
                         if (expireDateObj instanceof Date) {
                             LocalDate expireDate = ((Date) expireDateObj).toLocalDate();
-                            dates.put((Integer) item.getData("Stock Id"), (Integer) item.getData("Stock quantity"));
                             LocalDate today = LocalDate.now();
                             long monthsUntilExpire = ChronoUnit.MONTHS.between(today, expireDate);
                             if (expireDate.isBefore(today)) {
@@ -178,16 +178,11 @@ public class PharmacyStockController implements Initializable {
             return row;
         });
         TableColumn<DynamicTableRow, Integer> firstColumn = (TableColumn<DynamicTableRow, Integer>) tableView.getColumns().get(5);
-//
-//        firstColumn.setCellValueFactory(cellData -> {
-//            String value = cellData.getValue().getData("First Column Data").toString(); // Replace with your method to get the value
-//            return new javafx.beans.property.SimpleStringProperty(value);
-//        });
         final int[] i = {0};
-        firstColumn.setCellFactory(new Callback<TableColumn<DynamicTableRow, Integer>, TableCell<DynamicTableRow, Integer>>() {
+        firstColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<DynamicTableRow, Integer> call(TableColumn<DynamicTableRow, Integer> param) {
-                return new TableCell<DynamicTableRow, Integer>() {
+                return new TableCell<>() {
                     @Override
                     protected void updateItem(Integer item, boolean empty) {
                         super.updateItem(item, empty);
@@ -197,6 +192,7 @@ public class PharmacyStockController implements Initializable {
                             Label label = new Label();
                             int quantity = item;
                             QuantityLimit quantityLimit = QuantityLimit.getQuantityByLimit(quantity);
+                            System.out.println(quantity);
                             String style = getStyleByLimit(quantityLimit);
                             label.getStyleClass().add(style);
                             assert quantityLimit != null;
@@ -212,18 +208,10 @@ public class PharmacyStockController implements Initializable {
     private static String getStyleByLimit(QuantityLimit quantityLimit) {
         String style = "";
         switch (Objects.requireNonNull(quantityLimit)) {
-            case LOW -> {
-                style = "low-quantity";
-            }
-            case MEDIUM -> {
-                style = "medium-quantity";
-            }
-            case HIGH -> {
-                style = "high-quantity";
-            }
-            case VERY_HIGH -> {
-                style = "very-high-quantity";
-            }
+            case LOW -> style = "low-quantity";
+            case MEDIUM -> style = "medium-quantity";
+            case HIGH -> style = "high-quantity";
+            case VERY_HIGH -> style = "very-high-quantity";
         }
         return style;
     }
@@ -251,7 +239,7 @@ public class PharmacyStockController implements Initializable {
             for (QuantityLimit q : values()) {
                 if (q.limit > limit) return q;
             }
-            if (limit > values()[values().length - 1].limit) return values()[values().length - 1];
+            if (limit >= values()[values().length - 1].limit) return values()[values().length - 1];
             return null;
         }
     }

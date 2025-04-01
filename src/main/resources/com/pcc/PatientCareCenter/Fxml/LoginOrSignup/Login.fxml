@@ -28,7 +28,7 @@
       </VBox.margin>
    </Text>
    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="Email" />
-   <TextField fx:id="loginEmail" alignment="CENTER" prefHeight="26.0" prefWidth="400.0" promptText="Enter email" styleClass="textfield" text="amadawalage@gmail.com">
+   <TextField fx:id="loginEmail" alignment="CENTER" prefHeight="26.0" prefWidth="400.0" promptText="Enter email" styleClass="textfield">
       <opaqueInsets>
          <Insets />
       </opaqueInsets>
@@ -40,7 +40,7 @@
       </VBox.margin>
    </TextField>
    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text-p" text="Password" />
-   <PasswordField fx:id="loginPassword" alignment="CENTER" prefHeight="26.0" prefWidth="400.0" promptText="Enter password" styleClass="textfield" text="1234">
+   <PasswordField fx:id="loginPassword" alignment="CENTER" prefHeight="26.0" prefWidth="400.0" promptText="Enter password" styleClass="textfield">
       <padding>
          <Insets bottom="10.0" top="10.0" />
       </padding>
@@ -49,15 +49,14 @@
       </VBox.margin>
    </PasswordField>
    <AnchorPane prefHeight="20.0" prefWidth="400.0">
-      <children>
-         <Label fx:id="forgotPasswordLink" layoutX="235.0" prefHeight="20.0" prefWidth="100.0" text="Forgot password" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <styleClass>
-               <String fx:value="normal-text-p" />
-               <String fx:value="link" />
-               <String fx:value="forgot-password-link" />
-            </styleClass>
-         </Label>
-      </children>
+      <Label fx:id="forgotPasswordLink" layoutX="235.0" prefHeight="20.0" prefWidth="100.0" text="Forgot password"
+             AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <styleClass>
+            <String fx:value="normal-text-p"/>
+            <String fx:value="link"/>
+            <String fx:value="forgot-password-link"/>
+         </styleClass>
+      </Label>
    </AnchorPane>
    <Label fx:id="loginMessage" prefHeight="18.0" prefWidth="368.0" text="Message" textAlignment="CENTER" visible="false">
       <VBox.margin>

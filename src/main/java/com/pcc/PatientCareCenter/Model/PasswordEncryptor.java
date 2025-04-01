@@ -66,17 +66,13 @@ public class PasswordEncryptor {
         return new String(decrypted);
     }
     public static void main(String[] args) throws Exception {
-        String masterPassword = "YourSecureMasterPassword123!"; // Store securely!
-        String originalPassword = "1234";
+        String originalPassword = "2063";
 
         // Encrypt
-        String encrypted;
-        encrypted = encrypt(originalPassword, masterPassword);
-        System.out.println("Encrypted: " + encrypted);
-        encrypted = encrypt(originalPassword, masterPassword);
+        String encrypted = encrypt(originalPassword, MASTER);
         System.out.println("Encrypted: " + encrypted);
         // Decrypt
-        String decrypted = decrypt(encrypted, masterPassword);
+        String decrypted = decrypt(encrypted, MASTER);
         System.out.println("Decrypted: " + decrypted);
     }
 }

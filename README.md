@@ -13,13 +13,13 @@
   - Name, DOB, gender, marital status
   - Nationality and language preferences
   - Contact details management
-  ![Screenshot (67)](https://github.com/user-attachments/assets/81324166-bd64-4495-bedd-9a6b164c33f3)
+  >![Screenshot (67)](https://github.com/user-attachments/assets/81324166-bd64-4495-bedd-9a6b164c33f3)
 
 
 - **Search & Filter**:
   - Quick access to patient records
   - Action buttons for editing/viewing
-  - >![Screenshot (61)](https://github.com/user-attachments/assets/38cf8148-7e5f-4642-afda-867da7f05ef0)
+  >![Screenshot (61)](https://github.com/user-attachments/assets/38cf8148-7e5f-4642-afda-867da7f05ef0)
 
 
 ### 💊 **Pharmacy & Prescriptions**
@@ -27,25 +27,25 @@
   - Medicine selection from stock
   - Dosage calculation (frequency, duration)
   - Print/Send prescriptions
-  ![Screenshot (64)](https://github.com/user-attachments/assets/32b3d638-6c97-4ae7-8f2f-40681cb465eb)
+  >![Screenshot (64)](https://github.com/user-attachments/assets/32b3d638-6c97-4ae7-8f2f-40681cb465eb)
 
 
 - **Inventory Management**:
   - Stock level indicators (e.g., "VERY HIGH")
   - Expiry date tracking (e.g., RED means Expired,YELLOW - 3 months to expire)
-  ![Screenshot (62)](https://github.com/user-attachments/assets/0e8768fb-5a78-4da5-b335-d3fd7c1b53f3)
+  >![Screenshot (62)](https://github.com/user-attachments/assets/0e8768fb-5a78-4da5-b335-d3fd7c1b53f3)
 
 
 ### 📄 **Medical Documentation**
 - **Certificate Generation**:
   - Medical certificates
-  - >![Screenshot (48)](https://github.com/user-attachments/assets/42e0b49f-0b60-4161-8f74-bc0231794b7b)
+  >![Screenshot (48)](https://github.com/user-attachments/assets/42e0b49f-0b60-4161-8f74-bc0231794b7b)
 
   - Fitness certificates
-  - >![Screenshot (49)](https://github.com/user-attachments/assets/918c8882-1f9b-4ad0-ba52-ff3b93e200ae)
+  >![Screenshot (49)](https://github.com/user-attachments/assets/918c8882-1f9b-4ad0-ba52-ff3b93e200ae)
 
   - Ultrasound reports
-  - >![Screenshot (51)](https://github.com/user-attachments/assets/fb61ab21-a674-42ab-9e82-b1752221c2a2)
+  >![Screenshot (51)](https://github.com/user-attachments/assets/fb61ab21-a674-42ab-9e82-b1752221c2a2)
   
 
 ### 🔐 **Security & Administration**
